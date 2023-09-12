@@ -27,6 +27,9 @@ export default class Juego extends Phaser.Scene {
       spawnPoint.y,
       "alma"
     ).setScale(0.5);
+
+    this.scene.launch("ui",);
+
   }
 
   update() {
