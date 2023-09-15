@@ -13,12 +13,12 @@ export default class Menu extends Phaser.Scene {
       { texto: "AJUSTES", escenaKey: "ajustes" },
     ];
 
-    const posicionIncialY = 300;
+    const posicionIncialY = 500;
     const espaciado = 100;
 
     botones.forEach((infoBoton, indice) => {
       const boton = this.agregarBoton(
-        400,
+        900,
         posicionIncialY + indice * espaciado,
         infoBoton.texto,
         infoBoton.escenaKey
@@ -30,7 +30,7 @@ export default class Menu extends Phaser.Scene {
 
   agregarBoton(x, y, texto, escenaKey) {
     const boton = this.add
-      .text(x, y, texto, { fontSize: "32px" })
+      .text(x, y, texto, { fontSize: "50px" })
       .setOrigin(0.5)
       .setInteractive();
 
