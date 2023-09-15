@@ -9,7 +9,7 @@ export default class Ajustes extends Phaser.Scene {
 
   create() {
     const botonVolver = this.add
-      .text(400, 300, "volver", { fontSize: "32px" })
+      .text(1000, 500, "volver", { fontSize: "50px" })
       .setOrigin(0.5)
       .setInteractive();
 

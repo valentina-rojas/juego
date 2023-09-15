@@ -9,8 +9,9 @@ export default class UI extends Phaser.Scene {
 
 
   create() {
-    this.texto = this.add.text(700, 15, "UI", {
-      fontSize: "20px",
+    this.texto = this.add.text(1800, 50, "UI", {
+      fontSize: "50px",
     });
+
 }
 }
