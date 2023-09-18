@@ -1,18 +1,15 @@
 import Phaser from "phaser";
 // import events from "./EventCenter";
 
-export default class UI extends Phaser.Scene {
+export default class Creditos extends Phaser.Scene {
   constructor() {
-    super("ui");
+    super("creditos");
   }
 
-  create() {
-    this.texto = this.add.text(1800, 50, "UI", {
-      fontSize: "50px",
-    });
 
+  create() {
     const botonVolver = this.add
-      .text(100, 50, "pausa", { fontSize: "50px" })
+      .text(1000, 500, "volver", { fontSize: "50px" })
       .setOrigin(0.5)
       .setInteractive();
 
@@ -25,8 +22,9 @@ export default class UI extends Phaser.Scene {
     });
 
     botonVolver.on("pointerup", () => {
-      this.scene.stop("juego");
-      this.scene.launch("pausa");
+      this.scene.start("menu");
     });
-  }
+
+}
+
 }
