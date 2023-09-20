@@ -13,12 +13,19 @@ export default class Juego extends Phaser.Scene {
     const map = this.make.tilemap({ key: "nivel1" });
 
     const capaFondo = map.addTilesetImage("fondo", "fondo1");
-
     map.createLayer("background", capaFondo, 0, 0);
+
+    const capaPiso = map.addTilesetImage("suelo", "suelo1");
+    const pisoLayer =map.createLayer("floor", capaPiso, 0, 0);
+
+    pisoLayer.setCollisionByProperty({ colision: true });
+
 
     map.getObjectLayer("objects");
 
     const spawnPoint = map.findObject("objects", (obj) => obj.name === "jugador");
+
+
 
     // agrega el personaje al escenario
     this.jugador = new Jugador(
@@ -27,6 +34,8 @@ export default class Juego extends Phaser.Scene {
       spawnPoint.y,
       "alma"
     ).setScale(0.5);
+
+    this.physics.add.collider(this.jugador, pisoLayer);
 
     this.scene.launch("ui",);
 
