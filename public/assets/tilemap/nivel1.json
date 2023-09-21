@@ -93,15 +93,51 @@
          "objects":[
                 {
                  "height":0,
-                 "id":1,
+                 "id":2,
                  "name":"jugador",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1576,
-                 "y":502
+                 "x":1087.99039632316,
+                 "y":912.244104885871
+                }, 
+                {
+                 "height":0,
+                 "id":5,
+                 "name":"llave",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":137.575757575758,
+                 "y":531.272727272727
+                }, 
+                {
+                 "height":0,
+                 "id":6,
+                 "name":"puerta",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1808.84848484848,
+                 "y":787.030303030303
+                }, 
+                {
+                 "height":0,
+                 "id":7,
+                 "name":"caja",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1315.15151515152,
+                 "y":915.151515151515
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -110,7 +146,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":2,
+ "nextobjectid":9,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

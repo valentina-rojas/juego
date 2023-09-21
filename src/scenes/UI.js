@@ -1,9 +1,15 @@
 import Phaser from "phaser";
-// import events from "./EventCenter";
+import events from "./EventCenter";
 
 export default class UI extends Phaser.Scene {
   constructor() {
     super("ui");
+  }
+
+  init(data){
+
+    this.llaveRecolectada = data.llaveRecolectada || 0;
+
   }
 
   create() {
@@ -28,5 +34,16 @@ export default class UI extends Phaser.Scene {
       this.scene.stop("juego");
       this.scene.launch("pausa");
     });
+
+     // escuchar eventos
+   events.on("mostrarLlave", this.mostrarLlave, this);
+  }
+
+  mostrarLlave(){
+
+    console.log ("imagen en ui");
+
+    this.add.image(1800, 80, "llave");
+
   }
 }
