@@ -16,7 +16,7 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
 
     this.setCollideWorldBounds(true);
     this.setBounce(0.2);
-    this.setGravityY(1000);
+    this.setGravityY(1350);
 
     this.velocidad = 250;
 
@@ -33,7 +33,7 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (this.cursor.up.isDown && this.body.blocked.down) {
-      this.body.setVelocityY(-2000);
+      this.body.setVelocityY(-1050);
     }
   }
 }

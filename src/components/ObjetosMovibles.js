@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 // import events from "./EventCenter";
 
-export default class Objetos extends Phaser.Physics.Arcade.Sprite {
+export default class ObjetosMovibles extends Phaser.Physics.Arcade.Sprite {
   
 body
 
@@ -13,8 +13,9 @@ body
 
     this.setCollideWorldBounds(true);
     
-    this.body.setImmovable(true);
-    this.body.allowGravity = false;
+    
+    this.body.setDamping(true); // Habilitar el amortiguador
+    this.body.setDrag(0.001); // Configurar el valor del amortiguador
 
    
   }
