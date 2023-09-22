@@ -1,13 +1,18 @@
 import Phaser from "phaser";
-// import events from "./EventCenter";
+import events from "./EventCenter";
 
 export default class UI extends Phaser.Scene {
   constructor() {
     super("ui");
   }
 
+  init(data) {
+    this.nivel = data.nivel || 1;
+    this.recolectables = data.recolectables || 0;
+  }
+
   create() {
-    this.texto = this.add.text(1800, 50, "UI", {
+    this.nivelTexto = this.add.text(1600, 50, `Nivel ${  this.nivel}`, {
       fontSize: "50px",
     });
 
@@ -28,5 +33,23 @@ export default class UI extends Phaser.Scene {
       this.scene.stop("juego");
       this.scene.launch("pausa");
     });
+
+     // escuchar eventos
+   events.on("mostrarLlave", this.mostrarLlave, this);
+   events.on("actualizarNivel", this.actualizarNivel, this);
+  }
+
+  mostrarLlave(){
+
+    console.log ("imagen en ui");
+
+    this.add.image(1800, 80, "llave");
+
+  }
+
+  actualizarNivel(data) {
+    this.nivel = data.nivel;
+
+    this.nivelTexto.setText(`Nivel ${  this.nivel}`);
   }
 }
