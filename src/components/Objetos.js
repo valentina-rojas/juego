@@ -1,13 +1,14 @@
 import Phaser from "phaser";
-// import events from "./EventCenter";
-
+// import events from "./EventCenter"
 export default class Objetos extends Phaser.Physics.Arcade.Sprite {
   
-body
+  body
 
   constructor(scene, x, y, texture) {
+    
     super(scene, x, y, texture);
 
+    console.log("scene",scene)
     scene.add.existing(this);
     scene.physics.add.existing(this);
 
@@ -18,6 +19,7 @@ body
 
    
   }
+
 
   
 }

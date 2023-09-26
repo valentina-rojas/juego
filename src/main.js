@@ -8,6 +8,7 @@ import Creditos from "./scenes/Creditos";
 import Ajustes from "./scenes/Ajustes";
 import Pausa from "./scenes/Pausa";
 
+
 const config = {
   type: Phaser.AUTO,
   width: 1920,
@@ -31,7 +32,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [Preload, Menu, Creditos, Ajustes, Pausa, Juego, UI],
+  scene: [Preload, Menu, Creditos, Ajustes, Pausa, Juego, UI,],
 };
 
 export default new Phaser.Game(config);

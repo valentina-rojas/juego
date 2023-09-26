@@ -1,5 +1,6 @@
 import Phaser from "phaser";
-// import events from "./EventCenter";
+import Enemigo from "../components/Enemigo";
+ import events from "./EventCenter";
 import Jugador from "../components/Jugador";
 import Objetos from "../components/Objetos";
 import ObjetosMovibles from "../components/ObjetosMovibles";
@@ -23,6 +24,7 @@ export default class Juego extends Phaser.Scene {
       nivel: this.nivel,
     recolectables: this.recolectables});
 
+
     const mapKey = `nivel${this.nivel}`;
     const map = this.make.tilemap({ key: mapKey });
 
@@ -37,48 +39,73 @@ export default class Juego extends Phaser.Scene {
     const pisoLayer = map.createLayer("floor", capaPiso, 0, 0);
     pisoLayer.setCollisionByProperty({ colision: true });
 
-    map.getObjectLayer("objects");
+    const objectsLayer = map.getObjectLayer("objects");
 
-    const jugadorSpawn = map.findObject(
-      "objects",
-      (obj) => obj.name === "jugador"
-    );
+    objectsLayer.objects.forEach((objData) => {
+     
+      const { x = 0, y = 0, name, } = objData;
+      switch (name) {
+        case "jugador": {
+        
+          this.jugador = new Jugador(
+            this,
+            x,
+            y,
+            "alma"
+          ).setScale(0.5);
+          break;
+        }
+        case "puerta": {
+          this.puerta = new Objetos(
+            this,
+            x,
+            y,
+            "puerta-cerrada"
+          );
+          break;
+        }
+        case "llave": {          
+          this.llave = new Objetos(
+            this,
+            x,
+            y,
+            "llave"
+          );
+          break;
+        }
+        case "caja": {          
+          this.caja = new ObjetosMovibles(
+            this, 
+            x, 
+            y, 
+            "caja")
+          break;
+          
+        }
 
-    const llaveSpawn = map.findObject("objects", (obj) => obj.name === "llave");
-    const puertaSpawn = map.findObject(
-      "objects",
-      (obj) => obj.name === "puerta"
-    );
-    const cajaSpawn = map.findObject("objects", (obj) => obj.name === "caja");
+      }
+    });
 
-    // agregar la puerta al escenario
-    this.puerta = new Objetos(
-      this,
-      puertaSpawn.x,
-      puertaSpawn.y,
-      "puerta-cerrada"
-    );
 
-    // agrega el personaje al escenario
-    this.jugador = new Jugador(
-      this,
-      jugadorSpawn.x,
-      jugadorSpawn.y,
-      "alma"
-    ).setScale(0.5);
+    //condicionales para nivele 2  // agregar enemigo 
 
-    // agrega la llave al escenario
-    this.llave = new Objetos(
-      this,
-      llaveSpawn.x,
-      llaveSpawn.y,
-      "llave"
-    );
+    if (this.nivel === 2 ){
 
-    // agregar caja al escenario
-    this.caja = new ObjetosMovibles(this, cajaSpawn.x, cajaSpawn.y, "caja")
-    ;
+      this.time.addEvent({
+        delay:5000,
+        callback: this.manosRandom,
+        callbackScope: this,
+        loop: true
+      
+      }
+      )
+      console.log("enemigo");
+    }
 
+    
+
+
+    
 
     this.physics.add.overlap(
       this.jugador,
@@ -96,11 +123,26 @@ export default class Juego extends Phaser.Scene {
       this
     );
 
+   /* this.physics.add.overlap(
+      this.manos,
+      this.jugador,
+      this.perderJuego,
+      null,
+      this
+    );*/
+
+
+
     this.physics.add.collider(this.jugador, pisoLayer);
     this.physics.add.collider(this.llave, pisoLayer);
     this.physics.add.collider(this.puerta, pisoLayer);
     this.physics.add.collider(this.caja, pisoLayer);
     this.physics.add.collider(this.jugador, this.caja);
+   // this.physics.add.collider(this.manos, pisoLayer);
+
+
+   
+    
 
     // cámara sigue al jugador
     this.cameras.main.startFollow(this.jugador);
@@ -108,6 +150,13 @@ export default class Juego extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     // camera dont go out of the map
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+
+    //iluminacion
+
+    this.lights.enable();
+
+   
+
   }
 
   update() {
@@ -118,7 +167,7 @@ export default class Juego extends Phaser.Scene {
   recolectarObjeto() {
     this.llave.disableBody(true, true);
     this.recolectables += 1;
-    // events.emit("mostrarLlave");
+     events.emit("mostrarLlave");
     this.puerta.setTexture("puerta-abierta");
     console.log("llave recolectada");
   }
@@ -132,5 +181,28 @@ export default class Juego extends Phaser.Scene {
       this.nivel += 1;
       this.scene.start(("juego"),{ nivel: this.nivel });
     }
+    
   }
+
+  manosRandom(){
+
+    //const randomX= Phaser.Math.RND.between(0,500);
+    this.manos = new Enemigo (this, this.jugador.x-100, this.jugador.y - 1000, "caja");
+    if(this.manos.y > 500 ){
+      console.log("eliminar ENEMIGO")
+      this.velocidad=(-250)
+
+      this.manos.destroy();
+
+    }
+
+
+  }
+
+  perderJuego(){
+
+    this.scene.start(("juego"),{ nivel: this.nivel });
+
+  }
+
 }

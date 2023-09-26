@@ -117,18 +117,6 @@
                 }, 
                 {
                  "height":0,
-                 "id":8,
-                 "name":"caja",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1596.39327056645,
-                 "y":837.027696318019
-                }, 
-                {
-                 "height":0,
                  "id":7,
                  "name":"llave",
                  "point":true,
