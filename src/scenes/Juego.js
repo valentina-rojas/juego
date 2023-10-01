@@ -80,14 +80,15 @@ export default class Juego extends Phaser.Scene {
             y, 
             "caja")
           break;
-          
         }
-
+        default: {
+          
+          break;
+        }
       }
     });
 
-
-    //condicionales para nivele 2  // agregar enemigo 
+    // condicionales para nivel 2  // agregar enemigo 
 
     if (this.nivel === 2 ){
 
@@ -96,16 +97,13 @@ export default class Juego extends Phaser.Scene {
         callback: this.manosRandom,
         callbackScope: this,
         loop: true
-      
       }
       )
+      
       console.log("enemigo");
+
+      ;
     }
-
-    
-
-
-    
 
     this.physics.add.overlap(
       this.jugador,
@@ -123,14 +121,15 @@ export default class Juego extends Phaser.Scene {
       this
     );
 
-   /* this.physics.add.overlap(
-      this.manos,
-      this.jugador,
-      this.perderJuego,
-      null,
-      this
-    );*/
-
+     /* this.physics.add.collider(
+        this.manos,
+        this.jugador,
+        this.perderJuego,
+        null,
+        this
+      ); */
+  
+    //  this.physics.add.collider(this.manos, pisoLayer, this.desaparecerManos, null, this)
 
 
     this.physics.add.collider(this.jugador, pisoLayer);
@@ -138,11 +137,7 @@ export default class Juego extends Phaser.Scene {
     this.physics.add.collider(this.puerta, pisoLayer);
     this.physics.add.collider(this.caja, pisoLayer);
     this.physics.add.collider(this.jugador, this.caja);
-   // this.physics.add.collider(this.manos, pisoLayer);
-
-
-   
-    
+  
 
     // cámara sigue al jugador
     this.cameras.main.startFollow(this.jugador);
@@ -151,16 +146,12 @@ export default class Juego extends Phaser.Scene {
     // camera dont go out of the map
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    //iluminacion
+    // iluminacion
 
     this.lights.enable();
-
-   
-
   }
 
   update() {
-    // movimiento del jugador
     this.jugador.movimiento();
   }
 
@@ -181,28 +172,20 @@ export default class Juego extends Phaser.Scene {
       this.nivel += 1;
       this.scene.start(("juego"),{ nivel: this.nivel });
     }
-    
   }
 
   manosRandom(){
-
-    //const randomX= Phaser.Math.RND.between(0,500);
     this.manos = new Enemigo (this, this.jugador.x-100, this.jugador.y - 1000, "caja");
-    if(this.manos.y > 500 ){
-      console.log("eliminar ENEMIGO")
-      this.velocidad=(-250)
+    console.log("nueva mano");
+  }
 
+  desaparecerManos(){
       this.manos.destroy();
-
-    }
-
-
+      console.log("mano eliminada");
   }
 
   perderJuego(){
-
     this.scene.start(("juego"),{ nivel: this.nivel });
-
   }
 
 }

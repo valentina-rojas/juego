@@ -26,10 +26,13 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
   movimiento() {
     if (this.cursor.left.isDown) {
       this.body.setVelocityX(-this.velocidad);
+      this.anims.play("caminarIzquierda", true);
     } else if (this.cursor.right.isDown) {
       this.body.setVelocityX(this.velocidad);
+      this.anims.play("caminarDerecha", true);
     } else {
       this.body.setVelocityX(0);
+      this.anims.play("quieto", true);
     }
 
     if (this.cursor.up.isDown && this.body.blocked.down) {
