@@ -52,7 +52,7 @@ export default class Juego extends Phaser.Scene {
             x,
             y,
             "alma"
-          ).setScale(0.5);
+          );
           break;
         }
         case "puerta": {
