@@ -6,10 +6,14 @@ export default class Ajustes extends Phaser.Scene {
     super("ajustes");
   }
 
-
   create() {
+    this.add.image(960, 540, "ajustes");
+
     const botonVolver = this.add
-      .text(1000, 500, "volver", { fontSize: "50px" })
+      .text(1000, 850, "volver", {
+        fontSize: "60px",
+        backgroundColor: "#000000",
+      })
       .setOrigin(0.5)
       .setInteractive();
 
@@ -24,7 +28,5 @@ export default class Ajustes extends Phaser.Scene {
     botonVolver.on("pointerup", () => {
       this.scene.start("menu");
     });
-
-}
-
+  }
 }

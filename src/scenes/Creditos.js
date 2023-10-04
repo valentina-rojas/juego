@@ -6,10 +6,11 @@ export default class Creditos extends Phaser.Scene {
     super("creditos");
   }
 
-
   create() {
+    this.add.image(960, 540, "creditos");
+
     const botonVolver = this.add
-      .text(1000, 500, "volver", { fontSize: "50px" })
+      .text(180, 50, "volver", { fontSize: "60px", backgroundColor: "#000000" })
       .setOrigin(0.5)
       .setInteractive();
 
@@ -24,7 +25,5 @@ export default class Creditos extends Phaser.Scene {
     botonVolver.on("pointerup", () => {
       this.scene.start("menu");
     });
-
-}
-
+  }
 }
