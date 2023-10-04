@@ -7,18 +7,20 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
+    this.add.image(600, 500, "logo");
+
     const botones = [
       { texto: "JUGAR", escenaKey: "juego" },
       { texto: "CRÉDITOS", escenaKey: "creditos" },
       { texto: "AJUSTES", escenaKey: "ajustes" },
     ];
 
-    const posicionIncialY = 500;
+    const posicionIncialY = 400;
     const espaciado = 100;
 
     botones.forEach((infoBoton, indice) => {
       const boton = this.agregarBoton(
-        900,
+        1200,
         posicionIncialY + indice * espaciado,
         infoBoton.texto,
         infoBoton.escenaKey
