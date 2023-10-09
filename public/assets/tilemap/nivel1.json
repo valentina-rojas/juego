@@ -118,6 +118,12 @@
          "id":3,
          "name":"floor",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"colision",
+                 "type":"bool",
+                 "value":true
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":48,
@@ -139,7 +145,7 @@
                  "visible":true,
                  "width":0,
                  "x":1547.99039632316,
-                 "y":666.244104885871
+                 "y":887.456226097992
                 }, 
                 {
                  "height":0,
@@ -150,8 +156,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":146.575757575758,
-                 "y":326.772727272727
+                 "x":1328.39393939394,
+                 "y":854.045454545454
                 }, 
                 {
                  "height":0,

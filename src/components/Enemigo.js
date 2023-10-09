@@ -20,6 +20,5 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
     this.velocidad = 250;
 
   }
-
  
 }
