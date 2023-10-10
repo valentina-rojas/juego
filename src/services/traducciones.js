@@ -12,7 +12,7 @@ export async function getTranslations(lang, callback) {
     return callback ? callback() : false;
   }
 
-  return /*await*/ fetch(
+  return fetch(
     `https://traduci-la-strapi.herokuapp.com/api/translations/${PROJECT_ID}/${language}`
   )
     .then((response) => response.json())
@@ -37,13 +37,12 @@ export function getPhrase(key) {
   return phrase;
 }
 
-function isAllowedLanguge(language) {
+function isAllowedLanguge(language_) {
   const allowedLanguages = [ES_AR, EN_US];
-  return allowedLanguages.indexOf(language) !== -1;
+  return allowedLanguages.indexOf(language_) !== -1;
 }
 
 export function getLanguageConfig() {
-  let languageConfig;
 
   // Obtener desde la URL el idioma
   console.log(window.location.href);
@@ -64,7 +63,7 @@ export function getLanguageConfig() {
   const params = new URL(window.location.href).searchParams;
   const queryLang = params.get("lang");
 
-  languageConfig = path ?? queryLang;
+  const languageConfig = path ?? queryLang;
   
 
   if (languageConfig) {

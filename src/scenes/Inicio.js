@@ -8,9 +8,11 @@ export default class Inicio extends Phaser.Scene {
   #textSpanish;
 
   #textEnglish;
+
   #language;
 
   #wasChangedLanguage = TODO;
+
   constructor() {
     super("inicio");
   }
@@ -40,8 +42,8 @@ export default class Inicio extends Phaser.Scene {
     const buttonEnglish = this.add
       .rectangle(width / 2.5, height / 2, 150, 75, 0xffffff)
       .setInteractive()
-      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
-        getTranslations(EN_US);
+      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, async () => {
+        await getTranslations(EN_US);
         console.log("idioma: EN_US");
         this.iniciarEscena();
       });
@@ -67,7 +69,7 @@ export default class Inicio extends Phaser.Scene {
     this.language = language;
     this.#wasChangedLanguage = FETCHING;
 
-    await getTranslations(language, this.updateWasChangedLanguage);
+    getTranslations(language, this.updateWasChangedLanguage);
   }
 
   iniciarEscena() {
