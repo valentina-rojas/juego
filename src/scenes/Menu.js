@@ -42,7 +42,7 @@ export default class Menu extends Phaser.Scene {
 
   agregarBoton(x, y, texto, escenaKey) {
     const boton = this.add
-      .text(x, y, texto, { fontSize: "50px" })
+      .text(x, y, texto, { fontSize: "100px", fontFamily: "AmaticSC-Bold", })
       .setOrigin(0.5)
       .setInteractive();
 

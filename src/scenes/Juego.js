@@ -1,12 +1,13 @@
 import Phaser from "phaser";
 import Enemigo from "../components/Enemigo";
- import events from "./EventCenter";
+import events from "./EventCenter";
 import Jugador from "../components/Jugador";
 import Objetos from "../components/Objetos";
 import ObjetosMovibles from "../components/ObjetosMovibles";
 
 export default class Juego extends Phaser.Scene {
   jugador;
+  manos
 
   nivel;
 
@@ -28,18 +29,22 @@ export default class Juego extends Phaser.Scene {
     const mapKey = `nivel${this.nivel}`;
     const map = this.make.tilemap({ key: mapKey });
 
-
-    const capaFondo = map.addTilesetImage("fondo", "fondo1");
+    const fondoKey = `fondo${this.nivel}`;
+    const capaFondo = map.addTilesetImage("fondo", fondoKey );
     map.createLayer("background", capaFondo, 0, 0);
 
-    const capaMuebles = map.addTilesetImage("muebles", "muebles1");
+    const mueblesKey = `muebles${this.nivel}`;
+    const capaMuebles = map.addTilesetImage("muebles", mueblesKey);
     map.createLayer("furniture", capaMuebles, 0, 0);
 
-    const capaPiso = map.addTilesetImage("suelo", "suelo1");
+    const pisoKey = `suelo${this.nivel}`;
+    const capaPiso = map.addTilesetImage("suelo", pisoKey);
     const pisoLayer = map.createLayer("floor", capaPiso, 0, 0);
     pisoLayer.setCollisionByProperty({ colision: true });
 
     const objectsLayer = map.getObjectLayer("objects");
+
+    this.manos = this.physics.add.group();
 
     objectsLayer.objects.forEach((objData) => {
      
@@ -73,12 +78,13 @@ export default class Juego extends Phaser.Scene {
           );
           break;
         }
+
         case "caja": {          
           this.caja = new ObjetosMovibles(
             this, 
             x, 
             y, 
-            "caja")
+            "caja").setSize(360, 320).setOffset(10, 10)
           break;
         }
         default: {
@@ -86,14 +92,17 @@ export default class Juego extends Phaser.Scene {
           break;
         }
       }
+
     });
+
+    
 
     // condicionales para nivel 2  // agregar enemigo 
 
     if (this.nivel === 2 ){
 
       this.time.addEvent({
-        delay:5000,
+        delay:2000,
         callback: this.manosRandom,
         callbackScope: this,
         loop: true
@@ -102,7 +111,34 @@ export default class Juego extends Phaser.Scene {
       
       console.log("enemigo");
 
-      ;
+      console.log("manos",this.manos)
+
+     this.physics.add.overlap(
+      this.manos,
+      this.jugador,
+      this.perderJuego,
+      null,
+      this
+    );
+
+
+
+   this.physics.add.collider(this.manos, pisoLayer, this. desaparecerManos,null,this); 
+
+    }
+
+    if(this.nivel === 3) {
+
+this.enemigoFinal = new Enemigo(
+  this,
+  400,
+  500,
+  "manos"
+);
+
+this.enemigoFinal.movimientoEnemigo();
+
+this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, null,this)
     }
 
     this.physics.add.overlap(
@@ -113,7 +149,7 @@ export default class Juego extends Phaser.Scene {
       this
     );
 
-    this.physics.add.overlap(
+    this.physics.add.collider(
       this.puerta,
       this.jugador,
       this.abrirPuerta,
@@ -121,16 +157,7 @@ export default class Juego extends Phaser.Scene {
       this
     );
 
-     /* this.physics.add.collider(
-        this.manos,
-        this.jugador,
-        this.perderJuego,
-        null,
-        this
-      ); */
-  
-    //  this.physics.add.collider(this.manos, pisoLayer, this.desaparecerManos, null, this)
-
+    
 
     this.physics.add.collider(this.jugador, pisoLayer);
     this.physics.add.collider(this.llave, pisoLayer);
@@ -146,9 +173,9 @@ export default class Juego extends Phaser.Scene {
     // camera dont go out of the map
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
 
-    // iluminacion
+    
 
-    this.lights.enable();
+    
   }
 
   update() {
@@ -175,16 +202,21 @@ export default class Juego extends Phaser.Scene {
   }
 
   manosRandom(){
-    this.manos = new Enemigo (this, this.jugador.x-100, this.jugador.y - 1000, "caja");
+    const manos= new Enemigo (this, this.jugador.x-200, this.jugador.y - 1000, "manos");
+    this.manos.add(manos)
+
+
     console.log("nueva mano");
   }
 
-  desaparecerManos(){
-      this.manos.destroy();
+  desaparecerManos(manos){
+  
+      manos.destroy();
       console.log("mano eliminada");
   }
 
   perderJuego(){
+    console.log(this)
     this.scene.start(("juego"),{ nivel: this.nivel });
   }
 
