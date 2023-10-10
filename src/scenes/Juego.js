@@ -7,6 +7,7 @@ import ObjetosMovibles from "../components/ObjetosMovibles";
 
 export default class Juego extends Phaser.Scene {
   jugador;
+  manos
 
   nivel;
 
@@ -42,6 +43,8 @@ export default class Juego extends Phaser.Scene {
     pisoLayer.setCollisionByProperty({ colision: true });
 
     const objectsLayer = map.getObjectLayer("objects");
+
+    this.manos = this.physics.add.group();
 
     objectsLayer.objects.forEach((objData) => {
      
@@ -108,16 +111,20 @@ export default class Juego extends Phaser.Scene {
       
       console.log("enemigo");
 
-     /* this.physics.add.overlap(
+      console.log("manos",this.manos)
+
+     this.physics.add.overlap(
       this.manos,
       this.jugador,
       this.perderJuego,
       null,
       this
     );
-    
 
-   this.physics.add.collider(this.manos, pisoLayer); */
+
+
+   this.physics.add.collider(this.manos, pisoLayer, this. desaparecerManos,null,this); 
+
     }
 
     if(this.nivel === 3) {
@@ -130,6 +137,8 @@ this.enemigoFinal = new Enemigo(
 );
 
 this.enemigoFinal.movimientoEnemigo();
+
+this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, null,this)
     }
 
     this.physics.add.overlap(
@@ -193,16 +202,21 @@ this.enemigoFinal.movimientoEnemigo();
   }
 
   manosRandom(){
-    this.manos = new Enemigo (this, this.jugador.x-200, this.jugador.y - 1000, "manos");
+    const manos= new Enemigo (this, this.jugador.x-200, this.jugador.y - 1000, "manos");
+    this.manos.add(manos)
+
+
     console.log("nueva mano");
   }
 
-  desaparecerManos(){
-      this.manos.destroy();
+  desaparecerManos(manos){
+  
+      manos.destroy();
       console.log("mano eliminada");
   }
 
   perderJuego(){
+    console.log(this)
     this.scene.start(("juego"),{ nivel: this.nivel });
   }
 
