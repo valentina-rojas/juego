@@ -108,7 +108,28 @@ export default class Juego extends Phaser.Scene {
       
       console.log("enemigo");
 
-      ;
+     /* this.physics.add.overlap(
+      this.manos,
+      this.jugador,
+      this.perderJuego,
+      null,
+      this
+    );
+    
+
+   this.physics.add.collider(this.manos, pisoLayer); */
+    }
+
+    if(this.nivel === 3) {
+
+this.enemigoFinal = new Enemigo(
+  this,
+  400,
+  500,
+  "manos"
+);
+
+this.enemigoFinal.movimientoEnemigo();
     }
 
     this.physics.add.overlap(
@@ -127,15 +148,7 @@ export default class Juego extends Phaser.Scene {
       this
     );
 
-    /* this.physics.add.overlap(
-      this.manos,
-      this.jugador,
-      this.perderJuego,
-      null,
-      this
-    );
     
-   this.physics.add.collider(this.manos, pisoLayer); */
 
     this.physics.add.collider(this.jugador, pisoLayer);
     this.physics.add.collider(this.llave, pisoLayer);

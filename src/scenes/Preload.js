@@ -32,6 +32,9 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 132,
       frameHeight: 180,
     });
+
+
+   // this.load.bitmapFont("AmaticSC-Bold", "assets/fuentes/AmaticSC-Bold.ttf")
   }
 
   create() {
