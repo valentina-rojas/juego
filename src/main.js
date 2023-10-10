@@ -7,6 +7,7 @@ import Preload from "./scenes/Preload";
 import Creditos from "./scenes/Creditos";
 import Ajustes from "./scenes/Ajustes";
 import Pausa from "./scenes/Pausa";
+import Inicio from "./scenes/Inicio";
 
 
 const config = {
@@ -32,7 +33,7 @@ const config = {
       debug: true,
     },
   },
-  scene: [Preload, Menu, Creditos, Ajustes, Pausa, Juego, UI,],
+  scene: [Preload, Inicio, Menu, Creditos, Ajustes, Pausa, Juego, UI,],
 };
 
 export default new Phaser.Game(config);
