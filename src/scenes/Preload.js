@@ -1,11 +1,17 @@
 import Phaser from "phaser";
+import { getLanguageConfig, getTranslations } from "../services/traducciones";
 
 export default class Preload extends Phaser.Scene {
+  #language
   constructor() {
     super("preload");
   }
 
   preload() {
+
+    this.#language = getLanguageConfig();
+    alert(this.#language)
+
     this.load.image("fondo1", "assets/sprites/nivel 1/pared-n1.png");
     this.load.image("muebles1", "assets/sprites/nivel 1/objetos-quietos-n1.png");
     this.load.image("suelo1", "assets/sprites/nivel 1/piso-n1.png");
@@ -55,7 +61,10 @@ export default class Preload extends Phaser.Scene {
       repeat: -1,
     });
 
+    getTranslations(this.#language, () => {
+      this.scene.start("inicio", { language: this.#language });
+    });
 
-    this.scene.start("menu");
+
   }
 }

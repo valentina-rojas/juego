@@ -1,18 +1,28 @@
 import Phaser from "phaser";
 // import events from "./EventCenter";
+//import { EN_US, ES_AR } from "../enums/lenguajes";
+import { getPhrase } from "../services/traducciones";
 
 export default class Menu extends Phaser.Scene {
+
+  language;
   constructor() {
     super("menu");
   }
 
+  init(language) {
+    this.language = language;
+  }
+
   create() {
+    console.log("idioma:" + this.language);
     this.add.image(600, 500, "logo");
 
+
     const botones = [
-      { texto: "JUGAR", escenaKey: "juego" },
-      { texto: "CRÉDITOS", escenaKey: "creditos" },
-      { texto: "AJUSTES", escenaKey: "ajustes" },
+      { texto: getPhrase("JUGAR"), escenaKey: "juego" },
+      { texto: getPhrase("CRÉDITOS"), escenaKey: "creditos" },
+      { texto: getPhrase("AJUSTES"), escenaKey: "ajustes" },
     ];
 
     const posicionIncialY = 400;
@@ -41,6 +51,7 @@ export default class Menu extends Phaser.Scene {
     return boton;
   }
 
+  
   interacciones(boton) {
     boton.on("pointerover", () => {
       boton.setStyle({ backgroundColor: "#888888" });
@@ -52,7 +63,7 @@ export default class Menu extends Phaser.Scene {
 
     boton.on("pointerup", () => {
       const targetScene = boton.getData("escenaKey");
-      this.scene.start(targetScene);
+      this.scene.start(targetScene, { language: this.language });
     });
   }
 }
