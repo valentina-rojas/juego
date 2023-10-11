@@ -25,7 +25,7 @@ export default class Inicio extends Phaser.Scene {
     const { width, height } = this.scale;
 
     const buttonSpanish = this.add
-      .rectangle(width / 1.5, height / 2, 150, 75, 0xffffff)
+      .rectangle(width / 1.5, height / 2, 200, 85, 0xffffff)
       .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
         getTranslations(ES_AR);
@@ -35,12 +35,14 @@ export default class Inicio extends Phaser.Scene {
 
     this.#textSpanish = this.add
       .text(buttonSpanish.x, buttonSpanish.y, "Español", {
+        fontFamily: 'Amatic SC',
+        fontSize: "70px",
         color: "#000000",
       })
       .setOrigin(0.5);
 
     const buttonEnglish = this.add
-      .rectangle(width / 2.5, height / 2, 150, 75, 0xffffff)
+      .rectangle(width / 2.5, height / 2, 200, 85, 0xffffff)
       .setInteractive()
       .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, async () => {
         await getTranslations(EN_US);
@@ -50,6 +52,8 @@ export default class Inicio extends Phaser.Scene {
 
     this.#textEnglish = this.add
       .text(buttonEnglish.x, buttonEnglish.y, "Inglés", {
+        fontFamily: 'Amatic SC',
+        fontSize: "70px", 
         color: "#000000",
       })
       .setOrigin(0.5);

@@ -1,11 +1,10 @@
 import Phaser from "phaser";
-// import events from "./EventCenter";
-//import { EN_US, ES_AR } from "../enums/lenguajes";
 import { getPhrase } from "../services/traducciones";
 
-export default class Menu extends Phaser.Scene {
 
+export default class Menu extends Phaser.Scene {
   language;
+
   constructor() {
     super("menu");
   }
@@ -15,9 +14,9 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
-    console.log("idioma:" + this.language);
-    this.add.image(600, 500, "logo");
+    console.log(`idioma:${  this.language}`);
 
+    this.add.image(600, 500, "logo");
 
     const botones = [
       { texto: getPhrase("JUGAR"), escenaKey: "juego" },
@@ -42,7 +41,7 @@ export default class Menu extends Phaser.Scene {
 
   agregarBoton(x, y, texto, escenaKey) {
     const boton = this.add
-      .text(x, y, texto, { fontSize: "100px", fontFamily: "AmaticSC-Bold", })
+      .text(x, y, texto, { fontFamily: 'Amatic SC, cursive',fontSize: "80px" })
       .setOrigin(0.5)
       .setInteractive();
 
@@ -51,7 +50,6 @@ export default class Menu extends Phaser.Scene {
     return boton;
   }
 
-  
   interacciones(boton) {
     boton.on("pointerover", () => {
       boton.setStyle({ backgroundColor: "#888888" });
