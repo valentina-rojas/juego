@@ -1,8 +1,10 @@
 import Phaser from "phaser";
 import { getLanguageConfig, getTranslations } from "../services/traducciones";
+// import WebFont from "webfontloader"; 
 
 export default class Preload extends Phaser.Scene {
   #language
+
   constructor() {
     super("preload");
   }
@@ -10,7 +12,7 @@ export default class Preload extends Phaser.Scene {
   preload() {
 
     this.#language = getLanguageConfig();
-    alert(this.#language)
+
 
     this.load.image("fondo1", "assets/sprites/nivel 1/pared-n1.png");
     this.load.image("fondo2", "assets/sprites/nivel 2/fondo2.png");
@@ -40,7 +42,14 @@ export default class Preload extends Phaser.Scene {
     });
 
 
-   // this.load.bitmapFont("AmaticSC-Bold", "assets/fuentes/AmaticSC-Bold.ttf")
+  /* WebFont.load({
+      custom: {
+          families: ['Amatic SC'],
+          urls: ['assets/fuentes/tipografias.css'],
+      },
+  }); */
+
+  
   }
 
   create() {

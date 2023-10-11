@@ -8,7 +8,7 @@ export default class Pausa extends Phaser.Scene {
 
   create() {
     const botonVolver = this.add
-      .text(1000, 500, "volver", { fontSize: "50px" })
+      .text(1000, 500, "volver", {fontFamily: 'Amatic SC', fontSize: "70px" })
       .setOrigin(0.5)
       .setInteractive();
 
@@ -26,7 +26,7 @@ export default class Pausa extends Phaser.Scene {
     });
 
     const botonReiniciar = this.add
-      .text(1000, 600, "reiniciar", { fontSize: "50px" })
+      .text(1000, 600, "reiniciar", { fontFamily: 'Amatic SC', fontSize: "70px" })
       .setOrigin(0.5)
       .setInteractive();
 

@@ -12,24 +12,25 @@ export default class UI extends Phaser.Scene {
   }
 
   create() {
-    this.nivelTexto = this.add.text(1600, 50, `Nivel ${  this.nivel}`, {
-      fontSize: "50px",
+    this.nivelTexto = this.add.text(1600, 40, `Nivel ${  this.nivel}`, {
+      fontFamily: 'Amatic SC',
+      fontSize: "60px",
     });
 
-    const botonVolver = this.add
-      .text(100, 50, "pausa", { fontSize: "50px" })
+    const botonPausa = this.add
+      .text(100, 50, "pausa", { fontFamily: 'Amatic SC', fontSize: "60px" })
       .setOrigin(0.5)
       .setInteractive();
 
-    botonVolver.on("pointerover", () => {
-      botonVolver.setStyle({ backgroundColor: "#888888" });
+    botonPausa.on("pointerover", () => {
+      botonPausa.setStyle({ backgroundColor: "#888888" });
     });
 
-    botonVolver.on("pointerout", () => {
-      botonVolver.setStyle({ backgroundColor: "#000000" });
+    botonPausa.on("pointerout", () => {
+      botonPausa.setStyle({ backgroundColor: "#000000" });
     });
 
-    botonVolver.on("pointerup", () => {
+    botonPausa.on("pointerup", () => {
       this.scene.stop("juego");
       this.scene.launch("pausa");
     });
