@@ -7,8 +7,8 @@ import ObjetosMovibles from "../components/ObjetosMovibles";
 
 export default class Juego extends Phaser.Scene {
   jugador;
-  manos
-
+  manos;
+  jarron;
   nivel;
 
   constructor() {
@@ -45,6 +45,7 @@ export default class Juego extends Phaser.Scene {
     const objectsLayer = map.getObjectLayer("objects");
 
     this.manos = this.physics.add.group();
+    this.jarron = this.physics.add.group();
 
     objectsLayer.objects.forEach((objData) => {
      
@@ -87,6 +88,17 @@ export default class Juego extends Phaser.Scene {
             "caja").setSize(360, 320).setOffset(10, 10)
           break;
         }
+
+        case "jarron": {          
+          const jarron = new ObjetosMovibles(
+            this, 
+            x, 
+            y, 
+            "jarron")
+            this.jarron.add(jarron)
+          break;
+
+        }
         default: {
           
           break;
@@ -123,22 +135,23 @@ export default class Juego extends Phaser.Scene {
 
 
 
-   this.physics.add.collider(this.manos, pisoLayer, this. desaparecerManos,null,this); 
-
+   this.physics.add.collider(this.manos, pisoLayer, this. desaparecerManos,null,this);
     }
+
+    // condicionales para nivel 3  // agregar enemigo final
 
     if(this.nivel === 3) {
 
-this.enemigoFinal = new Enemigo(
-  this,
-  400,
-  500,
-  "manos"
-);
+   this.enemigoFinal = new Enemigo(
+   this,
+   400,
+   500,
+   "manos"
+    );
 
-this.enemigoFinal.movimientoEnemigo();
+  this.enemigoFinal.movimientoEnemigo();
 
-this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, null,this)
+  this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, null,this)
     }
 
     this.physics.add.overlap(
@@ -149,6 +162,7 @@ this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, nul
       this
     );
 
+
     this.physics.add.collider(
       this.puerta,
       this.jugador,
@@ -157,13 +171,22 @@ this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, nul
       this
     );
 
-    
+    this.physics.add.collider(
+      this.jarron,
+      pisoLayer,
+      this.romperJarron,
+      null,
+      this
+    );
+
+
+
 
     this.physics.add.collider(this.jugador, pisoLayer);
-    this.physics.add.collider(this.llave, pisoLayer);
     this.physics.add.collider(this.puerta, pisoLayer);
     this.physics.add.collider(this.caja, pisoLayer);
     this.physics.add.collider(this.jugador, this.caja);
+    this.physics.add.collider(this.jugador, this.jarron);
   
 
     // cámara sigue al jugador
@@ -182,8 +205,34 @@ this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, nul
     this.jugador.movimiento();
   }
 
+  romperJarron(jarron){
+    console.log ("jarron roto")
+    const x = jarron.x;
+    const y = jarron.y;
+    jarron.destroy();
+    this.llave2 = new Objetos (this, x, y, "llave");
+
+    this.physics.add.overlap(
+      this.jugador,
+      this.llave2,
+      this.recolectarLlave2,
+      null,
+      this
+    );
+
+  }
+
+
   recolectarObjeto() {
     this.llave.disableBody(true, true);
+    this.recolectables += 1;
+     events.emit("mostrarLlave");
+    this.puerta.setTexture("puerta-abierta");
+    console.log("llave recolectada");
+  }
+
+  recolectarLlave2() {
+    this.llave2.disableBody(true, true);
     this.recolectables += 1;
      events.emit("mostrarLlave");
     this.puerta.setTexture("puerta-abierta");
@@ -199,8 +248,14 @@ this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, nul
       this.nivel += 1;
       this.scene.start(("juego"),{ nivel: this.nivel });
     }
-  }
 
+    if ( this.nivel === 4){
+      console.log("animacion2")
+
+      this.scene.start(("animaciones"),{ nivel: this.nivel }); 
+  }
+  }
+  
   manosRandom(){
     const manos= new Enemigo (this, this.jugador.x-200, this.jugador.y - 1000, "manos");
     this.manos.add(manos)

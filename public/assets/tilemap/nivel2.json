@@ -130,20 +130,20 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1126.81751299069,
-                 "y":828.664059954382
+                 "x":1678.81751299069,
+                 "y":784.664059954382
                 }, 
                 {
                  "height":0,
                  "id":7,
-                 "name":"llave",
+                 "name":"jarron",
                  "point":true,
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":654.9387251119,
-                 "y":695.209514499837
+                 "x":930.9387251119,
+                 "y":539.209514499837
                 }],
          "opacity":1,
          "type":"objectgroup",

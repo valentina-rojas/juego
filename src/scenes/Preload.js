@@ -25,8 +25,10 @@ export default class Preload extends Phaser.Scene {
     this.load.image("puerta-cerrada", "assets/sprites/nivel 1/puerta-cerrada-n1.png" )
     this.load.image("puerta-abierta", "assets/sprites/nivel 1/puerta-abierta-n1.png" )
     this.load.image("caja", "assets/sprites/nivel 1/caja-n1.png")
+    this.load.image("jarron", "assets/sprites/jarron.png")
 
     this.load.image("manos", "assets/sprites/mano.png");
+
 
     this.load.image("logo", "assets/escenas/Logo.png")
     this.load.image("creditos", "assets/escenas/creditos.png")
@@ -35,6 +37,8 @@ export default class Preload extends Phaser.Scene {
     this.load.tilemapTiledJSON("nivel1", "assets/tilemap/nivel1.json");
     this.load.tilemapTiledJSON("nivel2", "assets/tilemap/nivel2.json");
     this.load.tilemapTiledJSON("nivel3", "assets/tilemap/nivel3.json");
+
+    this.load.image("animacion1", "assets/sprites/animacion1.jpeg");
 
     this.load.spritesheet("alma", "assets/sprites/alma.png", {
       frameWidth: 132,
