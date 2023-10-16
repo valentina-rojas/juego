@@ -37,8 +37,10 @@ export default class Preload extends Phaser.Scene {
 
     // objetos
     this.load.image("llave","assets/sprites/nivel 1/llave-n1.png" )
+    this.load.image("llaveSilueta","assets/sprites/nivel 1/llave-silueta-n1.png" )
     this.load.image("jarron","assets/sprites/nivel 2/jarron-n2.png" )
     this.load.image("palanca","assets/sprites/nivel 2/palanca-n2.png" )
+    this.load.image("palancaSilueta","assets/sprites/nivel 2/palanca-silueta-n2.png" )
     this.load.image("caja", "assets/sprites/nivel 1/caja-n1.png")
 
 
