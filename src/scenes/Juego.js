@@ -7,9 +7,12 @@ import ObjetosMovibles from "../components/ObjetosMovibles";
 
 export default class Juego extends Phaser.Scene {
   jugador;
-  manos
+
+  manos;
 
   nivel;
+
+  luces;
 
   constructor() {
     super("juego");
@@ -21,25 +24,27 @@ export default class Juego extends Phaser.Scene {
   }
 
   create() {
-    this.scene.launch("ui",  {
+    this.scene.launch("ui", {
       nivel: this.nivel,
-    recolectables: this.recolectables});
-
+      recolectables: this.recolectables,
+    });
 
     const mapKey = `nivel${this.nivel}`;
     const map = this.make.tilemap({ key: mapKey });
 
     const fondoKey = `fondo${this.nivel}`;
-    const capaFondo = map.addTilesetImage("fondo", fondoKey );
-    map.createLayer("background", capaFondo, 0, 0);
+    const capaFondo = map.addTilesetImage("fondo", fondoKey);
+    map.createLayer("background", capaFondo, 0, 0).setPipeline("Light2D");
 
     const mueblesKey = `muebles${this.nivel}`;
     const capaMuebles = map.addTilesetImage("muebles", mueblesKey);
-    map.createLayer("furniture", capaMuebles, 0, 0);
+    map.createLayer("furniture", capaMuebles, 0, 0).setPipeline("Light2D");
 
     const pisoKey = `suelo${this.nivel}`;
     const capaPiso = map.addTilesetImage("suelo", pisoKey);
-    const pisoLayer = map.createLayer("floor", capaPiso, 0, 0);
+    const pisoLayer = map
+      .createLayer("floor", capaPiso, 0, 0)
+      .setPipeline("Light2D");
     pisoLayer.setCollisionByProperty({ colision: true });
 
     const objectsLayer = map.getObjectLayer("objects");
@@ -47,98 +52,82 @@ export default class Juego extends Phaser.Scene {
     this.manos = this.physics.add.group();
 
     objectsLayer.objects.forEach((objData) => {
-     
-      const { x = 0, y = 0, name, } = objData;
+      const { x = 0, y = 0, name } = objData;
       switch (name) {
         case "jugador": {
-        
-          this.jugador = new Jugador(
-            this,
-            x,
-            y,
-            "alma"
-          );
+          this.jugador = new Jugador(this, x, y, "alma").setPipeline("Light2D");
           break;
         }
         case "puerta": {
-          this.puerta = new Objetos(
-            this,
-            x,
-            y,
-            "puerta-cerrada"
+          this.puerta = new Objetos(this, x, y, "puerta-cerrada").setPipeline(
+            "Light2D"
           );
           break;
         }
-        case "llave": {          
-          this.llave = new Objetos(
-            this,
-            x,
-            y,
-            "llave"
-          );
+        case "llave": {
+          this.llave = new Objetos(this, x, y, "llave").setPipeline("Light2D");
           break;
         }
 
-        case "caja": {          
-          this.caja = new ObjetosMovibles(
-            this, 
-            x, 
-            y, 
-            "caja").setSize(360, 320).setOffset(10, 10)
+        case "caja": {
+          this.caja = new ObjetosMovibles(this, x, y, "caja")
+            .setPipeline("Light2D")
+            .setSize(360, 320)
+            .setOffset(10, 10);
           break;
         }
         default: {
-          
           break;
         }
       }
-
     });
 
-    
+    this.luces = this.lights.addLight(1000, 500, 200, 0x555556, 5);
+    this.lights.enable().setAmbientColor(0x555556);
 
-    // condicionales para nivel 2  // agregar enemigo 
+    // condicionales para nivel 2  // agregar enemigo
 
-    if (this.nivel === 2 ){
-
+    if (this.nivel === 2) {
       this.time.addEvent({
-        delay:2000,
+        delay: 2000,
         callback: this.manosRandom,
         callbackScope: this,
-        loop: true
-      }
-      )
-      
+        loop: true,
+      });
+
       console.log("enemigo");
 
-      console.log("manos",this.manos)
+      console.log("manos", this.manos);
 
-     this.physics.add.overlap(
-      this.manos,
-      this.jugador,
-      this.perderJuego,
-      null,
-      this
-    );
+      this.physics.add.overlap(
+        this.manos,
+        this.jugador,
+        this.perderJuego,
+        null,
+        this
+      );
 
-
-
-   this.physics.add.collider(this.manos, pisoLayer, this. desaparecerManos,null,this); 
-
+      this.physics.add.collider(
+        this.manos,
+        pisoLayer,
+        this.desaparecerManos,
+        null,
+        this
+      );
     }
 
-    if(this.nivel === 3) {
+    if (this.nivel === 3) {
+      this.enemigoFinal = new Enemigo(this, 400, 500, "manos");
 
-this.enemigoFinal = new Enemigo(
-  this,
-  400,
-  500,
-  "manos"
-);
+      this.enemigoFinal.movimientoEnemigo();
 
-this.enemigoFinal.movimientoEnemigo();
-
-this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, null,this)
+      this.physics.add.collider(
+        this.jugador,
+        this.enemigoFinal,
+        this.perderJuego,
+        null,
+        this
+      );
     }
 
     this.physics.add.overlap(
@@ -157,14 +146,11 @@ this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, nul
       this
     );
 
-    
-
     this.physics.add.collider(this.jugador, pisoLayer);
     this.physics.add.collider(this.llave, pisoLayer);
     this.physics.add.collider(this.puerta, pisoLayer);
     this.physics.add.collider(this.caja, pisoLayer);
     this.physics.add.collider(this.jugador, this.caja);
-  
 
     // cámara sigue al jugador
     this.cameras.main.startFollow(this.jugador);
@@ -172,52 +158,56 @@ this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, nul
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     // camera dont go out of the map
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-    
-
-    
   }
 
   update() {
     this.jugador.movimiento();
+
+    this.actualizarLuz();
+  }
+
+  actualizarLuz() {
+    this.luces.x = this.jugador.x;
+    this.luces.y = this.jugador.y;
   }
 
   recolectarObjeto() {
     this.llave.disableBody(true, true);
     this.recolectables += 1;
-     events.emit("mostrarLlave");
+    events.emit("mostrarLlave");
     this.puerta.setTexture("puerta-abierta");
     console.log("llave recolectada");
   }
 
   abrirPuerta() {
     console.log("colision puerta");
-    
+
     if (this.recolectables >= 1) {
-      
       console.log("puerta abierta");
       this.nivel += 1;
-      this.scene.start(("juego"),{ nivel: this.nivel });
+      this.scene.start("juego", { nivel: this.nivel });
     }
   }
 
-  manosRandom(){
-    const manos= new Enemigo (this, this.jugador.x-200, this.jugador.y - 1000, "manos");
-    this.manos.add(manos)
-
+  manosRandom() {
+    const manos = new Enemigo(
+      this,
+      this.jugador.x - 200,
+      this.jugador.y - 1000,
+      "manos"
+    );
+    this.manos.add(manos);
 
     console.log("nueva mano");
   }
 
-  desaparecerManos(manos){
-  
-      manos.destroy();
-      console.log("mano eliminada");
+  desaparecerManos(manos) {
+    this.manos.remove(manos, true, true);
+    console.log("mano eliminada");
   }
 
-  perderJuego(){
-    console.log(this)
-    this.scene.start(("juego"),{ nivel: this.nivel });
+  perderJuego() {
+    console.log(this);
+    this.scene.start("juego", { nivel: this.nivel });
   }
-
 }
