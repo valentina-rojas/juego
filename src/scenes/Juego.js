@@ -7,8 +7,11 @@ import ObjetosMovibles from "../components/ObjetosMovibles";
 
 export default class Juego extends Phaser.Scene {
   jugador;
+
   manos;
+
   jarron;
+
   nivel;
 
   constructor() {
@@ -21,16 +24,16 @@ export default class Juego extends Phaser.Scene {
   }
 
   create() {
-    this.scene.launch("ui",  {
+    this.scene.launch("ui", {
       nivel: this.nivel,
-    recolectables: this.recolectables});
-
+      recolectables: this.recolectables,
+    });
 
     const mapKey = `nivel${this.nivel}`;
     const map = this.make.tilemap({ key: mapKey });
 
     const fondoKey = `fondo${this.nivel}`;
-    const capaFondo = map.addTilesetImage("fondo", fondoKey );
+    const capaFondo = map.addTilesetImage("fondo", fondoKey);
     map.createLayer("background", capaFondo, 0, 0);
 
     const mueblesKey = `muebles${this.nivel}`;
@@ -44,114 +47,97 @@ export default class Juego extends Phaser.Scene {
 
     const objectsLayer = map.getObjectLayer("objects");
 
+    
+      const plataformasKey = `plataformas${this.nivel}`;
+      const capaPlataformas = map.addTilesetImage("plataformas", plataformasKey);
+      const plataformasLayer =  map.createLayer("platforms", capaPlataformas, 0, 0);
+      if (plataformasLayer) {
+        plataformasLayer.setCollisionByProperty({ colision: true });
+      }
+
     this.manos = this.physics.add.group();
     this.jarron = this.physics.add.group();
 
     objectsLayer.objects.forEach((objData) => {
-     
-      const { x = 0, y = 0, name, } = objData;
+      const { x = 0, y = 0, name } = objData;
       switch (name) {
-        case "jugador": {
-        
-          this.jugador = new Jugador(
-            this,
-            x,
-            y,
-            "alma"
-          );
+        case "puerta izquierda": {
+          this.puertaIzquierda = new Objetos(this, x, y, "puerta-izquierda2");
           break;
         }
         case "puerta": {
-          this.puerta = new Objetos(
-            this,
-            x,
-            y,
-            "puerta-cerrada"
-          );
+          this.puerta = new Objetos(this, x, y, "puerta-cerrada");
           break;
         }
-        case "llave": {          
-          this.llave = new Objetos(
-            this,
-            x,
-            y,
-            "llave"
-          );
+        case "jugador": {
+          this.jugador = new Jugador(this, x, y, "alma");
           break;
         }
-
-        case "caja": {          
-          this.caja = new ObjetosMovibles(
-            this, 
-            x, 
-            y, 
-            "caja").setSize(360, 320).setOffset(10, 10)
+        case "llave": {
+          this.llave = new Objetos(this, x, y, "llave");
           break;
         }
+        case "caja": {
+          this.caja = new ObjetosMovibles(this, x, y, "caja")
 
-        case "jarron": {          
-          const jarron = new ObjetosMovibles(
-            this, 
-            x, 
-            y, 
-            "jarron")
-            this.jarron.add(jarron)
           break;
-
+        }
+        case "jarron": {
+          const jarron = new ObjetosMovibles(this, x, y, "jarron");
+          this.jarron.add(jarron);
+          break;
         }
         default: {
-          
           break;
         }
       }
-
     });
 
-    
+    // condicionales para nivel 2  
+    if (this.nivel === 2) {
 
-    // condicionales para nivel 2  // agregar enemigo 
-
-    if (this.nivel === 2 ){
+      this.puerta.setTexture("puerta-cerrada2");
 
       this.time.addEvent({
-        delay:2000,
+        delay: 3000,
         callback: this.manosRandom,
         callbackScope: this,
-        loop: true
-      }
-      )
-      
-      console.log("enemigo");
+        loop: true,
+      });
 
-      console.log("manos",this.manos)
+      this.physics.add.overlap(
+        this.manos,
+        this.jugador,
+        this.perderJuego,
+        null,
+        this
+      );
 
-     this.physics.add.overlap(
-      this.manos,
-      this.jugador,
-      this.perderJuego,
-      null,
-      this
-    );
+      this.physics.add.collider(
+        this.manos,
+        pisoLayer,
+        this.desaparecerManos,
+        null,
+        this
+      );
 
-
-
-   this.physics.add.collider(this.manos, pisoLayer, this. desaparecerManos,null,this);
+    this.physics.add.collider(this.jugador, plataformasLayer);
+    this.physics.add.collider(this.jarron, plataformasLayer);
     }
 
-    // condicionales para nivel 3  // agregar enemigo final
+    // condicionales para nivel 3  
+    if (this.nivel === 3) {
+      this.enemigoFinal = new Enemigo(this, 400, 500, "manos");
 
-    if(this.nivel === 3) {
+      this.enemigoFinal.movimientoEnemigo();
 
-   this.enemigoFinal = new Enemigo(
-   this,
-   400,
-   500,
-   "manos"
-    );
-
-  this.enemigoFinal.movimientoEnemigo();
-
-  this.physics.add.collider(this.jugador, this.enemigoFinal, this.perderJuego, null,this)
+      this.physics.add.collider(
+        this.jugador,
+        this.enemigoFinal,
+        this.perderJuego,
+        null,
+        this
+      );
     }
 
     this.physics.add.overlap(
@@ -161,7 +147,6 @@ export default class Juego extends Phaser.Scene {
       null,
       this
     );
-
 
     this.physics.add.collider(
       this.puerta,
@@ -179,100 +164,89 @@ export default class Juego extends Phaser.Scene {
       this
     );
 
-
-
-
     this.physics.add.collider(this.jugador, pisoLayer);
+   
     this.physics.add.collider(this.puerta, pisoLayer);
     this.physics.add.collider(this.caja, pisoLayer);
     this.physics.add.collider(this.jugador, this.caja);
     this.physics.add.collider(this.jugador, this.jarron);
-  
 
-    // cámara sigue al jugador
     this.cameras.main.startFollow(this.jugador);
-    // world bounds
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    // camera dont go out of the map
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-
-    
-
-    
   }
 
   update() {
     this.jugador.movimiento();
   }
 
-  romperJarron(jarron){
-    console.log ("jarron roto")
-    const x = jarron.x;
-    const y = jarron.y;
+  romperJarron(jarron) {
+    console.log("jarron roto");
+    const {x} = jarron;
+    const {y} = jarron;
     jarron.destroy();
-    this.llave2 = new Objetos (this, x, y, "llave");
+    this.palanca = new Objetos(this, x, y, "palanca");
 
     this.physics.add.overlap(
       this.jugador,
-      this.llave2,
-      this.recolectarLlave2,
+      this.palanca,
+      this.recolectarObjeto2,
       null,
       this
     );
-
   }
-
 
   recolectarObjeto() {
     this.llave.disableBody(true, true);
     this.recolectables += 1;
-     events.emit("mostrarLlave");
+    events.emit("mostrarLlave");
     this.puerta.setTexture("puerta-abierta");
     console.log("llave recolectada");
   }
 
-  recolectarLlave2() {
-    this.llave2.disableBody(true, true);
+  recolectarObjeto2() {
+    this.palanca.disableBody(true, true);
     this.recolectables += 1;
-     events.emit("mostrarLlave");
-    this.puerta.setTexture("puerta-abierta");
+    events.emit("mostrarLlave");
+    this.puerta.setTexture("puerta-abierta2");
     console.log("llave recolectada");
   }
 
   abrirPuerta() {
     console.log("colision puerta");
-    
+
     if (this.recolectables >= 1) {
-      
       console.log("puerta abierta");
       this.nivel += 1;
-      this.scene.start(("juego"),{ nivel: this.nivel });
+      this.scene.start("juego", { nivel: this.nivel });
     }
 
-    if ( this.nivel === 4){
-      console.log("animacion2")
+    if (this.nivel === 4) {
+      console.log("animacion2");
 
-      this.scene.start(("animaciones"),{ nivel: this.nivel }); 
+      this.scene.start("animaciones", { nivel: this.nivel });
+    }
   }
-  }
-  
-  manosRandom(){
-    const manos= new Enemigo (this, this.jugador.x-200, this.jugador.y - 1000, "manos");
-    this.manos.add(manos)
 
+  manosRandom() {
+    const manos = new Enemigo(
+      this,
+      this.jugador.x - 200,
+      this.jugador.y - 1000,
+      "manos"
+    );
+    this.manos.add(manos);
 
     console.log("nueva mano");
   }
 
-  desaparecerManos(manos){
-  
-      manos.destroy();
-      console.log("mano eliminada");
+  desaparecerManos(manos) {
+    this.manos.remove(manos, true, true);
+    console.log("mano eliminada");
   }
 
-  perderJuego(){
-    console.log(this)
-    this.scene.start(("juego"),{ nivel: this.nivel });
+  perderJuego() {
+    console.log(this);
+    this.scene.start("juego", { nivel: this.nivel });
   }
-
 }

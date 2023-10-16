@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+
 export default class Animaciones extends Phaser.Scene {
 
   constructor() {
@@ -23,15 +24,11 @@ export default class Animaciones extends Phaser.Scene {
 
    
    if ( this.nivel === 4){
-
     console.log("animacion2")
-
     this.add.image(1000, 400, "animacion1");
     setTimeout(() => {
       this.scene.start(("menu"),{ nivel: this.nivel });  
     }, 3000);
 }
-
   }
-
 }
