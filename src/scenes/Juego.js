@@ -14,6 +14,8 @@ export default class Juego extends Phaser.Scene {
 
   nivel;
 
+  luces;
+
   constructor() {
     super("juego");
   }
@@ -34,15 +36,15 @@ export default class Juego extends Phaser.Scene {
 
     const fondoKey = `fondo${this.nivel}`;
     const capaFondo = map.addTilesetImage("fondo", fondoKey);
-    map.createLayer("background", capaFondo, 0, 0);
+    map.createLayer("background", capaFondo, 0, 0).setPipeline("Light2D");;
 
     const mueblesKey = `muebles${this.nivel}`;
     const capaMuebles = map.addTilesetImage("muebles", mueblesKey);
-    map.createLayer("furniture", capaMuebles, 0, 0);
+    map.createLayer("furniture", capaMuebles, 0, 0).setPipeline("Light2D");;
 
     const pisoKey = `suelo${this.nivel}`;
     const capaPiso = map.addTilesetImage("suelo", pisoKey);
-    const pisoLayer = map.createLayer("floor", capaPiso, 0, 0);
+    const pisoLayer = map.createLayer("floor", capaPiso, 0, 0).setPipeline("Light2D");;
     pisoLayer.setCollisionByProperty({ colision: true });
 
     const objectsLayer = map.getObjectLayer("objects");
@@ -52,7 +54,7 @@ export default class Juego extends Phaser.Scene {
       const capaPlataformas = map.addTilesetImage("plataformas", plataformasKey);
       const plataformasLayer =  map.createLayer("platforms", capaPlataformas, 0, 0);
       if (plataformasLayer) {
-        plataformasLayer.setCollisionByProperty({ colision: true });
+        plataformasLayer.setCollisionByProperty({ colision: true }).setPipeline("Light2D");;
       }
 
     this.manos = this.physics.add.group();
@@ -62,28 +64,28 @@ export default class Juego extends Phaser.Scene {
       const { x = 0, y = 0, name } = objData;
       switch (name) {
         case "puerta izquierda": {
-          this.puertaIzquierda = new Objetos(this, x, y, "puerta-izquierda2");
+          this.puertaIzquierda = new Objetos(this, x, y, "puerta-izquierda2").setPipeline("Light2D");
           break;
         }
         case "puerta": {
-          this.puerta = new Objetos(this, x, y, "puerta-cerrada");
+          this.puerta = new Objetos(this, x, y, "puerta-cerrada").setPipeline("Light2D");
           break;
         }
         case "jugador": {
-          this.jugador = new Jugador(this, x, y, "alma");
+          this.jugador = new Jugador(this, x, y, "alma").setPipeline("Light2D");
           break;
         }
         case "llave": {
-          this.llave = new Objetos(this, x, y, "llave");
+          this.llave = new Objetos(this, x, y, "llave").setPipeline("Light2D");
           break;
         }
         case "caja": {
-          this.caja = new ObjetosMovibles(this, x, y, "caja")
+          this.caja = new ObjetosMovibles(this, x, y, "caja").setPipeline("Light2D");
 
           break;
         }
         case "jarron": {
-          const jarron = new ObjetosMovibles(this, x, y, "jarron");
+          const jarron = new ObjetosMovibles(this, x, y, "jarron").setPipeline("Light2D");
           this.jarron.add(jarron);
           break;
         }
@@ -92,6 +94,9 @@ export default class Juego extends Phaser.Scene {
         }
       }
     });
+
+    this.luces = this.lights.addLight(1000, 500, 200, 0x555556, 5);
+    this.lights.enable().setAmbientColor(0x555556);
 
     // condicionales para nivel 2  
     if (this.nivel === 2) {
@@ -178,6 +183,12 @@ export default class Juego extends Phaser.Scene {
 
   update() {
     this.jugador.movimiento();
+    this.actualizarLuz();
+  }
+
+  actualizarLuz() {
+    this.luces.x = this.jugador.x;
+    this.luces.y = this.jugador.y;
   }
 
   romperJarron(jarron) {
