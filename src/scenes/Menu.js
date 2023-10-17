@@ -19,7 +19,7 @@ export default class Menu extends Phaser.Scene {
     this.add.image(600, 500, "logo");
 
     const botones = [
-      { texto: getPhrase("JUGAR"), escenaKey: "juego" },
+      { texto: getPhrase("JUGAR"), escenaKey: "animaciones" },
       { texto: getPhrase("CRÉDITOS"), escenaKey: "creditos" },
       { texto: getPhrase("AJUSTES"), escenaKey: "ajustes" },
     ];

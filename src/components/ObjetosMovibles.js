@@ -16,7 +16,6 @@ body
     
     this.body.setDamping(true); // Habilitar el amortiguador
     this.body.setDrag(0.001); // Configurar el valor del amortiguador
-
    
   }
 
