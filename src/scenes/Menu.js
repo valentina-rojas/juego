@@ -1,18 +1,27 @@
 import Phaser from "phaser";
-// import events from "./EventCenter";
+import { getPhrase } from "../services/traducciones";
+
 
 export default class Menu extends Phaser.Scene {
+  language;
+
   constructor() {
     super("menu");
   }
 
+  init(language) {
+    this.language = language;
+  }
+
   create() {
+    console.log(`idioma:${  this.language}`);
+
     this.add.image(600, 500, "logo");
 
     const botones = [
-      { texto: "JUGAR", escenaKey: "juego" },
-      { texto: "CRÉDITOS", escenaKey: "creditos" },
-      { texto: "AJUSTES", escenaKey: "ajustes" },
+      { texto: getPhrase("JUGAR"), escenaKey: "animaciones" },
+      { texto: getPhrase("CRÉDITOS"), escenaKey: "creditos" },
+      { texto: getPhrase("AJUSTES"), escenaKey: "ajustes" },
     ];
 
     const posicionIncialY = 400;
@@ -32,7 +41,7 @@ export default class Menu extends Phaser.Scene {
 
   agregarBoton(x, y, texto, escenaKey) {
     const boton = this.add
-      .text(x, y, texto, { fontSize: "50px" })
+      .text(x, y, texto, { fontFamily: 'Amatic SC, cursive',fontSize: "80px" })
       .setOrigin(0.5)
       .setInteractive();
 
@@ -52,7 +61,7 @@ export default class Menu extends Phaser.Scene {
 
     boton.on("pointerup", () => {
       const targetScene = boton.getData("escenaKey");
-      this.scene.start(targetScene);
+      this.scene.start(targetScene, { language: this.language });
     });
   }
 }

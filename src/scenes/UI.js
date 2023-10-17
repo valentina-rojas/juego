@@ -12,44 +12,56 @@ export default class UI extends Phaser.Scene {
   }
 
   create() {
-    this.nivelTexto = this.add.text(1600, 50, `Nivel ${  this.nivel}`, {
-      fontSize: "50px",
+    this.nivelTexto = this.add.text(1600, 40, `Nivel ${this.nivel}`, {
+      fontFamily: "Amatic SC",
+      fontSize: "60px",
     });
 
-    const botonVolver = this.add
-      .text(100, 50, "pausa", { fontSize: "50px" })
+    const botonPausa = this.add
+      .text(100, 50, "pausa", { fontFamily: "Amatic SC", fontSize: "60px" })
       .setOrigin(0.5)
       .setInteractive();
 
-    botonVolver.on("pointerover", () => {
-      botonVolver.setStyle({ backgroundColor: "#888888" });
+    botonPausa.on("pointerover", () => {
+      botonPausa.setStyle({ backgroundColor: "#888888" });
     });
 
-    botonVolver.on("pointerout", () => {
-      botonVolver.setStyle({ backgroundColor: "#000000" });
+    botonPausa.on("pointerout", () => {
+      botonPausa.setStyle({ backgroundColor: "#000000" });
     });
 
-    botonVolver.on("pointerup", () => {
+    botonPausa.on("pointerup", () => {
       this.scene.stop("juego");
       this.scene.launch("pausa");
     });
 
-     // escuchar eventos
-   events.on("mostrarLlave", this.mostrarLlave, this);
-   events.on("actualizarNivel", this.actualizarNivel, this);
+    // escuchar eventos
+    events.on("mostrarLlave", this.mostrarLlave, this);
+    events.on("actualizarNivel", this.actualizarNivel, this);
+
+    if (this.nivel === 1) {
+      this.imagenNivel = this.add.image(1800, 80, "llaveSilueta");
+    } else if (this.nivel === 2) {
+      this.imagenNivel = this.add
+        .image(1800, 80, "palancaSilueta")
+        .setScale(0.3);
+    }
   }
 
-  mostrarLlave(){
+  mostrarLlave() {
+    // console.log("imagen en ui");
 
-    console.log ("imagen en ui");
-
-    this.add.image(1800, 80, "llave");
-
+    if (this.nivel === 1) {
+      this.imagenNivel.setTexture("llave");
+    }
+     if (this.nivel === 2) {
+      this.imagenNivel.setTexture("palanca").setScale(0.3);
+    }
   }
 
   actualizarNivel(data) {
     this.nivel = data.nivel;
 
-    this.nivelTexto.setText(`Nivel ${  this.nivel}`);
+    this.nivelTexto.setText(`Nivel ${this.nivel}`);
   }
 }

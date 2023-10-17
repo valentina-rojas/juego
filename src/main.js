@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-
 import Juego from "./scenes/Juego";
 import UI from "./scenes/UI";
 import Menu from "./scenes/Menu";
@@ -7,7 +6,8 @@ import Preload from "./scenes/Preload";
 import Creditos from "./scenes/Creditos";
 import Ajustes from "./scenes/Ajustes";
 import Pausa from "./scenes/Pausa";
-
+import Inicio from "./scenes/Inicio";
+import Animaciones from "./scenes/Animaciones";
 
 const config = {
   type: Phaser.AUTO,
@@ -32,7 +32,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [Preload, Menu, Creditos, Ajustes, Pausa, Juego, UI,],
+  scene: [Preload, Inicio, Menu, Creditos, Ajustes, Pausa, Juego, UI, Animaciones],
 };
 
 export default new Phaser.Game(config);

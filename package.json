@@ -32,7 +32,8 @@
   },
   "dependencies": {
     "eslint-config-prettier": "^9.0.0",
-    "phaser": "^3.60.0"
+    "phaser": "^3.60.0",
+    "webfontloader": "^1.6.28"
   },
   "parcelCleanPaths": [
     "dist"
