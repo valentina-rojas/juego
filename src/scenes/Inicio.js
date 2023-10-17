@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 // import events from "./EventCenter";
-import { EN_US, ES_AR } from "../enums/lenguajes";
+import { EN_US, ES_AR, PT_BR } from "../enums/lenguajes";
 import { FETCHED, FETCHING, READY, TODO } from "../enums/status";
 import { getTranslations } from "../services/traducciones";
 
@@ -8,6 +8,8 @@ export default class Inicio extends Phaser.Scene {
   #textSpanish;
 
   #textEnglish;
+
+  #textPortuguese;
 
   #language;
 
@@ -54,6 +56,21 @@ export default class Inicio extends Phaser.Scene {
       .text(buttonEnglish.x, buttonEnglish.y, "Inglés", {
         fontFamily: 'Amatic SC',
         fontSize: "70px", 
+        color: "#000000",
+      })
+      .setOrigin(0.5);
+
+      const buttonPortuguese = this.add
+      .rectangle(100, 200, 200, 85, 0xffffff)
+      .setInteractive()
+      .on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, async () => {
+        await getTranslations(PT_BR);
+        console.log("idioma: PT_BR");
+        this.iniciarEscena();
+      });
+
+    this.#textPortuguese = this.add
+      .text(buttonPortuguese.x, buttonPortuguese.y, "Portugués", {
         color: "#000000",
       })
       .setOrigin(0.5);
