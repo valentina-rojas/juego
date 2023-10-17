@@ -16,7 +16,7 @@ export default class Menu extends Phaser.Scene {
   create() {
     console.log(`idioma:${  this.language}`);
 
-    this.add.image(600, 500, "logo");
+    this.add.image(960,540,"fondoMenu")
 
     const botones = [
       { texto: getPhrase("JUGAR"), escenaKey: "animaciones" },
@@ -29,7 +29,7 @@ export default class Menu extends Phaser.Scene {
 
     botones.forEach((infoBoton, indice) => {
       const boton = this.agregarBoton(
-        1200,
+        1400,
         posicionIncialY + indice * espaciado,
         infoBoton.texto,
         infoBoton.escenaKey
@@ -41,7 +41,7 @@ export default class Menu extends Phaser.Scene {
 
   agregarBoton(x, y, texto, escenaKey) {
     const boton = this.add
-      .text(x, y, texto, { fontFamily: 'Amatic SC, cursive',fontSize: "80px" })
+      .text(x, y, texto, { fontFamily: 'Amatic SC, cursive', fontSize: "80px" })
       .setOrigin(0.5)
       .setInteractive();
 
