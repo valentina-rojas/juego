@@ -26,6 +26,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image("muebles3", "assets/sprites/fondojpg.jpg");
     this.load.image("plataformas2", "assets/sprites/nivel 2/cama-repisa-n2.png");
 
+
     // puertas
     this.load.image("puerta-cerrada", "assets/sprites/nivel 1/puerta-cerrada-n1.png")
     this.load.image("puerta-abierta", "assets/sprites/nivel 1/puerta-abierta-n1.png")
@@ -51,6 +52,10 @@ export default class Preload extends Phaser.Scene {
     this.load.image("ajustes", "assets/escenas/ajustes.png")
     this.load.image("animacion1", "assets/sprites/animacion1.jpeg");
 
+    this.load.image("banderaEspañol", "assets/escenas/idiomas/bandera-español.png");
+    this.load.image("banderaIngles", "assets/escenas/idiomas/bandera-ingles.png");
+    this.load.image("banderaPortugues", "assets/escenas/idiomas/bandera-portugues.png");
+    this.load.image("fondoIdiomas", "assets/escenas/idiomas/idioma-fondo.png");
 
     // mapas
     this.load.tilemapTiledJSON("nivel1", "assets/tilemap/nivel1.json");
