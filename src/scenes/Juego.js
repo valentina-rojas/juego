@@ -99,7 +99,7 @@ export default class Juego extends Phaser.Scene {
       this.puerta.setTexture("puerta-cerrada2");
 
       this.time.addEvent({
-        delay: 3000,
+        delay: 10000,
         callback: this.manosRandom,
         callbackScope: this,
         loop: true,
@@ -218,14 +218,17 @@ export default class Juego extends Phaser.Scene {
     if (this.recolectables >= 1) {
       console.log("puerta abierta");
       this.nivel += 1;
-      this.scene.start("juego", { nivel: this.nivel });
-    }
 
-    if (this.nivel === 4) {
-      console.log("animacion2");
+
+      if (this.nivel < 4 ){
+        this.scene.start("juego", { nivel: this.nivel });
+      } else  { 
+        console.log("animacion2");
 
       this.scene.start("animaciones", { nivel: this.nivel });
     }
+  }
+
   }
 
   manosRandom() {
