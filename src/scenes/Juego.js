@@ -14,6 +14,7 @@ export default class Juego extends Phaser.Scene {
 
   nivel;
 
+
   luces;
 
   constructor() {

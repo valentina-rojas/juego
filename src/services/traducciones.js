@@ -1,4 +1,4 @@
-import { EN_US, ES_AR } from "../enums/lenguajes";
+import { EN_US, ES_AR, PT_BR} from "../enums/lenguajes";
 
 const PROJECT_ID = "55";
 let translations = null;
@@ -38,7 +38,7 @@ export function getPhrase(key) {
 }
 
 function isAllowedLanguge(language_) {
-  const allowedLanguages = [ES_AR, EN_US];
+  const allowedLanguages = [ES_AR, EN_US, PT_BR];
   return allowedLanguages.indexOf(language_) !== -1;
 }
 
