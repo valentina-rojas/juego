@@ -103,7 +103,7 @@ export default class Juego extends Phaser.Scene {
       this.puerta.setTexture("puerta-cerrada2");
 
       this.time.addEvent({
-        delay: 7000,
+        delay: 2000,
         callback: this.manosRandom,
         callbackScope: this,
         loop: true,
@@ -247,7 +247,9 @@ export default class Juego extends Phaser.Scene {
       this.jugador.x - 200,
       this.jugador.y - 1000,
       "manos"
-    );
+    ).setPipeline("Light2D");
+
+    manos.movimientoEnemigo();
     this.manos.add(manos);
 
     console.log("nueva mano");
