@@ -14,7 +14,6 @@ export default class Juego extends Phaser.Scene {
 
   nivel;
 
-
   luces;
 
   constructor() {
@@ -39,18 +38,17 @@ export default class Juego extends Phaser.Scene {
     const capaFondo = map.addTilesetImage("fondo", fondoKey);
     map.createLayer("background", capaFondo, 0, 0).setPipeline("Light2D");;
 
-    const mueblesKey = `muebles${this.nivel}`;
-    const capaMuebles = map.addTilesetImage("muebles", mueblesKey);
-    map.createLayer("furniture", capaMuebles, 0, 0).setPipeline("Light2D");;
-
     const pisoKey = `suelo${this.nivel}`;
     const capaPiso = map.addTilesetImage("suelo", pisoKey);
     const pisoLayer = map.createLayer("floor", capaPiso, 0, 0).setPipeline("Light2D");;
     pisoLayer.setCollisionByProperty({ colision: true });
 
+    const mueblesKey = `muebles${this.nivel}`;
+    const capaMuebles = map.addTilesetImage("muebles", mueblesKey);
+    map.createLayer("furniture", capaMuebles, 0, 0).setPipeline("Light2D");;
+
     const objectsLayer = map.getObjectLayer("objects");
 
-    
       const plataformasKey = `plataformas${this.nivel}`;
       const capaPlataformas = map.addTilesetImage("plataformas", plataformasKey);
       const plataformasLayer =  map.createLayer("platforms", capaPlataformas, 0, 0);
@@ -105,7 +103,7 @@ export default class Juego extends Phaser.Scene {
       this.puerta.setTexture("puerta-cerrada2");
 
       this.time.addEvent({
-        delay: 10000,
+        delay: 2000,
         callback: this.manosRandom,
         callbackScope: this,
         loop: true,
@@ -249,7 +247,9 @@ export default class Juego extends Phaser.Scene {
       this.jugador.x - 200,
       this.jugador.y - 1000,
       "manos"
-    );
+    ).setPipeline("Light2D");
+
+    manos.movimientoEnemigo();
     this.manos.add(manos);
 
     console.log("nueva mano");

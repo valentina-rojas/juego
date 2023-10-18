@@ -20,10 +20,11 @@ export default class Preload extends Phaser.Scene {
     this.load.image("suelo1", "assets/sprites/nivel 1/piso-n1.png");
     this.load.image("suelo2", "assets/sprites/nivel 2/piso-n2.png");
     this.load.image("suelo3", "assets/sprites/nivel 3/suelo3.jpeg");
-    this.load.image("techo2", "assets/sprites/nivel 2/roturas-techo-n2.jpeg");
     this.load.image("muebles1", "assets/sprites/nivel 1/objetos-quietos-n1.png");
     this.load.image("muebles2", "assets/sprites/nivel 2/objetos-quietos-n2.png");
+    this.load.image("muebles3", "assets/sprites/fondojpg.jpg");
     this.load.image("plataformas2", "assets/sprites/nivel 2/cama-repisa-n2.png");
+
 
     // puertas
     this.load.image("puerta-cerrada", "assets/sprites/nivel 1/puerta-cerrada-n1.png")
@@ -45,11 +46,16 @@ export default class Preload extends Phaser.Scene {
 
 
     // escenas fijas
-    this.load.image("logo", "assets/escenas/Logo.png")
+    this.load.image("fondoMenu", "assets/escenas/menu/menu-principal.png")
+
     this.load.image("creditos", "assets/escenas/creditos.png")
     this.load.image("ajustes", "assets/escenas/ajustes.png")
     this.load.image("animacion1", "assets/sprites/animacion1.jpeg");
 
+    this.load.image("banderaEspañol", "assets/escenas/idiomas/bandera-español.png");
+    this.load.image("banderaIngles", "assets/escenas/idiomas/bandera-ingles.png");
+    this.load.image("banderaPortugues", "assets/escenas/idiomas/bandera-portugues.png");
+    this.load.image("fondoIdiomas", "assets/escenas/idiomas/idioma-fondo.png");
 
     // mapas
     this.load.tilemapTiledJSON("nivel1", "assets/tilemap/nivel1.json");
@@ -57,11 +63,14 @@ export default class Preload extends Phaser.Scene {
     this.load.tilemapTiledJSON("nivel3", "assets/tilemap/nivel3.json");
 
     // personajes
-    this.load.image("manos", "assets/sprites/mano.png");
-
     this.load.spritesheet("alma", "assets/sprites/alma.png", {
       frameWidth: 132,
       frameHeight: 180,
+    });
+
+    this.load.spritesheet("manos", "assets/sprites/Manos-321x944.png", {
+      frameWidth: 321,
+      frameHeight: 944,
     });
 
 
@@ -102,6 +111,17 @@ export default class Preload extends Phaser.Scene {
       frameRate: 10,
       repeat: -1,
     });
+
+    this.anims.create({
+      key: "atrapar",
+      frames: this.anims.generateFrameNumbers("manos", {
+        start: 0,
+        end: 5,
+      }),
+      frameRate: 5,
+      repeat: -1,
+    });
+   
 
     getTranslations(this.#language, () => {
       this.scene.start("inicio", { language: this.#language });
