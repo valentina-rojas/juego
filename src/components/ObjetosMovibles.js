@@ -3,7 +3,7 @@ import Phaser from "phaser";
 
 export default class ObjetosMovibles extends Phaser.Physics.Arcade.Sprite {
   
-body
+body;
 
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);

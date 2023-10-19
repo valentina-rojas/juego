@@ -19,7 +19,7 @@ export default class Animaciones extends Phaser.Scene {
     setTimeout(() => {
       this.nivel += 1;
       this.scene.start(("juego"),{ nivel: this.nivel });  
-    }, 3000);
+    }, 1500);
    }
 
    

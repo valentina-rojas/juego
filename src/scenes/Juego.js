@@ -23,6 +23,8 @@ export default class Juego extends Phaser.Scene {
   init(data) {
     this.recolectables = 0;
     this.nivel = data.nivel || 1;
+    this.timer = 15;
+    this.baldosaPresionada = 0;
   }
 
   create() {
@@ -88,6 +90,14 @@ export default class Juego extends Phaser.Scene {
           this.jarron.add(jarron);
           break;
         }
+        case "baldosa": {
+          this.baldosa = new Objetos(this, x, y, "baldosa").setScale(0.5).setPipeline("Light2D");
+          break;
+        }
+        case "cuadro": {
+          this.cuadro = new Objetos(this, x, y, "cuadro").setPipeline("Light2D");
+          break;
+        }
         default: {
           break;
         }
@@ -130,7 +140,7 @@ export default class Juego extends Phaser.Scene {
     }
 
     // condicionales para nivel 3  
-    if (this.nivel === 3) {
+    if (this.nivel === 6) {
       this.enemigoFinal = new Enemigo(this, 400, 500, "manos");
 
       this.enemigoFinal.movimientoEnemigo();
@@ -144,6 +154,10 @@ export default class Juego extends Phaser.Scene {
       );
     }
 
+     this.physics.add.collider(this.jugador, this.baldosa, this.presionarBaldosa, null, this);
+  
+
+    // agregado de fisicas 
     this.physics.add.overlap(
       this.jugador,
       this.llave,
@@ -222,6 +236,75 @@ export default class Juego extends Phaser.Scene {
     console.log("llave recolectada");
   }
 
+  presionarBaldosa(){
+    this.baldosaPresionada = 1;
+    if(this.baldosaPresionada === 1){
+      this.cuadro.disableBody(true, true);
+      this.interruptor = new Objetos (this, 1400, 800, "palancaNo").setScale(0.2);
+      console.log("palanca no")
+      console.log(`baldosa presionada ${  this.baldosaPresionada}`)
+      this.physics.add.collider(
+        this.jugador,
+        this.interruptor,
+        this.puertaTemporizada,
+        null,
+        this
+      );
+    } 
+  }
+
+  liberarBaldosa(){
+    this.baldosaPresionada = 0;
+    if (this.baldosaPresionada === 0){
+      this.cuadro.enableBody(true);
+      this.interruptor.disableBody(true)
+    }
+  }
+
+
+  puertaTemporizada(){
+    this.interruptor.setTexture("palancaSi").setScale(0.2);
+    console.log("palanca si")
+    this.recolectables += 1;
+    this.puerta.setTexture("puerta-abierta2");
+    console.log("puerta abierta");
+
+     // create timer
+     this.time.addEvent({
+      delay: 1000,
+      callback: this.updateTimer,
+      callbackScope: this,
+      loop: true,
+    });
+
+    console.log(this.timer);
+
+    this.enemigoFinal = new Enemigo(this, 400, 500, "manos");
+
+    this.enemigoFinal.movimientoEnemigo();
+
+    this.physics.add.collider(
+      this.jugador,
+      this.enemigoFinal,
+      this.perderJuego,
+      null,
+      this
+    );
+  }
+
+
+  updateTimer(){
+    this.timer -= 1;
+    console.log(this.timer);
+    
+    if (this.timer === 0) {
+      this.recolectables = 0;
+      this.puerta.setTexture("puerta-cerrada");
+      console.log("puerta cerrada");
+    }
+    console.log(`recolectables= ${  this.recolectables}`);
+  }
+
   abrirPuerta() {
     console.log("colision puerta");
 
@@ -261,7 +344,7 @@ export default class Juego extends Phaser.Scene {
   }
 
   perderJuego() {
-    console.log(this);
-    this.scene.start("juego", { nivel: this.nivel });
+   console.log(this);
+   this.scene.start("juego", { nivel: this.nivel });
   }
 }
