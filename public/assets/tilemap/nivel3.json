@@ -150,8 +150,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":113.362967536143,
-                 "y":853.148908439231
+                 "x":250.284456779614,
+                 "y":535.74000155664
                 }, 
                 {
                  "height":0,
@@ -198,7 +198,7 @@
                 {
                  "height":0,
                  "id":12,
-                 "name":"caja",
+                 "name":"caja3",
                  "point":true,
                  "rotation":0,
                  "type":"",
@@ -213,7 +213,7 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":5,
+ "nextlayerid":6,
  "nextobjectid":13,
  "orientation":"orthogonal",
  "renderorder":"right-down",
