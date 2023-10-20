@@ -179,7 +179,7 @@ export default class Juego extends Phaser.Scene {
         this.perderJuego,
         null,
         this
-      );*/
+      ); */
 
       this.physics.add.collider(this.jugador, this.caja3);
 
@@ -190,15 +190,15 @@ export default class Juego extends Phaser.Scene {
         null,
         this
       );
-    }
 
-    this.physics.add.overlap(
-      this.jugador,
-      this.baldosa,
-      this.presionarBaldosa,
-      null,
-      this
-    );
+      this.physics.add.overlap(
+        this.jugador,
+        this.baldosa,
+        this.presionarBaldosa,
+        null,
+        this
+      );
+    }
 
     // agregado de fisicas
     this.physics.add.overlap(
@@ -240,6 +240,15 @@ export default class Juego extends Phaser.Scene {
   update() {
     this.jugador.movimiento();
     this.actualizarLuz();
+
+    // verifica si el jugador ya no está sobre la baldosa y liberarla
+    if (
+      this.baldosaPresionada &&
+      !this.physics.overlap(this.jugador, this.baldosa) &&
+      !this.physics.overlap(this.caja3, this.baldosa)
+    ) {
+      this.liberarBaldosa();
+    }
   }
 
   actualizarLuz() {
@@ -285,12 +294,10 @@ export default class Juego extends Phaser.Scene {
 
       console.log("baldosa presionada");
       this.cuadro.disableBody(true, true);
-      this.interruptor = new Objetos(
-        this,
-        this.cuadro.x,
-        this.cuadro.y,
-        "palancaNo"
-      ).setScale(0.2);
+
+      this.interruptor = new Objetos(this, 1400, 600, "palancaNo").setScale(
+        0.2
+      );
 
       this.physics.add.overlap(
         this.jugador,
@@ -303,12 +310,13 @@ export default class Juego extends Phaser.Scene {
   }
 
   liberarBaldosa() {
-    this.baldosaPresionada = false;
+    if (this.baldosaPresionada === true) {
+      this.baldosaPresionada = false;
 
-    if (this.baldosaPresionada = false) {
       console.log("baldosa liberada");
       this.cuadro.enableBody(true);
       this.interruptor.disableBody(true);
+      this.interruptor.setVisible(false);
     }
   }
 
