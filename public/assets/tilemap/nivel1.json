@@ -144,8 +144,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1547.99039632316,
-                 "y":887.456226097992
+                 "x":398.666666666667,
+                 "y":918
                 }, 
                 {
                  "height":0,
@@ -156,8 +156,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1328.39393939394,
-                 "y":854.045454545454
+                 "x":159.954545454543,
+                 "y":367.780303030303
                 }, 
                 {
                  "height":0,
@@ -180,8 +180,20 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":959.15151515152,
-                 "y":844.484848484848
+                 "x":981.15151515152,
+                 "y":893.151515151515
+                }, 
+                {
+                 "height":0,
+                 "id":9,
+                 "name":"madera",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1119.48484848485,
+                 "y":1018.15151515152
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -190,7 +202,7 @@
          "y":0
         }],
  "nextlayerid":5,
- "nextobjectid":9,
+ "nextobjectid":10,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.10.1",

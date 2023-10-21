@@ -2,7 +2,7 @@ import Phaser from "phaser";
 // import events from "./EventCenter"
 export default class Objetos extends Phaser.Physics.Arcade.Sprite {
   
-  body
+  body;
 
   constructor(scene, x, y, texture) {
     

@@ -3,7 +3,7 @@ import Phaser from "phaser";
 
 export default class ObjetosMovibles extends Phaser.Physics.Arcade.Sprite {
   
-body
+body;
 
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
@@ -15,8 +15,8 @@ body
     
     
     this.body.setDamping(true); // Habilitar el amortiguador
-    this.body.setDrag(0.001); // Configurar el valor del amortiguador
-   
+    this.body.setDrag(0.000001); // Configurar el valor del amortiguador
+  
   }
 
   

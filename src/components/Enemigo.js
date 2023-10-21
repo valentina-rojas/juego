@@ -22,7 +22,7 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
   }
  
   movimientoEnemigo() {
-    this.body.setVelocityX(this.velocidad+200);
+    this.body.setVelocityX(this.velocidad);
     this.anims.play("atrapar", true);
 }
 }
