@@ -121,8 +121,8 @@ export default class Preload extends Phaser.Scene {
         start: 0,
         end: 5,
       }),
-      frameRate: 5,
-      repeat: -1,
+      frameRate: 6,
+      repeat: 1,
     });
    
 

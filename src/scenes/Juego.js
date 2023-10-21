@@ -23,7 +23,7 @@ export default class Juego extends Phaser.Scene {
   init(data) {
     this.recolectables = 0;
     this.nivel = data.nivel || 1;
-    this.timer = 30;
+    this.timer = 15;
     this.baldosaPresionada = false;
   }
 
@@ -127,6 +127,12 @@ export default class Juego extends Phaser.Scene {
           );
           break;
         }
+        case "madera": {
+          this.madera = new Objetos(this, x, y, "#").setScale(0.1).setPipeline(
+            "Light2D"
+          );
+          break;
+        }
         default: {
           break;
         }
@@ -226,15 +232,18 @@ export default class Juego extends Phaser.Scene {
     );
 
     this.physics.add.collider(this.jugador, pisoLayer);
-
+    
     this.physics.add.collider(this.puerta, pisoLayer);
     this.physics.add.collider(this.caja, pisoLayer);
+    this.physics.add.collider(this.madera, pisoLayer);
+    this.physics.add.collider(this.caja, this.madera);
     this.physics.add.collider(this.jugador, this.caja);
     this.physics.add.collider(this.jugador, this.jarron);
 
     this.cameras.main.startFollow(this.jugador);
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.map = ( map.widthInPixels, map.heightInPixels);
   }
 
   update() {
@@ -261,8 +270,8 @@ export default class Juego extends Phaser.Scene {
     const { x } = jarron;
     const { y } = jarron;
     jarron.destroy();
-    this.palanca = new Objetos(this, x, y, "palanca");
-
+    this.palanca = new Objetos(this, x, y, "palanca").setScale(0.7);
+  
     this.physics.add.overlap(
       this.jugador,
       this.palanca,
@@ -314,7 +323,7 @@ export default class Juego extends Phaser.Scene {
       this.baldosaPresionada = false;
 
       console.log("baldosa liberada");
-      this.cuadro.enableBody(true);
+      this.cuadro.setVisible(true);
       this.interruptor.disableBody(true);
       this.interruptor.setVisible(false);
     }
@@ -346,14 +355,40 @@ export default class Juego extends Phaser.Scene {
       null,
       this
     );
+
+    this.tweens.add({
+      targets:[  this.cameras.main.startFollow(this.jugador)],
+      x:-10,
+      y:10,
+      duration: 150,
+      ease: "Bounce.easeIn", 
+      repeat: -1,
+      yoyo:true,
+    }); 
+    console.log("temblor");
+
+
+   /* this.time.addEvent({
+        delay: 200,
+        callback: () => {
+
+        },
+        callbackScope: this,
+        loop: true,
+    }); */
+
   }
+
+
 
   updateTimer() {
     this.timer -= 1;
     console.log(this.timer);
 
     if (this.timer === 0) {
-      this.perderJuego();
+      this.recolectables = 0 ;
+      this.puerta.setTexture("puerta-cerrada");
+      console.log("puerta cerrada");
     }
   }
 
@@ -394,6 +429,7 @@ export default class Juego extends Phaser.Scene {
 
   perderJuego() {
     console.log(this);
+    this.luces = this.lights.addLight(1000, 500, 200, 0x5, 5);
     this.scene.start("juego", { nivel: this.nivel });
   }
 }
