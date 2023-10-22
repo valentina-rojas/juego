@@ -8,6 +8,12 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
 
   cursor;
 
+  nivel;
+
+  luces;
+
+  jugador;
+
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
 
@@ -21,6 +27,8 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     this.velocidad = 250;
 
     this.cursor = scene.input.keyboard.createCursorKeys();
+
+    this.scene = scene;
   }
 
   movimiento() {
@@ -38,5 +46,10 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     if (this.cursor.up.isDown && this.body.blocked.down) {
       this.body.setVelocityY(-1050);
     }
+  }
+
+  morir() {
+    console.log(this);
+    this.scene.start("juego", { nivel: this.nivel });
   }
 }
