@@ -1,16 +1,13 @@
 import Phaser from "phaser";
 import Enemigo from "../components/Enemigo";
-import events from "./EventCenter";
+import events from "../components/EventCenter";
 import Jugador from "../components/Jugador";
 import Objetos from "../components/Objetos";
 import ObjetosMovibles from "../components/ObjetosMovibles";
+import ObjetosRecolectables from "../components/ObjetosRecolectables";
 
 export default class Juego extends Phaser.Scene {
-  jugador;
-
   manos;
-
-  jarron;
 
   nivel;
 
@@ -25,6 +22,7 @@ export default class Juego extends Phaser.Scene {
     this.nivel = data.nivel || 1;
     this.timer = 15;
     this.baldosaPresionada = false;
+    this.interruptor = null;
   }
 
   create() {
@@ -67,9 +65,6 @@ export default class Juego extends Phaser.Scene {
         .setPipeline("Light2D");
     }
 
-    this.manos = this.physics.add.group();
-    this.jarron = this.physics.add.group();
-
     objectsLayer.objects.forEach((objData) => {
       const { x = 0, y = 0, name } = objData;
       switch (name) {
@@ -93,26 +88,32 @@ export default class Juego extends Phaser.Scene {
           break;
         }
         case "llave": {
-          this.llave = new Objetos(this, x, y, "llave").setPipeline("Light2D");
+          this.llave = new ObjetosRecolectables(
+            this,
+            x,
+            y,
+            "llave"
+          ).setPipeline("Light2D");
           break;
         }
         case "caja": {
-          this.caja = new ObjetosMovibles(this, x, y, "caja").setPipeline(
-            "Light2D"
-          );
+          this.caja = new ObjetosMovibles(this, x, y, "caja")
+            .setDamping(true)
+            .setDrag(0.000001)
+            .setPipeline("Light2D");
           break;
         }
         case "caja3": {
-          this.caja3 = new ObjetosMovibles(this, x, y, "caja").setPipeline(
-            "Light2D"
-          );
+          this.caja3 = new ObjetosMovibles(this, x, y, "caja")
+            .setDamping(true)
+            .setDrag(0.000001)
+            .setPipeline("Light2D");
           break;
         }
         case "jarron": {
-          const jarron = new ObjetosMovibles(this, x, y, "jarron").setPipeline(
+          this.jarron = new ObjetosMovibles(this, x, y, "jarron").setPipeline(
             "Light2D"
           );
-          this.jarron.add(jarron);
           break;
         }
         case "baldosa": {
@@ -128,9 +129,9 @@ export default class Juego extends Phaser.Scene {
           break;
         }
         case "madera": {
-          this.madera = new Objetos(this, x, y, "#").setScale(0.1).setPipeline(
-            "Light2D"
-          );
+          this.madera = new Objetos(this, x, y, "#")
+            .setScale(0.1)
+            .setPipeline("Light2D");
           break;
         }
         default: {
@@ -138,6 +139,8 @@ export default class Juego extends Phaser.Scene {
         }
       }
     });
+
+    this.manos = this.physics.add.group();
 
     this.luces = this.lights.addLight(1000, 500, 200, 0x555556, 5);
     this.lights.enable().setAmbientColor(0x555556);
@@ -156,7 +159,7 @@ export default class Juego extends Phaser.Scene {
       this.physics.add.overlap(
         this.manos,
         this.jugador,
-        this.perderJuego,
+        this.jugador.morir,
         null,
         this
       );
@@ -169,30 +172,39 @@ export default class Juego extends Phaser.Scene {
         this
       );
 
+      this.physics.add.collider(
+        pisoLayer,
+        this.jarron,
+        this.jarron.romperJarron,
+        null,
+        this
+      );
+
       this.physics.add.collider(this.jugador, plataformasLayer);
       this.physics.add.collider(this.jarron, plataformasLayer);
+
+      events.on("colisionConPalanca", (x, y) => {
+        this.palanca = new ObjetosRecolectables(this, x, y, "palanca").setScale(
+          0.7
+        );
+        this.physics.add.overlap(
+          this.jugador,
+          this.palanca,
+          this.palanca.recolectarPalanca,
+          null,
+          this
+        );
+      });
     }
 
     // condicionales para nivel 3
     if (this.nivel === 3) {
-      /* this.enemigoFinal = new Enemigo(this, 400, 500, "manos");
-
-      this.enemigoFinal.movimientoEnemigo();
-
-      this.physics.add.collider(
-        this.jugador,
-        this.enemigoFinal,
-        this.perderJuego,
-        null,
-        this
-      ); */
-
       this.physics.add.collider(this.jugador, this.caja3);
 
       this.physics.add.overlap(
         this.caja3,
         this.baldosa,
-        this.presionarBaldosa,
+        this.baldosa.presionarBaldosa,
         null,
         this
       );
@@ -200,17 +212,55 @@ export default class Juego extends Phaser.Scene {
       this.physics.add.overlap(
         this.jugador,
         this.baldosa,
-        this.presionarBaldosa,
+        this.baldosa.presionarBaldosa,
         null,
         this
       );
+
+      events.on("colisionConInterruptor", (interruptor) => {
+        this.physics.add.overlap(
+          this.jugador,
+          interruptor,
+          this.baldosa.puertaTemporizada,
+          null,
+          this
+        );
+      });
+
+      events.on("temporizador", (enemigoFinal) => {
+        this.time.addEvent({
+          delay: 1000,
+          callback: this.baldosa.updateTimer,
+          callbackScope: this,
+          loop: true,
+        });
+
+        this.tweens.add({
+          targets: [this.cameras.main.startFollow(this.jugador)],
+          x: -10,
+          y: 10,
+          duration: 150,
+          ease: "Bounce.easeIn",
+          repeat: -1,
+          yoyo: true,
+        });
+        console.log("temblor");
+
+        this.physics.add.collider(
+          this.jugador,
+          enemigoFinal,
+          this.jugador.morir,
+          null,
+          this
+        );
+      });
     }
 
     // agregado de fisicas
     this.physics.add.overlap(
       this.jugador,
       this.llave,
-      this.recolectarObjeto,
+      this.llave.recolectarLlave,
       null,
       this
     );
@@ -218,21 +268,12 @@ export default class Juego extends Phaser.Scene {
     this.physics.add.collider(
       this.puerta,
       this.jugador,
-      this.abrirPuerta,
-      null,
-      this
-    );
-
-    this.physics.add.collider(
-      this.jarron,
-      pisoLayer,
-      this.romperJarron,
+      this.puerta.abrirPuerta,
       null,
       this
     );
 
     this.physics.add.collider(this.jugador, pisoLayer);
-    
     this.physics.add.collider(this.puerta, pisoLayer);
     this.physics.add.collider(this.caja, pisoLayer);
     this.physics.add.collider(this.madera, pisoLayer);
@@ -243,78 +284,23 @@ export default class Juego extends Phaser.Scene {
     this.cameras.main.startFollow(this.jugador);
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.map = ( map.widthInPixels, map.heightInPixels);
+    this.map = (map.widthInPixels, map.heightInPixels);
   }
 
   update() {
     this.jugador.movimiento();
     this.actualizarLuz();
+    this.estadoBaldosa();
+  }
 
-    // verifica si el jugador ya no está sobre la baldosa y liberarla
+  estadoBaldosa() {
     if (
       this.baldosaPresionada &&
       !this.physics.overlap(this.jugador, this.baldosa) &&
       !this.physics.overlap(this.caja3, this.baldosa)
     ) {
+      console.log("baldosa liberada");
       this.liberarBaldosa();
-    }
-  }
-
-  actualizarLuz() {
-    this.luces.x = this.jugador.x;
-    this.luces.y = this.jugador.y;
-  }
-
-  romperJarron(jarron) {
-    console.log("jarron roto");
-    const { x } = jarron;
-    const { y } = jarron;
-    jarron.destroy();
-    this.palanca = new Objetos(this, x, y, "palanca").setScale(0.7);
-  
-    this.physics.add.overlap(
-      this.jugador,
-      this.palanca,
-      this.recolectarObjeto2,
-      null,
-      this
-    );
-  }
-
-  recolectarObjeto() {
-    this.llave.disableBody(true, true);
-    this.recolectables += 1;
-    events.emit("mostrarLlave");
-    this.puerta.setTexture("puerta-abierta");
-    console.log("llave recolectada");
-  }
-
-  recolectarObjeto2() {
-    this.palanca.disableBody(true, true);
-    this.recolectables += 1;
-    events.emit("mostrarLlave");
-    this.puerta.setTexture("puerta-abierta2");
-    console.log("llave recolectada");
-  }
-
-  presionarBaldosa() {
-    if (!this.baldosaPresionada) {
-      this.baldosaPresionada = true;
-
-      console.log("baldosa presionada");
-      this.cuadro.disableBody(true, true);
-
-      this.interruptor = new Objetos(this, 1400, 600, "palancaNo").setScale(
-        0.2
-      );
-
-      this.physics.add.overlap(
-        this.jugador,
-        this.interruptor,
-        this.puertaTemporizada,
-        null,
-        this
-      );
     }
   }
 
@@ -329,83 +315,9 @@ export default class Juego extends Phaser.Scene {
     }
   }
 
-  puertaTemporizada() {
-    this.interruptor.disableBody(true);
-    this.recolectables += 1;
-    this.puerta.setTexture("puerta-abierta2");
-    this.interruptor.setTexture("palancaSi");
-    console.log("puerta abierta");
-
-    this.time.addEvent({
-      delay: 1000,
-      callback: this.updateTimer,
-      callbackScope: this,
-      loop: true,
-    });
-
-    console.log(this.timer);
-
-    this.enemigoFinal = new Enemigo(this, 400, 500, "manos");
-    this.enemigoFinal.movimientoEnemigo();
-
-    this.physics.add.collider(
-      this.jugador,
-      this.enemigoFinal,
-      this.perderJuego,
-      null,
-      this
-    );
-
-    this.tweens.add({
-      targets:[  this.cameras.main.startFollow(this.jugador)],
-      x:-10,
-      y:10,
-      duration: 150,
-      ease: "Bounce.easeIn", 
-      repeat: -1,
-      yoyo:true,
-    }); 
-    console.log("temblor");
-
-
-   /* this.time.addEvent({
-        delay: 200,
-        callback: () => {
-
-        },
-        callbackScope: this,
-        loop: true,
-    }); */
-
-  }
-
-
-
-  updateTimer() {
-    this.timer -= 1;
-    console.log(this.timer);
-
-    if (this.timer === 0) {
-      this.recolectables = 0 ;
-      this.puerta.setTexture("puerta-cerrada");
-      console.log("puerta cerrada");
-    }
-  }
-
-  abrirPuerta() {
-    console.log("colision puerta");
-
-    if (this.recolectables >= 1) {
-      console.log("puerta abierta");
-      this.nivel += 1;
-
-      if (this.nivel < 4) {
-        this.scene.start("juego", { nivel: this.nivel });
-      } else {
-        console.log("animacion2");
-        this.scene.start("animaciones", { nivel: this.nivel });
-      }
-    }
+  actualizarLuz() {
+    this.luces.x = this.jugador.x;
+    this.luces.y = this.jugador.y;
   }
 
   manosRandom() {
@@ -418,18 +330,11 @@ export default class Juego extends Phaser.Scene {
 
     manos.movimientoEnemigo();
     this.manos.add(manos);
-
     console.log("nueva mano");
   }
 
   desaparecerManos(manos) {
     this.manos.remove(manos, true, true);
     console.log("mano eliminada");
-  }
-
-  perderJuego() {
-    console.log(this);
-    this.luces = this.lights.addLight(1000, 500, 200, 0x5, 5);
-    this.scene.start("juego", { nivel: this.nivel });
   }
 }
