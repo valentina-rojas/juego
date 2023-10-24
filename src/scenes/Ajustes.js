@@ -17,7 +17,7 @@ export default class Ajustes extends Phaser.Scene {
     const botonVolver = this.add
       .text(1000, 850, getPhrase("volver"), {
         fontSize: "60px",
-        backgroundColor: "#000000",
+        fontFamily: 'Amatic SC, cursive',
       })
       .setOrigin(0.5)
       .setInteractive();
