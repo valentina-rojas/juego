@@ -43,10 +43,14 @@ export default class Preload extends Phaser.Scene {
     this.load.image("palanca","assets/sprites/nivel 2/palanca-n2.png" )
     this.load.image("palancaSilueta","assets/sprites/nivel 2/palanca-silueta-n2.png" )
     this.load.image("caja", "assets/sprites/nivel 1/caja-n1.png")
-
+    this.load.image("baldosa", "assets/sprites/nivel 3/baldosa.png")
+    this.load.image("cuadro", "assets/sprites/nivel 3/cuadro.png")
+    this.load.image("palancaSi", "assets/sprites/nivel 3/palancaSi.jpg")
+    this.load.image("palancaNo", "assets/sprites/nivel 3/palancaNo.jpg")
 
     // escenas fijas
     this.load.image("fondoMenu", "assets/escenas/menu/menu-principal.png")
+    this.load.image("popupPausa", "assets/escenas/menu/pop-up.png")
 
     this.load.image("creditos", "assets/escenas/creditos.png")
     this.load.image("ajustes", "assets/escenas/ajustes.png")
@@ -118,8 +122,8 @@ export default class Preload extends Phaser.Scene {
         start: 0,
         end: 5,
       }),
-      frameRate: 5,
-      repeat: -1,
+      frameRate: 6,
+      repeat: 1,
     });
    
 

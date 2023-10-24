@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import events from "./EventCenter";
+import events from "../components/EventCenter";
 
 export default class UI extends Phaser.Scene {
   constructor() {
@@ -31,8 +31,9 @@ export default class UI extends Phaser.Scene {
     });
 
     botonPausa.on("pointerup", () => {
+    
       this.scene.stop("juego");
-      this.scene.launch("pausa");
+     this.scene.launch("pausa")
     });
 
     // escuchar eventos

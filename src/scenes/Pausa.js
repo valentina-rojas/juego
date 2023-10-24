@@ -7,13 +7,18 @@ export default class Pausa extends Phaser.Scene {
     super("pausa");
   }
 
-  init(language) {
-    this.language = language;
+  init(data) {
+    this.language = data.language;
   }
 
   create() {
+    this.add.image(960, 540, "popupPausa");
+
     const botonVolver = this.add
-      .text(1000, 500, getPhrase("volver"), {fontFamily: 'Amatic SC', fontSize: "70px" })
+      .text(1000, 500, getPhrase("volver"), {
+        fontFamily: "Amatic SC",
+        fontSize: "70px",
+      })
       .setOrigin(0.5)
       .setInteractive();
 
@@ -31,7 +36,10 @@ export default class Pausa extends Phaser.Scene {
     });
 
     const botonReiniciar = this.add
-      .text(1000, 600, getPhrase("reiniciar"), { fontFamily: 'Amatic SC', fontSize: "70px" })
+      .text(1000, 600, getPhrase("reiniciar"), {
+        fontFamily: "Amatic SC",
+        fontSize: "70px",
+      })
       .setOrigin(0.5)
       .setInteractive();
 
@@ -46,6 +54,29 @@ export default class Pausa extends Phaser.Scene {
     botonReiniciar.on("pointerup", () => {
       this.scene.pause("pause");
       this.scene.start("juego");
+    });
+
+    const botonReanudar = this.add
+      .text(1000, 700, getPhrase("reanudar"), {
+        fontFamily: "Amatic SC",
+        fontSize: "70px",
+      })
+      .setOrigin(0.5)
+      .setInteractive();
+
+    botonReanudar.on("pointerover", () => {
+      botonReanudar.setStyle({ backgroundColor: "#888888" });
+    });
+
+    botonReanudar.on("pointerout", () => {
+      botonReanudar.setStyle({ backgroundColor: "#000000" });
+    });
+
+    botonReanudar.on("pointerup", () => {
+      this.scene.pause("pause");
+    
+
+      this.scene.resume("juego")
     });
   }
 }

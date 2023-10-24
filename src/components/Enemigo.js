@@ -6,6 +6,7 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
 
   body;
 
+  manos;
 
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
@@ -18,11 +19,10 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
     this.setGravityY(1350);
 
     this.velocidad = 50;
-
   }
- 
+
   movimientoEnemigo() {
-    this.body.setVelocityX(this.velocidad+200);
+    this.body.setVelocityX(this.velocidad);
     this.anims.play("atrapar", true);
-}
+  }
 }

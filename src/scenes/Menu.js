@@ -21,7 +21,7 @@ export default class Menu extends Phaser.Scene {
     const botones = [
       { texto: getPhrase("JUGAR"), escenaKey: "animaciones" },
       { texto: getPhrase("CRÉDITOS"), escenaKey: "creditos" },
-      { texto: getPhrase("AJUSTES"), escenaKey: "ajustes" },
+      { texto: getPhrase("AYUDA"), escenaKey: "ajustes" },
     ];
 
     const posicionIncialY = 400;
