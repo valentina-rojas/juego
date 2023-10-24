@@ -50,6 +50,7 @@ export default class Preload extends Phaser.Scene {
 
     // escenas fijas
     this.load.image("fondoMenu", "assets/escenas/menu/menu-principal.png")
+    this.load.image("popupPausa", "assets/escenas/menu/pop-up.png")
 
     this.load.image("creditos", "assets/escenas/creditos.png")
     this.load.image("ajustes", "assets/escenas/ajustes.png")

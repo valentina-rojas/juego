@@ -12,6 +12,8 @@ export default class Pausa extends Phaser.Scene {
   }
 
   create() {
+    this.add.image(960, 540, "popupPausa");
+
     const botonVolver = this.add
       .text(1000, 500, getPhrase("volver"), {
         fontFamily: "Amatic SC",

@@ -29,6 +29,7 @@ export default class Juego extends Phaser.Scene {
     this.scene.launch("ui", {
       nivel: this.nivel,
       recolectables: this.recolectables,
+
     });
 
     const mapKey = `nivel${this.nivel}`;
@@ -150,7 +151,7 @@ export default class Juego extends Phaser.Scene {
       this.puerta.setTexture("puerta-cerrada2");
 
       this.time.addEvent({
-        delay: 2000,
+        delay: 4000,
         callback: this.manosRandom,
         callbackScope: this,
         loop: true,
@@ -323,7 +324,7 @@ export default class Juego extends Phaser.Scene {
   manosRandom() {
     const manos = new Enemigo(
       this,
-      this.jugador.x - 200,
+      this.jugador.x ,
       this.jugador.y - 1000,
       "manos"
     ).setPipeline("Light2D");
