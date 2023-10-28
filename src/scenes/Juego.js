@@ -26,6 +26,8 @@ export default class Juego extends Phaser.Scene {
   }
 
   create() {
+
+
     this.scene.launch("ui", {
       nivel: this.nivel,
       recolectables: this.recolectables,

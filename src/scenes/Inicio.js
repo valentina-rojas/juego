@@ -75,6 +75,6 @@ buttonSpanish.on(Phaser.Input.Events.GAMEOBJECT_POINTER_UP, () => {
   }
 
   iniciarEscena() {
-    this.scene.start("menu", { language: this.#language });
+    this.scene.start("login", { language: this.#language });
   }
 }
