@@ -38,6 +38,7 @@ export default class Preload extends Phaser.Scene {
 
     // objetos
     this.load.image("llave","assets/sprites/nivel 1/llave-n1.png" )
+    this.load.image("ojos","assets/sprites/nivel 1/ojos.jpg" )
     this.load.image("llaveSilueta","assets/sprites/nivel 1/llave-silueta-n1.png" )
     this.load.image("jarron","assets/sprites/nivel 2/jarron-n2.png" )
     this.load.image("palanca","assets/sprites/nivel 2/palanca-n2.png" )
@@ -54,6 +55,7 @@ export default class Preload extends Phaser.Scene {
     this.load.image("creditos", "assets/escenas/creditos.png")
     this.load.image("ajustes", "assets/escenas/ajustes.png")
     this.load.image("animacion1", "assets/sprites/animacion1.jpeg");
+    this.load.image("animacion2", "assets/sprites/animacion2.jpeg");
 
     this.load.image("banderaEspañol", "assets/escenas/idiomas/bandera-español.png");
     this.load.image("banderaIngles", "assets/escenas/idiomas/bandera-ingles.png");

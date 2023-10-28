@@ -31,6 +31,7 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     this.scene = scene;
   }
 
+  
   movimiento() {
     if (this.cursor.left.isDown) {
       this.body.setVelocityX(-this.velocidad);

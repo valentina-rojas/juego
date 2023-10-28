@@ -18,7 +18,7 @@ export default class Juego extends Phaser.Scene {
   }
 
   init(data) {
-    this.recolectables = 0;
+    this.recolectables =  0;
     this.nivel = data.nivel || 1;
     this.timer = 15;
     this.baldosaPresionada = false;
@@ -130,8 +130,16 @@ export default class Juego extends Phaser.Scene {
         }
         case "madera": {
           this.madera = new Objetos(this, x, y, "#")
-            .setScale(0.1)
+            .setScale(0.3)
+            .setVisible(false)
             .setPipeline("Light2D");
+          break;
+        }
+        case "ojos": {
+          this.ojos = new Objetos(this, x, y, "ojos")
+          .setVisible(false)
+          .setPipeline("Light2D")
+          .setScale(0.3);
           break;
         }
         default: {
@@ -250,6 +258,22 @@ export default class Juego extends Phaser.Scene {
           this.jugador,
           enemigoFinal,
           this.jugador.morir,
+          null,
+          this
+        );
+
+        this.physics.add.overlap(
+          this.manos,
+          this.jugador,
+          this.jugador.morir,
+          null,
+          this
+        );
+  
+        this.physics.add.collider(
+          this.manos,
+          pisoLayer,
+          this.desaparecerManos,
           null,
           this
         );

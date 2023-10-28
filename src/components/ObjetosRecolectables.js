@@ -14,6 +14,8 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
     llave;
   
     palanca;
+
+    ojos;
   
     constructor(scene, x, y, texture) {
       super(scene, x, y, texture);
@@ -32,6 +34,10 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
         events.emit("mostrarLlave");
         this.puerta.setTexture("puerta-abierta");
         console.log("llave recolectada");
+        setTimeout(() => {
+          this.ojos.setTexture("ojos").setVisible(true);
+        }, 2000);
+       
       }
     
       recolectarPalanca() {
