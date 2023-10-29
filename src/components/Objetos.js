@@ -78,15 +78,15 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
     this.enemigoFinal = new Enemigo(this, 400, 500, "manos");
     this.enemigoFinal.movimientoEnemigo();
 
-    const manos = new Enemigo(
+    this.enemigoManos = new Enemigo(
       this,
       this.jugador.x + 200,
       this.jugador.y - 1000,
       "manos"
     ).setPipeline("Light2D");
 
-    manos.movimientoEnemigo();
-    this.manos.add(manos);
+    this.enemigoManos.movimientoEnemigo();
+    this.manos.add(this.enemigoManos); 
     console.log("nueva mano");
     
     events.emit("temporizador", this.enemigoFinal);

@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-// import events from "./EventCenter";
+import events from "../components/EventCenter";
 import { getPhrase } from "../services/traducciones";
 
 export default class Pausa extends Phaser.Scene {
@@ -51,6 +51,9 @@ export default class Pausa extends Phaser.Scene {
 
     botonReiniciar.on("pointerup", () => {
       this.scene.pause("pause");
+      events.off("colisionConInterruptor");
+      events.off("temporizador");
+      events.off("colisionConPalanca");
       this.scene.start("juego");
     });
 

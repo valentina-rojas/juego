@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-// import events from "./EventCenter";
+import events from "./EventCenter";
 
 export default class Jugador extends Phaser.Physics.Arcade.Sprite {
   velocidad;
@@ -52,5 +52,8 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
   morir() {
     console.log(this);
     this.scene.start("juego", { nivel: this.nivel });
+    events.off("colisionConInterruptor");
+    events.off("temporizador");
+    events.off("colisionConPalanca");
   }
 }

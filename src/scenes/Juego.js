@@ -262,7 +262,7 @@ export default class Juego extends Phaser.Scene {
           this
         );
 
-        this.physics.add.overlap(
+       this.physics.add.overlap(
           this.manos,
           this.jugador,
           this.jugador.morir,
@@ -308,7 +308,7 @@ export default class Juego extends Phaser.Scene {
     this.cameras.main.startFollow(this.jugador);
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.map = (map.widthInPixels, map.heightInPixels);
+   
   }
 
   update() {

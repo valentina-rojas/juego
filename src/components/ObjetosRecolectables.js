@@ -1,6 +1,5 @@
 import Phaser from "phaser";
- import events from "./EventCenter";
-
+import events from "./EventCenter";
 
 export default class Objetos extends Phaser.Physics.Arcade.Sprite {
     jugador;
@@ -43,9 +42,10 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       recolectarPalanca() {
         this.palanca.disableBody(true, true);
         this.recolectables += 1;
-        events.emit("mostrarLlave");
+        events.emit("colisionConPalanca");
         this.puerta.setTexture("puerta-abierta");
         console.log("palanca recolectada");
+        console.log(`recolectables${  this.recolectables}`);
       }
   }
 
