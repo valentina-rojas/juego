@@ -12,6 +12,7 @@ export default class Pausa extends Phaser.Scene {
   }
 
   create() {
+    this.scene.stop("ui");
     const botonVolver = this.add
       .text(1000, 500, getPhrase("volver"), {
         fontFamily: "Amatic SC",
@@ -74,10 +75,10 @@ export default class Pausa extends Phaser.Scene {
     });
 
     botonReanudar.on("pointerup", () => {
-      this.scene.pause("pause");
-    
-
-      this.scene.resume("juego")
+      this.scene.stop("pausa");
+      this.scene.resume("juego");
     });
   }
+
 }
+  

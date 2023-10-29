@@ -68,6 +68,10 @@ export default class Juego extends Phaser.Scene {
     objectsLayer.objects.forEach((objData) => {
       const { x = 0, y = 0, name } = objData;
       switch (name) {
+        case "jugador": {
+          this.jugador = new Jugador(this, x, y, "alma").setPipeline("Light2D");
+          break;
+        }
         case "puerta izquierda": {
           this.puertaIzquierda = new Objetos(
             this,
@@ -81,10 +85,6 @@ export default class Juego extends Phaser.Scene {
           this.puerta = new Objetos(this, x, y, "puerta-cerrada").setPipeline(
             "Light2D"
           );
-          break;
-        }
-        case "jugador": {
-          this.jugador = new Jugador(this, x, y, "alma").setPipeline("Light2D");
           break;
         }
         case "llave": {
@@ -350,7 +350,7 @@ export default class Juego extends Phaser.Scene {
       this.jugador.x - 200,
       this.jugador.y - 1000,
       "manos"
-    ).setPipeline("Light2D");
+    ).setSize(180,900).setPipeline("Light2D");
 
     manos.movimientoEnemigo();
     this.manos.add(manos);

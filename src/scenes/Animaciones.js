@@ -12,6 +12,8 @@ export default class Animaciones extends Phaser.Scene {
 
   create() {
 
+  this.scene.stop("ui");
+
    if ( this.nivel === 0){
     console.log("animacion1")
 
