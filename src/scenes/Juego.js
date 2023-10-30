@@ -13,6 +13,8 @@ export default class Juego extends Phaser.Scene {
 
   luces;
 
+  firebase;
+
   constructor() {
     super("juego");
   }
@@ -23,9 +25,19 @@ export default class Juego extends Phaser.Scene {
     this.timer = 15;
     this.baldosaPresionada = false;
     this.interruptor = null;
+    this.tiempo = data.tiempo || 0;
   }
 
   create() {
+
+    this.time.addEvent({
+      delay: 1000,
+      callback:  () => {
+        this.tiempo++; // Incrementa la variable this.tiempo en 1 cada segundo
+      },
+      callbackScope: this,
+      loop: true,
+    });
 
 
     this.scene.launch("ui", {
@@ -294,6 +306,20 @@ export default class Juego extends Phaser.Scene {
     this.jugador.movimiento();
     this.actualizarLuz();
     this.estadoBaldosa();
+
+    const user = this.firebase.getUser();
+    this.firebase.saveGameData(user.uid, {
+      tiempo: this.tiempo,
+    })
+
+     // si el puntaje es mayor al puntaje mas alto, agregarlo a la lista de high scores
+     this.firebase.getHighScores().then((highScores) => {
+      const highScore = highScores[0] || { score: 0 };
+      if (this.tiempo > highScore.score) {
+        this.firebase
+          .addHighScore(user.displayName || user.uid, this.tiempo)  
+    }});
+  
   }
 
   estadoBaldosa() {

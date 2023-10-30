@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import events from "../components/EventCenter";
 
 export default class UI extends Phaser.Scene {
+  firebase
   constructor() {
     super("ui");
   }
@@ -12,6 +13,10 @@ export default class UI extends Phaser.Scene {
   }
 
   create() {
+
+    const user = this.firebase.getUser();
+    this.add.text(1000, 40, user.displayName || user.uid);
+
     this.nivelTexto = this.add.text(1600, 40, `Nivel ${this.nivel}`, {
       fontFamily: "Amatic SC",
       fontSize: "60px",

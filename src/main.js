@@ -10,6 +10,7 @@ import Inicio from "./scenes/Inicio";
 import Animaciones from "./scenes/Animaciones";
 import FirebasePlugin from "./plugins/FirebasePlugin";
 import Login from "./scenes/Login";
+import Puntajes from "./scenes/Puntajes";
 
 const config = {
   type: Phaser.AUTO,
@@ -34,7 +35,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [Preload, Login, Inicio, Menu, Creditos, Ajustes, Pausa, Juego, UI, Animaciones],
+  scene: [Preload, Login, Inicio, Menu, Creditos, Ajustes, Puntajes , Pausa, Juego, UI, Animaciones],
   plugins: {
     global: [
       {
