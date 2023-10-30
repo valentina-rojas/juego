@@ -87,6 +87,7 @@ export default class FirebasePlugin extends Phaser.Plugins.BasePlugin {
     const credentials = await signInAnonymously(this.auth);
     return credentials.user;
   }
+  
   async signInWithGoogle() {
     const provider = new GoogleAuthProvider();
     const credentials = await signInWithPopup(this.auth, provider);

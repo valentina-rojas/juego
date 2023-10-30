@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { getPhrase } from "../services/traducciones";
 
 export default class Login extends Phaser.Scene {
   firebase;
@@ -7,22 +8,31 @@ export default class Login extends Phaser.Scene {
     super("login");
   }
 
+  init({ language }) {
+    this.language = language;
+  }
+
   create() {
+    this.add.image(960, 540, "fondoIdiomas");
+
     this.add
-      .text(1000, 100, "Login", {
-        fontSize: 48,
+      .text(960, 200, getPhrase("log in"), {
+        fontFamily: "Amatic SC",
+        fontSize: "80px",
       })
       .setOrigin(0.5);
 
     this.add
-      .text(1000, 200, "Ingresar con Email y contraseña", {
-        fontSize: 24,
+      .text(960, 500, getPhrase("ingresar con email y contraseña"), {
+        fontFamily: "Amatic SC",
+        fontSize: "80px",
       })
       .setOrigin(0.5)
       .setInteractive()
       .on("pointerdown", () => {
         const email = prompt("Email");
         const password = prompt("Password");
+
         this.firebase
           .signInWithEmail(email, password)
           .then(() => {
@@ -49,8 +59,9 @@ export default class Login extends Phaser.Scene {
       });
 
     this.add
-      .text(1000, 300, "Ingresar de forma Anonima", {
-        fontSize: 24,
+      .text(960, 600, getPhrase("ingresar de forma anonima"), {
+        fontFamily: "Amatic SC",
+        fontSize: "80px",
       })
       .setOrigin(0.5)
       .setInteractive()
@@ -65,10 +76,10 @@ export default class Login extends Phaser.Scene {
           });
       });
 
-    // agregar un texto centrado "Ingresar con Google" que al hacer clic me levante un popup js para ingresar los datos
     this.add
-      .text(1000, 400, "Ingresar con Google", {
-        fontSize: 24,
+      .text(960, 700, getPhrase("ingresar con google"), {
+        fontFamily: "Amatic SC",
+        fontSize: "80px",
       })
       .setOrigin(0.5)
       .setInteractive()
