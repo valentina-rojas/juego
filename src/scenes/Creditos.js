@@ -12,7 +12,7 @@ export default class Creditos extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(10, 35,("créditos"))
+    this.add.image(960, 542,("creditos"))
 
     const botonVolver = this.add
       .text(180, 50, getPhrase("volver"), { fontSize: "60px", backgroundColor: "#000000" })

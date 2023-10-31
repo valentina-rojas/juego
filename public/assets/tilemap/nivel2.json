@@ -175,24 +175,6 @@
          "objects":[
                 {
                  "height":0,
-                 "id":2,
-                 "name":"jugador",
-                 "point":true,
-                 "properties":[
-                        {
-                         "name":"colision",
-                         "type":"bool",
-                         "value":true
-                        }],
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":548.02963420281,
-                 "y":927.148908439231
-                }, 
-                {
-                 "height":0,
                  "id":9,
                  "name":"puerta",
                  "point":true,
@@ -230,8 +212,26 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":2333.45454545455,
-                 "y":385.818181818182
+                 "x":3434.18181818182,
+                 "y":951.878787878788
+                }, 
+                {
+                 "height":0,
+                 "id":2,
+                 "name":"jugador",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"colision",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3163.60539177857,
+                 "y":917.93678722711
                 }],
          "opacity":1,
          "type":"objectgroup",
