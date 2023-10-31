@@ -234,6 +234,8 @@ export default class Juego extends Phaser.Scene {
         this
       );
 
+      this.physics.add.collider(this.jugador, plataformasLayer);
+
       events.on("colisionConInterruptor", (interruptor) => {
         this.physics.add.overlap(
           this.jugador,
