@@ -31,19 +31,20 @@ export default class Juego extends Phaser.Scene {
       recolectables: this.recolectables,
     });
 
+    // sonido y musica
 
-    //sonido y musica
-
-    this.musicaAmbiente = this.sound.add("musicaAmbiente", {loop:true});
+    this.musicaAmbiente = this.sound.add("musicaAmbiente", { loop: true });
     this.musicaAmbiente.volume = 0.2;
-    this.musicaAmbiente.play(); 
+    this.musicaAmbiente.play();
     this.musicaAmbiente.seek = 4;
-    this.baldosaSonido = this.sound.add("baldosa", {loop : false});
-    this.temporizadorSonido = this.sound.add("temporizador", {loop:true});
-    this.pasos = this.sound.add("pasos", {loop:false});
-    this.jarronSonido = this.sound.add("jarron", {loop:false});
-    this.ArrastrarJarronSonido = this.sound.add("arrastrar-jarron", {loop:false});
-    this.puertaCerrada= this.sound.add("puerta-cerrada", {loop:false});
+    this.baldosaSonido = this.sound.add("baldosa", { loop: false });
+    this.temporizadorSonido = this.sound.add("temporizador", { loop: true });
+    this.pasos = this.sound.add("pasos", { loop: false });
+    this.jarronSonido = this.sound.add("jarron", { loop: false });
+    this.ArrastrarJarronSonido = this.sound.add("arrastrar-jarron", {
+      loop: false,
+    });
+    this.puertaCerrada = this.sound.add("puerta-cerrada", { loop: false });
 
     const mapKey = `nivel${this.nivel}`;
     const map = this.make.tilemap({ key: mapKey });
@@ -102,7 +103,12 @@ export default class Juego extends Phaser.Scene {
           break;
         }
         case "llave": {
-          this.llave = new ObjetosRecolectables( this,  x, y, "llave").setPipeline("Light2D");
+          this.llave = new ObjetosRecolectables(
+            this,
+            x,
+            y,
+            "llave"
+          ).setPipeline("Light2D");
           break;
         }
         case "caja": {
@@ -126,8 +132,9 @@ export default class Juego extends Phaser.Scene {
           break;
         }
         case "baldosa": {
-          this.baldosa = new Objetos(this, x, y, "baldosa")
-            .setPipeline("Light2D");
+          this.baldosa = new Objetos(this, x, y, "baldosa").setPipeline(
+            "Light2D"
+          );
           break;
         }
         case "cuadro": {
@@ -147,8 +154,6 @@ export default class Juego extends Phaser.Scene {
         }
       }
     });
-
-
 
     this.manos = this.physics.add.group();
 
@@ -247,7 +252,7 @@ export default class Juego extends Phaser.Scene {
           loop: true,
         });
 
-        this.temporizador = this.sound.add("temporizador", {loop:true});
+        this.temporizador = this.sound.add("temporizador", { loop: true });
 
         this.tweens.add({
           targets: [this.cameras.main.startFollow(this.jugador)],
