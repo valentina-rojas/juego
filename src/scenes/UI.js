@@ -2,7 +2,8 @@ import Phaser from "phaser";
 import events from "../components/EventCenter";
 
 export default class UI extends Phaser.Scene {
-  firebase
+  firebase;
+
   constructor() {
     super("ui");
   }
@@ -13,10 +14,6 @@ export default class UI extends Phaser.Scene {
   }
 
   create() {
-
-    const user = this.firebase.getUser();
-    this.add.text(1000, 40, user.displayName || user.uid);
-
     this.nivelTexto = this.add.text(1600, 40, `Nivel ${this.nivel}`, {
       fontFamily: "Amatic SC",
       fontSize: "60px",
@@ -36,9 +33,8 @@ export default class UI extends Phaser.Scene {
     });
 
     botonPausa.on("pointerup", () => {
-    
       this.scene.stop("juego");
-     this.scene.launch("pausa")
+      this.scene.launch("pausa");
     });
 
     // escuchar eventos
@@ -60,7 +56,7 @@ export default class UI extends Phaser.Scene {
     if (this.nivel === 1) {
       this.imagenNivel.setTexture("llave");
     }
-     if (this.nivel === 2) {
+    if (this.nivel === 2) {
       this.imagenNivel.setTexture("palanca").setScale(0.3);
     }
   }

@@ -23,42 +23,6 @@ export default class Login extends Phaser.Scene {
       .setOrigin(0.5);
 
     this.add
-      .text(960, 500, getPhrase("ingresar con email y contraseña"), {
-        fontFamily: "Amatic SC",
-        fontSize: "80px",
-      })
-      .setOrigin(0.5)
-      .setInteractive()
-      .on("pointerdown", () => {
-        const email = prompt("Email");
-        const password = prompt("Password");
-
-        this.firebase
-          .signInWithEmail(email, password)
-          .then(() => {
-            this.scene.start("menu");
-          })
-          .catch(() => {
-            const crearUsuario = window.confirm(
-              "Email no encontrado. \n ¿Desea crear un usuario?"
-            );
-            if (crearUsuario) {
-              this.firebase
-                .createUserWithEmail(email, password)
-                .then(() => {
-                  this.scene.start("menu");
-                })
-                .catch((createUserError) => {
-                  console.log(
-                    "🚀 ~ file: Login.js:51 ~ .catch ~ error",
-                    createUserError
-                  );
-                });
-            }
-          });
-      });
-
-    this.add
       .text(960, 600, getPhrase("ingresar de forma anonima"), {
         fontFamily: "Amatic SC",
         fontSize: "80px",

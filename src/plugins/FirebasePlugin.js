@@ -14,14 +14,11 @@ import {
 } from "firebase/firestore";
 import {
   getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   signInAnonymously,
   signInWithPopup,
   onAuthStateChanged,
   GoogleAuthProvider,
 } from "firebase/auth";
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyD8RgGgZmq7BpaD7speM_Qu3RNAn3Tt1_c",
@@ -65,35 +62,16 @@ export default class FirebasePlugin extends Phaser.Plugins.BasePlugin {
     return snap.data();
   }
 
-  async createUserWithEmail(email, password) {
-    const credentials = await createUserWithEmailAndPassword(
-      this.auth,
-      email,
-      password
-    );
-    return credentials.user;
-  }
-
-  async signInWithEmail(email, password) {
-    const credentials = await signInWithEmailAndPassword(
-      this.auth,
-      email,
-      password
-    );
-    return credentials.user;
-  }
-
   async signInAnonymously() {
     const credentials = await signInAnonymously(this.auth);
     return credentials.user;
   }
-  
+
   async signInWithGoogle() {
     const provider = new GoogleAuthProvider();
     const credentials = await signInWithPopup(this.auth, provider);
     return credentials.user;
   }
-
 
   getUser() {
     return this.auth.currentUser;
