@@ -2,6 +2,10 @@ import Phaser from "phaser";
 
 export default class Animaciones extends Phaser.Scene {
 
+  temporizadorSonido;
+
+  musicaAmbiente;
+
   constructor() {
     super("animaciones");
   }
@@ -12,7 +16,9 @@ export default class Animaciones extends Phaser.Scene {
 
   create() {
 
+
   this.scene.stop("ui");
+
 
    if ( this.nivel === 0){
     console.log("animacion1")
@@ -22,10 +28,12 @@ export default class Animaciones extends Phaser.Scene {
       this.nivel += 1;
       this.scene.start(("juego"),{ nivel: this.nivel });  
     }, 1500);
+   
    }
 
    
    if ( this.nivel === 4){
+
     console.log("animacion2")
     this.add.image(1000, 400, "animacion2");
     setTimeout(() => {

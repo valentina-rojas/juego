@@ -16,15 +16,15 @@ export default class Preload extends Phaser.Scene {
 
     this.load.image("fondo1", "assets/sprites/nivel 1/pared-n1.png");
     this.load.image("fondo2", "assets/sprites/nivel 2/fondo2.png");
-    this.load.image("fondo3", "assets/sprites/nivel 3/fondo3.jpg");
+    this.load.image("fondo3", "assets/sprites/nivel 3/fondo3.png");
     this.load.image("suelo1", "assets/sprites/nivel 1/piso-n1.png");
     this.load.image("suelo2", "assets/sprites/nivel 2/piso-n2.png");
-    this.load.image("suelo3", "assets/sprites/nivel 3/suelo3.jpeg");
+    this.load.image("suelo3", "assets/sprites/nivel 3/piso-n3.png");
     this.load.image("muebles1", "assets/sprites/nivel 1/objetos-quietos-n1.png");
     this.load.image("muebles2", "assets/sprites/nivel 2/objetos-quietos-n2.png");
-    this.load.image("muebles3", "assets/sprites/fondojpg.jpg");
+    this.load.image("muebles3", "assets/sprites/nivel 3/objetos-quietos-n3.png");
     this.load.image("plataformas2", "assets/sprites/nivel 2/cama-repisa-n2.png");
-
+    this.load.image("plataformas3", "assets/sprites/nivel 3/plataformas-n3.png");
 
     // puertas
     this.load.image("puerta-cerrada", "assets/sprites/nivel 1/puerta-cerrada-n1.png")
@@ -36,6 +36,10 @@ export default class Preload extends Phaser.Scene {
     this.load.image("puerta-maderas", "assets/sprites/nivel 2/puerta-maderas-n2.png")
     this.load.image("puerta-izquierda2", "assets/sprites/nivel 2/puerta-izquierda-n2.png")
 
+    this.load.image("puerta-izquierda3", "assets/sprites/nivel 3/puerta-izquierda-n3.png")
+    this.load.image("puerta-abierta3", "assets/sprites/nivel 3/puerta-derecha-abierta-n3.png")
+    this.load.image("puerta-cerrada3", "assets/sprites/nivel 3/puerta-derecha-cerrada-n3.png")
+
     // objetos
     this.load.image("llave","assets/sprites/nivel 1/llave-n1.png" )
     this.load.image("ojos","assets/sprites/nivel 1/ojos.jpg" )
@@ -45,12 +49,14 @@ export default class Preload extends Phaser.Scene {
     this.load.image("palancaSilueta","assets/sprites/nivel 2/palanca-silueta-n2.png" )
     this.load.image("caja", "assets/sprites/nivel 1/caja-n1.png")
     this.load.image("baldosa", "assets/sprites/nivel 3/baldosa.png")
-    this.load.image("cuadro", "assets/sprites/nivel 3/cuadro.png")
-    this.load.image("palancaSi", "assets/sprites/nivel 3/palancaSi.jpg")
-    this.load.image("palancaNo", "assets/sprites/nivel 3/palancaNo.jpg")
+    this.load.image("cuadro", "assets/sprites/nivel 3/cuadro-derecho-n3.png")
+    this.load.image("cuadro-abierto", "assets/sprites/nivel 3/cuadro-movido-n3.png")
+    this.load.image("palancaNo", "assets/sprites/nivel 3/interruptor-n3.png")
+    this.load.image("olla", "assets/sprites/nivel 3/olla-n3.png")
 
     // escenas fijas
     this.load.image("fondoMenu", "assets/escenas/menu/menu-principal.png")
+    this.load.image("popupPausa", "assets/escenas/menu/pop-up.png")
 
     this.load.image("creditos", "assets/escenas/creditos.png")
     this.load.image("ajustes", "assets/escenas/ajustes.png")
@@ -77,6 +83,18 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 321,
       frameHeight: 944,
     });
+
+
+    //sonidos
+    this.load.audio("pasos", "assets/audio/pasos.mp3");
+    this.load.audio("temporizador", "assets/audio/temporizador1.ogg");
+    this.load.audio("jarron", "assets/audio/jarron.wav");
+    this.load.audio("baldosa", "assets/audio/baldosa.mp3");
+    this.load.audio("cuadro-abierto", "assets/audio/cuador-abierto.mp3");
+    this.load.audio("puerta-cerrada", "assets/audio/puerta-cerrada.mp3");
+    this.load.audio("arrastrar-jarron", "assets/audio/arrastrarJarron.ogg");
+    //musica 
+    this.load.audio("musicaAmbiente", "assets/audio/musicaAmbiente.mp3"); 
 
 
   /* WebFont.load({
@@ -131,7 +149,6 @@ export default class Preload extends Phaser.Scene {
     getTranslations(this.#language, () => {
       this.scene.start("inicio", { language: this.#language });
     });
-
-
+  
   }
 }

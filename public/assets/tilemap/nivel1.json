@@ -137,6 +137,20 @@
          "objects":[
                 {
                  "height":0,
+
+                 "id":2,
+                 "name":"jugador",
+                 "point":true,
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":431.63636363637,
+                 "y":623.818181818182
+                }, 
+                {
+                 "height":0,
+
                  "id":5,
                  "name":"llave",
                  "point":true,
@@ -144,8 +158,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":1355.95454545454,
-                 "y":825.780303030303
+                 "x":165.95454545454,
+                 "y":364.780303030303
                 }, 
                 {
                  "height":0,
