@@ -203,6 +203,7 @@ export default class Juego extends Phaser.Scene {
         this
       );
 
+
       this.physics.add.collider(this.jugador, plataformasLayer);
       this.physics.add.collider(this.jarron, plataformasLayer);
 
@@ -222,8 +223,8 @@ export default class Juego extends Phaser.Scene {
 
     // condicionales para nivel 3
     if (this.nivel === 3) {
-      this.olla.setGravityY(5000); // Ajusta la gravedad en el eje Y
-      this.olla.body.velocity.y = 800; // Ajusta la velocidad de caída en el eje Y
+      this.olla.setGravityY(5000); 
+      this.olla.body.velocity.y = 800; 
 
       this.puerta.setTexture("puerta-cerrada3");
       this.puertaIzquierda.setTexture("puerta-izquierda3");
