@@ -18,7 +18,7 @@ export default class Juego extends Phaser.Scene {
   }
 
   init(data) {
-    this.recolectables = 0;
+    this.recolectables =  0;
     this.nivel = data.nivel || 1;
     this.timer = 40;
     this.baldosaPresionada = false;
@@ -83,6 +83,10 @@ export default class Juego extends Phaser.Scene {
     objectsLayer.objects.forEach((objData) => {
       const { x = 0, y = 0, name } = objData;
       switch (name) {
+        case "jugador": {
+          this.jugador = new Jugador(this, x, y, "alma").setPipeline("Light2D");
+          break;
+        }
         case "puerta izquierda": {
           this.puertaIzquierda = new Objetos(
             this,
@@ -96,10 +100,6 @@ export default class Juego extends Phaser.Scene {
           this.puerta = new Objetos(this, x, y, "puerta-cerrada").setPipeline(
             "Light2D"
           );
-          break;
-        }
-        case "jugador": {
-          this.jugador = new Jugador(this, x, y, "alma").setPipeline("Light2D");
           break;
         }
         case "llave": {
@@ -145,8 +145,16 @@ export default class Juego extends Phaser.Scene {
         }
         case "madera": {
           this.madera = new Objetos(this, x, y, "#")
-            .setScale(0.1)
+            .setScale(0.3)
+            .setVisible(false)
             .setPipeline("Light2D");
+          break;
+        }
+        case "ojos": {
+          this.ojos = new Objetos(this, x, y, "ojos")
+          .setVisible(false)
+          .setPipeline("Light2D")
+          .setScale(0.3);
           break;
         }
         default: {
@@ -279,6 +287,22 @@ export default class Juego extends Phaser.Scene {
           null,
           this
         );
+
+       this.physics.add.overlap(
+          this.manos,
+          this.jugador,
+          this.jugador.morir,
+          null,
+          this
+        );
+  
+        this.physics.add.collider(
+          this.manos,
+          pisoLayer,
+          this.desaparecerManos,
+          null,
+          this
+        );
       });
     }
 
@@ -310,7 +334,7 @@ export default class Juego extends Phaser.Scene {
     this.cameras.main.startFollow(this.jugador);
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.map = (map.widthInPixels, map.heightInPixels);
+   
   }
 
   update() {
@@ -354,7 +378,7 @@ export default class Juego extends Phaser.Scene {
       this.jugador.x + 350,
       this.jugador.y - 1000,
       "manos"
-    ).setPipeline("Light2D");
+    ).setSize(180,900).setPipeline("Light2D");
 
     manos.movimientoEnemigo();
     this.manos.add(manos);
