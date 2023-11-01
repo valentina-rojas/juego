@@ -137,7 +137,6 @@
          "objects":[
                 {
                  "height":0,
-
                  "id":2,
                  "name":"jugador",
                  "point":true,
@@ -150,7 +149,6 @@
                 }, 
                 {
                  "height":0,
-
                  "id":5,
                  "name":"llave",
                  "point":true,
@@ -208,18 +206,6 @@
                  "width":0,
                  "x":1195.48484848485,
                  "y":636.15151515152
-                }, 
-                {
-                 "height":0,
-                 "id":2,
-                 "name":"jugador",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1570.66666666667,
-                 "y":792
                 }],
          "opacity":1,
          "type":"objectgroup",

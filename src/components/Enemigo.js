@@ -18,7 +18,7 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
     this.setBounce(0.2);
     this.setGravityY(1350);
 
-    this.velocidad = 1;
+    this.velocidad = 241;
   }
 
   movimientoEnemigo() {
