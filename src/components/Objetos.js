@@ -52,6 +52,8 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       if (this.nivel < 4) {
         this.scene.start("juego", { nivel: this.nivel });
       } else {
+        this.temporizadorSonido.stop();
+        this.musicaAmbiente.stop();
         console.log("animacion2");
         this.scene.stop("ui");
         this.scene.start("animaciones", { nivel: this.nivel });

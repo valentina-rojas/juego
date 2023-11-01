@@ -3,6 +3,7 @@ import Phaser from "phaser";
 export default class Animaciones extends Phaser.Scene {
 
   temporizadorSonido;
+
   musicaAmbiente;
 
   constructor() {
@@ -28,8 +29,7 @@ export default class Animaciones extends Phaser.Scene {
 
    
    if ( this.nivel === 4){
-    this.temporizadorSonido.mute=true;
-    this.musicaAmbiente.stop();
+
     console.log("animacion2")
     this.add.image(1000, 400, "animacion1");
     setTimeout(() => {

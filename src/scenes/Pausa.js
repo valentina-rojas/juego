@@ -73,9 +73,8 @@ export default class Pausa extends Phaser.Scene {
 
     botonReanudar.on("pointerup", () => {
       this.scene.pause("pause");
-    
 
-      this.scene.resume("juego")
+      this.scene.resume("juego");
     });
   }
 }
