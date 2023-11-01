@@ -19,6 +19,14 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
 
   nivel;
 
+  baldosaSonido;
+
+  temporizadorSonido;
+
+  musicaAmbiente;
+
+  puertaCerrada;
+
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
 
@@ -44,6 +52,8 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       if (this.nivel < 4) {
         this.scene.start("juego", { nivel: this.nivel });
       } else {
+        this.temporizadorSonido.stop();
+        this.musicaAmbiente.stop();
         console.log("animacion2");
         this.scene.stop("ui");
         this.scene.start("animaciones", { nivel: this.nivel });
@@ -56,20 +66,21 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       this.baldosaPresionada = true;
 
       console.log("baldosa presionada");
-      this.cuadro.disableBody(true, true);
-
-      this.interruptor = new Objetos(this, 1400, 600, "palancaNo").setScale(
-        0.2
-      );
+      this.interruptor = new Objetos(this, 1130, 500, "palancaNo");
+      this.cuadro.setTexture("cuadro-abierto");
+      this.baldosaSonido.play();
+     
       events.emit("colisionConInterruptor", this.interruptor);
     }
   }
 
   puertaTemporizada() {
+    this.musicaAmbiente.setVolume(0.8);
+    this.temporizadorSonido.play();
+    this.temporizadorSonido.setVolume(0.3);
     this.interruptor.disableBody(true);
     this.recolectables += 1;
-    this.puerta.setTexture("puerta-abierta2");
-    this.interruptor.setTexture("palancaSi");
+    this.puerta.setTexture("puerta-abierta3");
     console.log("puerta abierta");
 
     console.log(this.timer);
@@ -86,7 +97,11 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
 
     if (this.timer === 0) {
       this.recolectables = 0;
-      this.puerta.setTexture("puerta-cerrada");
+      this.temporizadorSonido.stop();
+      this.puertaCerrada.play();
+      this.puertaCerrada.setVolume(0.5);
+      this.musicaAmbiente.setVolume(1.5);
+      this.puerta.setTexture("puerta-cerrada3");
       console.log("puerta cerrada");
     }
   }

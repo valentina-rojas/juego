@@ -20,7 +20,7 @@ export default class Juego extends Phaser.Scene {
   init(data) {
     this.recolectables = 0;
     this.nivel = data.nivel || 1;
-    this.timer = 15;
+    this.timer = 40;
     this.baldosaPresionada = false;
     this.interruptor = null;
   }
@@ -29,8 +29,22 @@ export default class Juego extends Phaser.Scene {
     this.scene.launch("ui", {
       nivel: this.nivel,
       recolectables: this.recolectables,
-
     });
+
+    // sonido y musica
+
+    this.musicaAmbiente = this.sound.add("musicaAmbiente", { loop: true });
+    this.musicaAmbiente.volume = 0.2;
+    this.musicaAmbiente.play();
+    this.musicaAmbiente.seek = 4;
+    this.baldosaSonido = this.sound.add("baldosa", { loop: false });
+    this.temporizadorSonido = this.sound.add("temporizador", { loop: true });
+    this.pasos = this.sound.add("pasos", { loop: false });
+    this.jarronSonido = this.sound.add("jarron", { loop: false });
+    this.ArrastrarJarronSonido = this.sound.add("arrastrar-jarron", {
+      loop: false,
+    });
+    this.puertaCerrada = this.sound.add("puerta-cerrada", { loop: false });
 
     const mapKey = `nivel${this.nivel}`;
     const map = this.make.tilemap({ key: mapKey });
@@ -104,8 +118,8 @@ export default class Juego extends Phaser.Scene {
             .setPipeline("Light2D");
           break;
         }
-        case "caja3": {
-          this.caja3 = new ObjetosMovibles(this, x, y, "caja")
+        case "olla": {
+          this.olla = new ObjetosMovibles(this, x, y, "olla")
             .setDamping(true)
             .setDrag(0.000001)
             .setPipeline("Light2D");
@@ -118,9 +132,9 @@ export default class Juego extends Phaser.Scene {
           break;
         }
         case "baldosa": {
-          this.baldosa = new Objetos(this, x, y, "baldosa")
-            .setScale(0.5)
-            .setPipeline("Light2D");
+          this.baldosa = new Objetos(this, x, y, "baldosa").setPipeline(
+            "Light2D"
+          );
           break;
         }
         case "cuadro": {
@@ -200,10 +214,17 @@ export default class Juego extends Phaser.Scene {
 
     // condicionales para nivel 3
     if (this.nivel === 3) {
-      this.physics.add.collider(this.jugador, this.caja3);
+      this.olla.setGravityY(5000); // Ajusta la gravedad en el eje Y
+      this.olla.body.velocity.y = 800; // Ajusta la velocidad de caída en el eje Y
+
+      this.puerta.setTexture("puerta-cerrada3");
+      this.puertaIzquierda.setTexture("puerta-izquierda3");
+      this.physics.add.collider(this.jugador, this.olla);
+      this.physics.add.collider(this.olla, plataformasLayer);
+      this.physics.add.collider(this.olla, pisoLayer);
 
       this.physics.add.overlap(
-        this.caja3,
+        this.olla,
         this.baldosa,
         this.baldosa.presionarBaldosa,
         null,
@@ -217,6 +238,8 @@ export default class Juego extends Phaser.Scene {
         null,
         this
       );
+
+      this.physics.add.collider(this.jugador, plataformasLayer);
 
       events.on("colisionConInterruptor", (interruptor) => {
         this.physics.add.overlap(
@@ -235,6 +258,8 @@ export default class Juego extends Phaser.Scene {
           callbackScope: this,
           loop: true,
         });
+
+        this.temporizador = this.sound.add("temporizador", { loop: true });
 
         this.tweens.add({
           targets: [this.cameras.main.startFollow(this.jugador)],
@@ -298,7 +323,7 @@ export default class Juego extends Phaser.Scene {
     if (
       this.baldosaPresionada &&
       !this.physics.overlap(this.jugador, this.baldosa) &&
-      !this.physics.overlap(this.caja3, this.baldosa)
+      !this.physics.overlap(this.olla, this.baldosa)
     ) {
       console.log("baldosa liberada");
       this.liberarBaldosa();
@@ -310,7 +335,8 @@ export default class Juego extends Phaser.Scene {
       this.baldosaPresionada = false;
 
       console.log("baldosa liberada");
-      this.cuadro.setVisible(true);
+      this.baldosa.stop();
+      this.cuadro.setTexture("cuadro");
       this.interruptor.disableBody(true);
       this.interruptor.setVisible(false);
     }
@@ -322,9 +348,10 @@ export default class Juego extends Phaser.Scene {
   }
 
   manosRandom() {
+    this.musicaAmbiente.volume = 0.4;
     const manos = new Enemigo(
       this,
-      this.jugador.x ,
+      this.jugador.x + 350,
       this.jugador.y - 1000,
       "manos"
     ).setPipeline("Light2D");

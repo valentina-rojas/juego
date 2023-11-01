@@ -31,9 +31,9 @@ export default class UI extends Phaser.Scene {
     });
 
     botonPausa.on("pointerup", () => {
-    
       this.scene.stop("juego");
-     this.scene.launch("pausa")
+      this.scene.stop("ui");
+      this.scene.launch("pausa");
     });
 
     // escuchar eventos
@@ -55,7 +55,7 @@ export default class UI extends Phaser.Scene {
     if (this.nivel === 1) {
       this.imagenNivel.setTexture("llave");
     }
-     if (this.nivel === 2) {
+    if (this.nivel === 2) {
       this.imagenNivel.setTexture("palanca").setScale(0.3);
     }
   }
