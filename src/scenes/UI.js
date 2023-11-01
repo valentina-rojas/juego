@@ -12,10 +12,10 @@ export default class UI extends Phaser.Scene {
   }
 
   create() {
-    this.nivelTexto = this.add.text(1600, 40, `Nivel ${this.nivel}`, {
+    /* this.nivelTexto = this.add.text(1600, 40, `Nivel ${this.nivel}`, {
       fontFamily: "Amatic SC",
       fontSize: "60px",
-    });
+    }); */
 
     const botonPausa = this.add
       .text(100, 50, "pausa", { fontFamily: "Amatic SC", fontSize: "60px" })
@@ -31,14 +31,16 @@ export default class UI extends Phaser.Scene {
     });
 
     botonPausa.on("pointerup", () => {
-    
+
       this.scene.stop("juego");
-     this.scene.launch("pausa")
+      this.scene.stop("ui");
+      this.scene.launch("pausa");
+
     });
 
     // escuchar eventos
     events.on("mostrarLlave", this.mostrarLlave, this);
-    events.on("actualizarNivel", this.actualizarNivel, this);
+    // events.on("actualizarNivel", this.actualizarNivel, this);
 
     if (this.nivel === 1) {
       this.imagenNivel = this.add.image(1800, 80, "llaveSilueta");
@@ -55,14 +57,14 @@ export default class UI extends Phaser.Scene {
     if (this.nivel === 1) {
       this.imagenNivel.setTexture("llave");
     }
-     if (this.nivel === 2) {
+    if (this.nivel === 2) {
       this.imagenNivel.setTexture("palanca").setScale(0.3);
     }
   }
 
-  actualizarNivel(data) {
+ /* actualizarNivel(data) {
     this.nivel = data.nivel;
 
     this.nivelTexto.setText(`Nivel ${this.nivel}`);
-  }
+  } */
 }
