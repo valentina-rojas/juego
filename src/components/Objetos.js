@@ -46,9 +46,12 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       if (this.nivel < 4) {
         this.scene.start("juego", { nivel: this.nivel, tiempo: this.tiempo });
       } else {
-        console.log("animacion2");
-        this.scene.stop("ui");
-        this.scene.start("animaciones", { nivel: this.nivel, tiempo: this.tiempo  });
+        events.emit("puntajes");
+
+        this.scene.start("animaciones", {
+          nivel: this.nivel,
+          tiempo: this.tiempo,
+        });
       }
     }
   }

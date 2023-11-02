@@ -88,7 +88,7 @@ export default class FirebasePlugin extends Phaser.Plugins.BasePlugin {
   async getHighScores() {
     const q = query(
       collection(this.db, "high-scores"),
-      orderBy("score", "desc"),
+      orderBy("score", "asc"),
       limit(10)
     );
     const querySnapshot = await getDocs(q);

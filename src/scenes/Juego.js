@@ -297,24 +297,32 @@ export default class Juego extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.map = (map.widthInPixels, map.heightInPixels);
+
+    if (!this.puntajesSuscribed) {
+      events.on("puntajes", this.puntajes, this);
+      this.puntajesSuscribed = true; 
+    }
   }
 
   update() {
     this.jugador.movimiento();
     this.actualizarLuz();
     this.estadoBaldosa();
+  }
 
+  puntajes() {
+    console.log("ejecutando punatjes");
+    
     const user = this.firebase.getUser();
     this.firebase.saveGameData(user.uid, {
       tiempo: this.tiempo,
     });
 
-    // si el puntaje es mayor al puntaje mas alto, agregarlo a la lista de high scores
     this.firebase.getHighScores().then((highScores) => {
       const highScore = highScores[0] || { score: 0 };
       if (this.tiempo > highScore.score) {
-        this.firebase.addHighScore(user.displayName || user.uid, this.tiempo);
-      }
+        this.firebase.addHighScore(user.displayName || user.uid, this.tiempo) ;
+    } 
     });
   }
 
@@ -361,5 +369,6 @@ export default class Juego extends Phaser.Scene {
   desaparecerManos(manos) {
     this.manos.remove(manos, true, true);
     console.log("mano eliminada");
+    
   }
 }

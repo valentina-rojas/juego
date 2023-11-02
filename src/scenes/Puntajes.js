@@ -28,6 +28,8 @@ export default class Puntajes extends Phaser.Scene {
           })
           .setOrigin(0.5);
         scrollY += 60;
+
+        console.log(`${doc.name} - ${doc.score}`)
       });
     });
 
