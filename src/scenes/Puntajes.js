@@ -33,15 +33,13 @@ export default class Puntajes extends Phaser.Scene {
       });
     });
 
-    this.add
-      .text(960, 850, getPhrase("volver"), {
-        fontSize: "60px",
-        fontFamily: "Amatic SC, cursive",
-      })
-      .setInteractive()
+    const botonVolver = this.add
+      .image(130, 80,"flechaVolver")
       .setOrigin(0.5)
-      .on("pointerdown", () => {
-        this.scene.start("menu");
-      });
+      .setInteractive();
+
+    botonVolver.on("pointerup", () => {
+      this.scene.start("menu");
+    });
   }
 }

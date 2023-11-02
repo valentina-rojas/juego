@@ -53,8 +53,11 @@ export default class Preload extends Phaser.Scene {
     this.load.image("cuadro-abierto", "assets/sprites/nivel 3/cuadro-movido-n3.png")
     this.load.image("palancaNo", "assets/sprites/nivel 3/interruptor-n3.png")
     this.load.image("olla", "assets/sprites/nivel 3/olla-n3.png")
+    this.load.image("bolsaCemento", "assets/sprites/nivel 1/bolsa-cemento-n1.png")
+
 
     // escenas fijas
+    this.load.image("flechaVolver", "assets/escenas/flecha-volver.png" )
     this.load.image("fondoMenu", "assets/escenas/menu/menu-principal.png")
     this.load.image("popupPausa", "assets/escenas/menu/pop-up.png")
 
@@ -81,9 +84,14 @@ export default class Preload extends Phaser.Scene {
 
     this.load.spritesheet("manos", "assets/sprites/Manos-321x944.png", {
       frameWidth: 321,
-      frameHeight: 944,
+      frameHeight: 1080,
     });
 
+
+ /*this.load.spritesheet("ojos", "assets/sprites/OjosSprite-316x184.png", {
+      frameWidth: 316,
+      frameHeight: 184,
+    });*/
 
     //sonidos
     this.load.audio("pasos", "assets/audio/pasos.mp3");
@@ -145,6 +153,16 @@ export default class Preload extends Phaser.Scene {
       repeat: 1,
     });
    
+    /*this.anims.create({
+      key: "aparecerOjos",
+      frames: this.anims.generateFrameNumbers("ojos", {
+        start: 0,
+        end: 12,
+      }),
+      frameRate: 6,
+      repeat: 1,
+    });*/
+
 
     getTranslations(this.#language, () => {
       this.scene.start("inicio", { language: this.#language });
