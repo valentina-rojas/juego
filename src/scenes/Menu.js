@@ -14,6 +14,8 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
+    this.scene.stop("ui"); 
+    
     console.log(`idioma:${  this.language}`);
 
     this.add.image(960,540,"fondoMenu")
