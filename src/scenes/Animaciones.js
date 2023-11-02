@@ -15,6 +15,7 @@ export default class Animaciones extends Phaser.Scene {
   }
 
   create() {
+    this.scene.stop("ui");
 
 
   this.scene.stop("ui");

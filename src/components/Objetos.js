@@ -20,6 +20,9 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
   nivel;
 
 
+  tiempo;
+
+
   manos;
 
   baldosaSonido;
@@ -29,6 +32,7 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
   musicaAmbiente;
 
   puertaCerrada;
+
 
 
   constructor(scene, x, y, texture) {
@@ -54,13 +58,16 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       this.nivel += 1;
 
       if (this.nivel < 4) {
-        this.scene.start("juego", { nivel: this.nivel });
+        this.scene.start("juego", { nivel: this.nivel, tiempo: this.tiempo });
       } else {
-        this.temporizadorSonido.stop();
+        events.emit("puntajes");
+          this.temporizadorSonido.stop();
         this.musicaAmbiente.stop();
-        console.log("animacion2");
-        this.scene.stop("ui");
-        this.scene.start("animaciones", { nivel: this.nivel });
+
+        this.scene.start("animaciones", {
+          nivel: this.nivel,
+          tiempo: this.tiempo,
+        });
       }
     }
   }

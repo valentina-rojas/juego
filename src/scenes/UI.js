@@ -2,6 +2,8 @@ import Phaser from "phaser";
 import events from "../components/EventCenter";
 
 export default class UI extends Phaser.Scene {
+  firebase;
+
   constructor() {
     super("ui");
   }
@@ -35,6 +37,7 @@ export default class UI extends Phaser.Scene {
       this.scene.stop("juego");
       this.scene.stop("ui");
       this.scene.launch("pausa");
+
 
     });
 

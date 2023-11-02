@@ -13,6 +13,8 @@ export default class Juego extends Phaser.Scene {
 
   luces;
 
+  firebase;
+
   constructor() {
     super("juego");
   }
@@ -23,12 +25,23 @@ export default class Juego extends Phaser.Scene {
     this.timer = 40;
     this.baldosaPresionada = false;
     this.interruptor = null;
+    this.tiempo = data.tiempo || 0;
   }
 
   create() {
+    this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        this.tiempo++; // Incrementa la variable this.tiempo en 1 cada segundo
+      },
+      callbackScope: this,
+      loop: true,
+    });
+
     this.scene.launch("ui", {
       nivel: this.nivel,
       recolectables: this.recolectables,
+
     });
 
     // sonido y musica
@@ -43,6 +56,7 @@ export default class Juego extends Phaser.Scene {
     this.jarronSonido = this.sound.add("jarron", { loop: false });
     this.ArrastrarJarronSonido = this.sound.add("arrastrar-jarron", {
       loop: false,
+
     });
     this.puertaCerrada = this.sound.add("puerta-cerrada", { loop: false });
 
@@ -335,13 +349,36 @@ export default class Juego extends Phaser.Scene {
     this.cameras.main.startFollow(this.jugador);
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-   
+
+    this.map = (map.widthInPixels, map.heightInPixels);
+
+    if (!this.puntajesSuscribed) {
+      events.on("puntajes", this.puntajes, this);
+      this.puntajesSuscribed = true; 
+    }
+
   }
 
   update() {
     this.jugador.movimiento();
     this.actualizarLuz();
     this.estadoBaldosa();
+  }
+
+  puntajes() {
+    console.log("ejecutando punatjes");
+    
+    const user = this.firebase.getUser();
+    this.firebase.saveGameData(user.uid, {
+      tiempo: this.tiempo,
+    });
+
+    this.firebase.getHighScores().then((highScores) => {
+      const highScore = highScores[0] || { score: 0 };
+      if (this.tiempo > highScore.score) {
+        this.firebase.addHighScore(user.displayName || user.uid, this.tiempo) ;
+    } 
+    });
   }
 
   estadoBaldosa() {
@@ -376,7 +413,9 @@ export default class Juego extends Phaser.Scene {
     this.musicaAmbiente.volume = 0.4;
     const manos = new Enemigo(
       this,
+
       this.jugador.x + 350,
+
       this.jugador.y - 1000,
       "manos"
     ).setSize(180,900).setPipeline("Light2D");
@@ -389,5 +428,6 @@ export default class Juego extends Phaser.Scene {
   desaparecerManos(manos) {
     this.manos.remove(manos, true, true);
     console.log("mano eliminada");
+    
   }
 }
