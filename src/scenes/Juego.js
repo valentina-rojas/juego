@@ -162,13 +162,6 @@ export default class Juego extends Phaser.Scene {
             .setPipeline("Light2D");
           break;
         }
-        case "ojos": {
-          this.ojos = new Objetos(this, x, y, "ojos")
-          .setVisible(false)
-          .setPipeline("Light2D")
-          .setScale(0.3);
-          break;
-        }
         default: {
           break;
         }

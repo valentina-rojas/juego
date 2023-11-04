@@ -42,7 +42,6 @@ export default class Preload extends Phaser.Scene {
 
     // objetos
     this.load.image("llave","assets/sprites/nivel 1/llave-n1.png" )
-    this.load.image("ojos","assets/sprites/nivel 1/ojos.jpg" )
     this.load.image("llaveSilueta","assets/sprites/nivel 1/llave-silueta-n1.png" )
     this.load.image("jarron","assets/sprites/nivel 2/jarron-n2.png" )
     this.load.image("palanca","assets/sprites/nivel 2/palanca-n2.png" )
@@ -88,10 +87,10 @@ export default class Preload extends Phaser.Scene {
     });
 
 
- /*this.load.spritesheet("ojos", "assets/sprites/OjosSprite-316x184.png", {
+ this.load.spritesheet("ojos", "assets/sprites/OjosSprite-316x184.png", {
       frameWidth: 316,
       frameHeight: 184,
-    });*/
+    });
 
     //sonidos
     this.load.audio("pasos", "assets/audio/pasos.mp3");
@@ -103,15 +102,6 @@ export default class Preload extends Phaser.Scene {
     this.load.audio("arrastrar-jarron", "assets/audio/arrastrarJarron.ogg");
     //musica 
     this.load.audio("musicaAmbiente", "assets/audio/musicaAmbiente.mp3"); 
-
-
-  /* WebFont.load({
-      custom: {
-          families: ['Amatic SC'],
-          urls: ['assets/fuentes/tipografias.css'],
-      },
-  }); */
-
   
   }
 
@@ -153,15 +143,15 @@ export default class Preload extends Phaser.Scene {
       repeat: 1,
     });
    
-    /*this.anims.create({
+    this.anims.create({
       key: "aparecerOjos",
       frames: this.anims.generateFrameNumbers("ojos", {
         start: 0,
         end: 12,
       }),
       frameRate: 6,
-      repeat: 1,
-    });*/
+      repeat: 0,
+    });
 
 
     getTranslations(this.#language, () => {
