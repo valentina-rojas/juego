@@ -35,4 +35,9 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
     this.body.setVelocityX(this.velocidad);
     this.anims.play("atrapar", true);
   }
+
+  movimientoEnemigoFinal() {
+    this.body.setVelocityX(this.velocidad);
+    this.anims.play("perseguir", true);
+  }
 }

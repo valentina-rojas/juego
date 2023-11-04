@@ -92,6 +92,12 @@ export default class Preload extends Phaser.Scene {
       frameHeight: 184,
     });
 
+    this.load.spritesheet("muro", "assets/sprites/SombraSprite-769x1080.png", {
+      frameWidth: 769,
+      frameHeight: 1080,
+    });
+
+
     //sonidos
     this.load.audio("pasos", "assets/audio/pasos.mp3");
     this.load.audio("temporizador", "assets/audio/temporizador1.ogg");
@@ -152,6 +158,17 @@ export default class Preload extends Phaser.Scene {
       frameRate: 6,
       repeat: 0,
     });
+
+    this.anims.create({
+      key: "perseguir",
+      frames: this.anims.generateFrameNumbers("muro", {
+        start: 0,
+        end: 10,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
 
 
     getTranslations(this.#language, () => {
