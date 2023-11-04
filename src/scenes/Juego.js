@@ -158,9 +158,7 @@ export default class Juego extends Phaser.Scene {
           break;
         }
         case "madera": {
-          this.madera = new Objetos(this, x, y, "#")
-            .setScale(0.3)
-            .setVisible(false)
+          this.madera = new Objetos(this, x, y, "bolsaCemento")
             .setPipeline("Light2D");
           break;
         }
@@ -343,6 +341,7 @@ export default class Juego extends Phaser.Scene {
     this.physics.add.collider(this.caja, pisoLayer);
     this.physics.add.collider(this.madera, pisoLayer);
     this.physics.add.collider(this.caja, this.madera);
+    this.physics.add.collider(this.jugador, this.madera);
     this.physics.add.collider(this.jugador, this.caja);
     this.physics.add.collider(this.jugador, this.jarron);
 
