@@ -35,7 +35,7 @@ const config = {
       debug: false,
     },
   },
-  scene: [Preload, Login, Inicio, Menu, Creditos, Ajustes, Puntajes , Pausa, Juego, UI, Animaciones],
+  scene: [Preload, Login, Inicio, Menu, Creditos, Ajustes, Puntajes , Juego,  Pausa, UI, Animaciones],
   plugins: {
     global: [
       {

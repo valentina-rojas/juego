@@ -30,6 +30,7 @@ export default class Pausa extends Phaser.Scene {
     });
 
     botonVolver.on("pointerup", () => {
+      this.scene.stop("juego");
       this.scene.stop("ui");
       this.scene.start("menu");
     });
@@ -75,12 +76,10 @@ export default class Pausa extends Phaser.Scene {
     });
 
     botonReanudar.on("pointerup", () => {
-
       this.scene.stop("pausa");
 
       this.scene.resume("juego");
+      this.scene.resume("ui");
     });
   }
-
 }
-  
