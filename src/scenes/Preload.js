@@ -51,6 +51,8 @@ export default class Preload extends Phaser.Scene {
     this.load.image("cuadro", "assets/sprites/nivel 3/cuadro-derecho-n3.png")
     this.load.image("cuadro-abierto", "assets/sprites/nivel 3/cuadro-movido-n3.png")
     this.load.image("palancaNo", "assets/sprites/nivel 3/interruptor-n3.png")
+    this.load.image("interruptorSilueta", "assets/sprites/nivel 3/interruptor-silueta-n3.png")
+
     this.load.image("olla", "assets/sprites/nivel 3/olla-n3.png")
     this.load.image("bolsaCemento", "assets/sprites/nivel 1/bolsa-cemento-n1.png")
 

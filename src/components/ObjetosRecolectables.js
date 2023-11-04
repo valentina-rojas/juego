@@ -48,6 +48,7 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
   recolectarPalanca() {
     this.palanca.disableBody(true, true);
     this.recolectables += 1;
+    events.emit("mostrarLlave");
     events.emit("colisionConPalanca");
     this.puerta.setTexture("puerta-abierta");
     console.log("palanca recolectada");
