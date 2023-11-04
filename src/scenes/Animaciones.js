@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import events from "../components/EventCenter";
 
 export default class Animaciones extends Phaser.Scene {
 
@@ -37,6 +38,9 @@ export default class Animaciones extends Phaser.Scene {
     console.log("animacion2")
     this.add.image(1000, 400, "animacion2");
     setTimeout(() => {
+      events.off("colisionConInterruptor");
+      events.off("temporizador");
+      events.off("colisionConPalanca");
       this.scene.start(("menu"),{ nivel: this.nivel });  
     }, 3000);
 }
