@@ -23,11 +23,22 @@ export default class UI extends Phaser.Scene {
 
     if (this.nivel === 1) {
       this.imagenNivel = this.add.image(1800, 80, "llaveSilueta");
-    } else if (this.nivel === 2) {
+    } 
+    
+    if (this.nivel === 2) {
       this.imagenNivel = this.add
         .image(1800, 80, "palancaSilueta")
         .setScale(0.3);
     }
+
+    if (this.nivel === 3) {
+      this.imagenNivel = this.add
+        .image(1800, 80, "interruptorSilueta")
+       
+    }
+
+
+
   }
 
   mostrarLlave() {
@@ -37,6 +48,11 @@ export default class UI extends Phaser.Scene {
     if (this.nivel === 2) {
       this.imagenNivel.setTexture("palanca").setScale(0.3);
     }
+
+    if (this.nivel === 3) {
+      this.imagenNivel.setTexture("palancaNo");
+    }
+
   }
 
   pausarJuego() {
