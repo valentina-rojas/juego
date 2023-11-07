@@ -133,14 +133,15 @@ export default class Juego extends Phaser.Scene {
         case "olla": {
           this.olla = new ObjetosMovibles(this, x, y, "olla")
             .setDamping(true)
-            .setDrag(0.000001)
+            .setDrag(0.000001, 4)
             .setPipeline("Light2D");
           break;
         }
         case "jarron": {
-          this.jarron = new ObjetosMovibles(this, x, y, "jarron").setPipeline(
-            "Light2D"
-          );
+          this.jarron = new ObjetosMovibles(this, x, y, "jarron")
+            .setDamping(true)
+            .setDrag(0.000001, 4)
+            .setPipeline("Light2D");
           break;
         }
         case "baldosa": {
@@ -159,8 +160,18 @@ export default class Juego extends Phaser.Scene {
           this.traba = new Objetos(this, x, y, "bolsaCemento").setPipeline(
             "Light2D"
           );
+
           break;
         }
+
+        case "ojos": {
+          this.ojos = new Objetos(this, x, y, "ojos")
+            .setVisible(false)
+            .setPipeline("Light2D")
+            .setScale(0.3);
+          break;
+        }
+
         default: {
           break;
         }
@@ -228,7 +239,9 @@ export default class Juego extends Phaser.Scene {
     if (this.nivel === 3) {
       this.olla.setGravityY(5000);
       this.olla.body.velocity.y = 800;
+
       this.traba.setTexture("cacerolas");
+
       this.puerta.setTexture("puerta-cerrada3");
       this.puertaIzquierda.setTexture("puerta-izquierda3");
       this.physics.add.collider(this.jugador, this.olla);
@@ -270,8 +283,6 @@ export default class Juego extends Phaser.Scene {
           callbackScope: this,
           loop: true,
         });
-
-        this.temporizador = this.sound.add("temporizador", { loop: true });
 
         this.tweens.add({
           targets: [this.cameras.main.startFollow(this.jugador)],
@@ -399,21 +410,29 @@ export default class Juego extends Phaser.Scene {
   }
 
   manosRandom() {
-    this.musicaAmbiente.volume = 0.4;
     const manos = new Enemigo(
       this,
-      this.jugador.x + 350,
-      this.jugador.y - 1000,
-      "manos"
-    ).setSize(180, 900).setPipeline("Light2D");
 
+      this.jugador.x + 900,
+
+      this.jugador.y - 2500,
+      "manos"
+    )
+      .setSize(200, 900)
+      .setPipeline("Light2D");
+
+    this.musicaAmbiente.volume = 0.4;
     manos.movimientoEnemigo();
     this.manos.add(manos);
     console.log("nueva mano");
   }
 
-  desaparecerManos(manos) {
-    this.manos.remove(manos, true, true);
+  desaparecerManos() {
+    this.manos.setVelocityY(-1000);
+    //this.manos.remove(manos, true, true);
     console.log("mano eliminada");
+
+    this.musicaAmbiente.volume = 0.2;
+
   }
 }
