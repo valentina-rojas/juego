@@ -144,10 +144,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-
                  "x":1499.63636363637,
                  "y":899.818181818182
-
                 }, 
                 {
                  "height":0,
@@ -158,10 +156,8 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-
                  "x":1659.95454545454,
                  "y":952.780303030303
-
                 }, 
                 {
                  "height":0,
@@ -198,18 +194,6 @@
                  "width":0,
                  "x":1263.16905901117,
                  "y":975.519936204152
-                }, 
-                {
-                 "height":0,
-                 "id":10,
-                 "name":"ojos",
-                 "point":true,
-                 "rotation":0,
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1293.37958532696,
-                 "y":443.519936204152
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -221,7 +205,7 @@
  "nextobjectid":11,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.10.1",
+ "tiledversion":"1.8.5",
  "tileheight":40,
  "tilesets":[
         {
@@ -698,6 +682,6 @@
         }],
  "tilewidth":40,
  "type":"map",
- "version":"1.10",
+ "version":"1.8",
  "width":48
 }
