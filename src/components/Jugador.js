@@ -12,7 +12,7 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
 
   jugador;
 
-  pasos; 
+  pasos;
 
   musicaAmbiente;
 
@@ -33,13 +33,12 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     this.cursor = scene.input.keyboard.createCursorKeys();
 
     this.scene = scene;
-
   }
 
   movimiento() {
     if (this.cursor.left.isDown) {
       this.body.setVelocityX(-this.velocidad);
-     // this.pasos.play();
+      // this.pasos.play();
       this.anims.play("caminarIzquierda", true);
     } else if (this.cursor.right.isDown) {
       this.body.setVelocityX(this.velocidad);
@@ -54,8 +53,8 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  morir() { 
-    this.scene.stop("ui"); 
+  morir() {
+    this.scene.stop("ui");
     this.scene.pause("juego");
     this.musicaAmbiente.setVolume(0.1);
 
@@ -68,5 +67,5 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
       events.off("colisionConPalanca");
       console.log("muerte");
     }, 1500);
-}
+  }
 }

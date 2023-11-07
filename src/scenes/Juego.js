@@ -295,6 +295,16 @@ export default class Juego extends Phaser.Scene {
         });
         console.log("temblor");
 
+        this.roturas = new Objetos(this, 5000, 2000, "roturas");
+
+        this.physics.add.collider(
+          this.jugador,
+          this.roturas,
+          this.jugador.morir,
+          null,
+          this
+        );
+
         this.physics.add.collider(
           this.jugador,
           enemigoFinal,
