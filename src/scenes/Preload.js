@@ -87,6 +87,27 @@ export default class Preload extends Phaser.Scene {
       frameHeight: 1080,
     });
 
+    //Viñetas introduccion
+    this.load.image("fondo-viñeta", "assets/sprites/Animacion 1/fondo-c-inicio.png");
+    this.load.image("viñeta1", "assets/sprites/Animacion 1/viñeta1-c-inicio.png");
+    this.load.image("viñeta2", "assets/sprites/Animacion 1/viñeta2-c-inicio.png");
+    this.load.image("viñeta3", "assets/sprites/Animacion 1/viñeta3-c-inicio.png");
+    this.load.image("viñeta4", "assets/sprites/Animacion 1/viñeta4-c-inicio.png");
+    this.load.image("viñeta5", "assets/sprites/Animacion 1/viñeta5-c-inicio.png");
+    this.load.image("viñeta6", "assets/sprites/Animacion 1/viñeta6-c-inicio.png");
+    this.load.image("viñeta7", "assets/sprites/Animacion 1/viñeta7-c-inicio.png");
+    this.load.image("viñeta8", "assets/sprites/Animacion 1/viñeta8-c-inicio.png");
+    this.load.image("viñeta9", "assets/sprites/Animacion 1/viñeta9-c-inicio.png");
+    
+    //Viñetas conclusion 
+    this.load.image("viñeta10", "assets/sprites/Animacion 2/viñeta1-c-fin.png");
+    this.load.image("viñeta11", "assets/sprites/Animacion 2/viñeta2-c-fin.png");
+    this.load.image("viñeta12", "assets/sprites/Animacion 2/viñeta3-c-fin.png");
+    this.load.image("viñeta13", "assets/sprites/Animacion 2/viñeta4-c-fin.png");
+    this.load.image("viñeta14", "assets/sprites/Animacion 2/viñeta5-c-fin.png");
+    this.load.image("viñeta15", "assets/sprites/Animacion 2/viñeta6-c-fin.png");
+    this.load.image("viñeta16", "assets/sprites/Animacion 2/viñeta7-c-fin.png");
+
 
  /*this.load.spritesheet("ojos", "assets/sprites/OjosSprite-316x184.png", {
       frameWidth: 316,
@@ -150,7 +171,7 @@ export default class Preload extends Phaser.Scene {
         end: 5,
       }),
       frameRate: 6,
-      repeat: 1,
+      repeat: -1,
     });
    
     /*this.anims.create({

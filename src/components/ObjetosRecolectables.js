@@ -15,7 +15,9 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
     palanca;
 
     ojos;
-  
+    
+    musicaAmbiente;
+
     constructor(scene, x, y, texture) {
       super(scene, x, y, texture);
   
@@ -35,8 +37,12 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
         console.log("llave recolectada");
         setTimeout(() => {
           this.ojos.setTexture("ojos").setVisible(true);
+          this.musicaAmbiente.volume = 0.5;
         }, 2000);
-       
+           (() => {
+          this.ojos.setTexture("ojos").setVisible(false);
+          this.musicaAmbiente.volume = 0.2;
+        });
       }
     
       recolectarPalanca() {

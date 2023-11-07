@@ -4,6 +4,7 @@ import { getPhrase } from "../services/traducciones";
 
 export default class Menu extends Phaser.Scene {
   language;
+  musicaAmbiente;
 
   constructor() {
     super("menu");
