@@ -12,8 +12,6 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
 
   jugador;
 
-  pasos;
-
   musicaAmbiente;
 
   cameras;
@@ -38,10 +36,11 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
   movimiento() {
     if (this.cursor.left.isDown) {
       this.body.setVelocityX(-this.velocidad);
-      // this.pasos.play();
+      this.scene.pasos.play();
       this.anims.play("caminarIzquierda", true);
     } else if (this.cursor.right.isDown) {
       this.body.setVelocityX(this.velocidad);
+      this.scene.pasos.play();
       this.anims.play("caminarDerecha", true);
     } else {
       this.body.setVelocityX(0);
