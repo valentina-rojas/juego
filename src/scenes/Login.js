@@ -18,14 +18,16 @@ export default class Login extends Phaser.Scene {
     this.add
       .text(960, 200, getPhrase("log in"), {
         fontFamily: "Amatic SC",
-        fontSize: "80px",
+        fontSize: "100px",
+        color: "#fce5cd",
       })
       .setOrigin(0.5);
 
-    this.add
-      .text(960, 600, getPhrase("ingresar de forma anonima"), {
+    const botonAnonimo = this.add
+      .text(960, 500, getPhrase("ingresar de forma anonima"), {
         fontFamily: "Amatic SC",
-        fontSize: "80px",
+        fontSize: "100px",
+        color: "#fce5cd",
       })
       .setOrigin(0.5)
       .setInteractive()
@@ -40,10 +42,19 @@ export default class Login extends Phaser.Scene {
           });
       });
 
-    this.add
-      .text(960, 700, getPhrase("ingresar con google"), {
+    botonAnonimo.on("pointerover", () => {
+      botonAnonimo.setStyle({ color: "#b0a08f" });
+    });
+
+    botonAnonimo.on("pointerout", () => {
+      botonAnonimo.setStyle({ color: "#fce5cd" });
+    });
+
+    const botonGoogle = this.add
+      .text(960, 650, getPhrase("ingresar con google"), {
         fontFamily: "Amatic SC",
-        fontSize: "80px",
+        fontSize: "100px",
+        color: "#fce5cd",
       })
       .setOrigin(0.5)
       .setInteractive()
@@ -57,5 +68,13 @@ export default class Login extends Phaser.Scene {
             console.log("🚀 ~ file: Login.js:74 ~ .catch ~ error", error);
           });
       });
+
+    botonGoogle.on("pointerover", () => {
+      botonGoogle.setStyle({ color: "#b0a08f" });
+    });
+
+    botonGoogle.on("pointerout", () => {
+      botonGoogle.setStyle({ color: "#fce5cd" });
+    });
   }
 }

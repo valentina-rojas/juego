@@ -21,10 +21,12 @@ export default class UI extends Phaser.Scene {
     // escuchar eventos
     events.on("mostrarLlave", this.mostrarLlave, this);
 
+    this.add.image(1800, 80, "cartelUI").setScale(0.6);
+
     if (this.nivel === 1) {
       this.imagenNivel = this.add.image(1800, 80, "llaveSilueta");
-    } 
-    
+    }
+
     if (this.nivel === 2) {
       this.imagenNivel = this.add
         .image(1800, 80, "palancaSilueta")
@@ -34,11 +36,8 @@ export default class UI extends Phaser.Scene {
     if (this.nivel === 3) {
       this.imagenNivel = this.add
         .image(1800, 80, "interruptorSilueta")
-       
+        .setScale(0.8);
     }
-
-
-
   }
 
   mostrarLlave() {
@@ -50,9 +49,8 @@ export default class UI extends Phaser.Scene {
     }
 
     if (this.nivel === 3) {
-      this.imagenNivel.setTexture("palancaNo");
+      this.imagenNivel.setTexture("palancaNo").setScale(0.8);
     }
-
   }
 
   pausarJuego() {

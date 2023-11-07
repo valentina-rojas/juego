@@ -13,7 +13,6 @@ export default class Preload extends Phaser.Scene {
 
     this.#language = getLanguageConfig();
 
-
     this.load.image("fondo1", "assets/sprites/nivel 1/pared-n1.png");
     this.load.image("fondo2", "assets/sprites/nivel 2/fondo2.png");
     this.load.image("fondo3", "assets/sprites/nivel 3/fondo3.png");
@@ -29,13 +28,10 @@ export default class Preload extends Phaser.Scene {
     // puertas
     this.load.image("puerta-cerrada", "assets/sprites/nivel 1/puerta-cerrada-n1.png")
     this.load.image("puerta-abierta", "assets/sprites/nivel 1/puerta-abierta-n1.png")
-
     this.load.image("puerta-cerrada2", "assets/sprites/nivel 2/puerta-derecha-cerrada-n2.png")
-
     this.load.image("puerta-abierta2", "assets/sprites/nivel 2/puerta-derecha-abierta-n2.png")
     this.load.image("puerta-maderas", "assets/sprites/nivel 2/puerta-maderas-n2.png")
     this.load.image("puerta-izquierda2", "assets/sprites/nivel 2/puerta-izquierda-n2.png")
-
     this.load.image("puerta-izquierda3", "assets/sprites/nivel 3/puerta-izquierda-n3.png")
     this.load.image("puerta-abierta3", "assets/sprites/nivel 3/puerta-derecha-abierta-n3.png")
     this.load.image("puerta-cerrada3", "assets/sprites/nivel 3/puerta-derecha-cerrada-n3.png")
@@ -52,15 +48,15 @@ export default class Preload extends Phaser.Scene {
     this.load.image("cuadro-abierto", "assets/sprites/nivel 3/cuadro-movido-n3.png")
     this.load.image("palancaNo", "assets/sprites/nivel 3/interruptor-n3.png")
     this.load.image("interruptorSilueta", "assets/sprites/nivel 3/interruptor-silueta-n3.png")
-
+    this.load.image("cacerolas", "assets/sprites/nivel 3/cacerolas-n3.png")
     this.load.image("olla", "assets/sprites/nivel 3/olla-n3.png")
     this.load.image("bolsaCemento", "assets/sprites/nivel 1/bolsa-cemento-n1.png")
-
 
     // escenas fijas
     this.load.image("flechaVolver", "assets/escenas/flecha-volver.png" )
     this.load.image("fondoMenu", "assets/escenas/menu/menu-principal.png")
     this.load.image("popupPausa", "assets/escenas/menu/pop-up.png")
+    this.load.image("cartelUI", "assets/escenas/elemento-ui.png" )
 
     this.load.image("creditos", "assets/escenas/creditos.png")
     this.load.image("ajustes", "assets/escenas/ajustes.png")
@@ -88,8 +84,7 @@ export default class Preload extends Phaser.Scene {
       frameHeight: 1080,
     });
 
-
- this.load.spritesheet("ojos", "assets/sprites/OjosSprite-316x184.png", {
+    this.load.spritesheet("ojos", "assets/sprites/OjosSprite-316x184.png", {
       frameWidth: 316,
       frameHeight: 184,
     });
@@ -98,7 +93,6 @@ export default class Preload extends Phaser.Scene {
       frameWidth: 769,
       frameHeight: 1080,
     });
-
 
     //sonidos
     this.load.audio("pasos", "assets/audio/pasos.mp3");
@@ -170,8 +164,6 @@ export default class Preload extends Phaser.Scene {
       frameRate: 6,
       repeat: -1,
     });
-
-
 
     getTranslations(this.#language, () => {
       this.scene.start("inicio", { language: this.#language });
