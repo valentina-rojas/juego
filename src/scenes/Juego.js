@@ -433,6 +433,5 @@ export default class Juego extends Phaser.Scene {
     console.log("mano eliminada");
 
     this.musicaAmbiente.volume = 0.2;
-
   }
 }

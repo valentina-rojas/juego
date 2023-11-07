@@ -19,9 +19,7 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
 
   nivel;
 
-
   tiempo;
-
 
   manos;
 
@@ -33,7 +31,7 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
 
   puertaCerrada;
 
-
+  i;
 
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
@@ -80,7 +78,7 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       this.interruptor = new Objetos(this, 1130, 500, "palancaNo");
       this.cuadro.setTexture("cuadro-abierto");
       this.baldosaSonido.play();
-     
+
       events.emit("colisionConInterruptor", this.interruptor);
     }
   }
@@ -101,19 +99,13 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
     this.enemigoFinal = new Enemigo(this, 400, 500, "manos");
     this.enemigoFinal.movimientoEnemigoFinal();
 
-    this.enemigoManos = new Enemigo(
-      this,
-      this.jugador.x + 200,
-      this.jugador.y - 1000,
-      "manos"
-    ).setPipeline("Light2D");
+    /*this.enemigoManos = new Enemigo(this, 2000, 500, "manos")
+      .setRotation(360)
+      .setPipeline("Light2D");
 
-    
+    this.manos.add(this.enemigoManos);
+    console.log("nueva mano");*/
 
-    this.enemigoManos.movimientoEnemigo();
-    this.manos.add(this.enemigoManos); 
-    console.log("nueva mano");
-    
     events.emit("temporizador", this.enemigoFinal);
   }
 
