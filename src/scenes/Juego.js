@@ -20,7 +20,7 @@ export default class Juego extends Phaser.Scene {
   }
 
   init(data) {
-    this.recolectables =  0;
+    this.recolectables = 0;
     this.nivel = data.nivel || 1;
     this.timer = 40;
     this.baldosaPresionada = false;
@@ -41,7 +41,6 @@ export default class Juego extends Phaser.Scene {
     this.scene.launch("ui", {
       nivel: this.nivel,
       recolectables: this.recolectables,
-
     });
 
     // sonido y musica
@@ -56,7 +55,6 @@ export default class Juego extends Phaser.Scene {
     this.jarronSonido = this.sound.add("jarron", { loop: false });
     this.ArrastrarJarronSonido = this.sound.add("arrastrar-jarron", {
       loop: false,
-
     });
     this.puertaCerrada = this.sound.add("puerta-cerrada", { loop: false });
 
@@ -135,14 +133,15 @@ export default class Juego extends Phaser.Scene {
         case "olla": {
           this.olla = new ObjetosMovibles(this, x, y, "olla")
             .setDamping(true)
-            .setDrag(0.000001)
+            .setDrag(0.000001, 4)
             .setPipeline("Light2D");
           break;
         }
         case "jarron": {
-          this.jarron = new ObjetosMovibles(this, x, y, "jarron").setPipeline(
-            "Light2D"
-          );
+          this.jarron = new ObjetosMovibles(this, x, y, "jarron")
+            .setDamping(true)
+            .setDrag(0.000001, 4)
+            .setPipeline("Light2D");
           break;
         }
         case "baldosa": {
@@ -159,9 +158,21 @@ export default class Juego extends Phaser.Scene {
         }
         case "madera": {
           this.madera = new Objetos(this, x, y, "bolsaCemento")
+            .setScale(0.9)
+            .setSize(230, 160)
+            .setOffset(10, 0)
             .setPipeline("Light2D");
           break;
         }
+
+        case "ojos": {
+          this.ojos = new Objetos(this, x, y, "ojos")
+            .setVisible(false)
+            .setPipeline("Light2D")
+            .setScale(0.3);
+          break;
+        }
+
         default: {
           break;
         }
@@ -208,7 +219,6 @@ export default class Juego extends Phaser.Scene {
         this
       );
 
-
       this.physics.add.collider(this.jugador, plataformasLayer);
       this.physics.add.collider(this.jarron, plataformasLayer);
 
@@ -228,8 +238,8 @@ export default class Juego extends Phaser.Scene {
 
     // condicionales para nivel 3
     if (this.nivel === 3) {
-      this.olla.setGravityY(5000); 
-      this.olla.body.velocity.y = 800; 
+      this.olla.setGravityY(5000);
+      this.olla.body.velocity.y = 800;
 
       this.puerta.setTexture("puerta-cerrada3");
       this.puertaIzquierda.setTexture("puerta-izquierda3");
@@ -273,8 +283,6 @@ export default class Juego extends Phaser.Scene {
           loop: true,
         });
 
-        this.temporizador = this.sound.add("temporizador", { loop: true });
-
         this.tweens.add({
           targets: [this.cameras.main.startFollow(this.jugador)],
           x: -10,
@@ -294,14 +302,14 @@ export default class Juego extends Phaser.Scene {
           this
         );
 
-       this.physics.add.overlap(
+        this.physics.add.overlap(
           this.manos,
           this.jugador,
           this.jugador.morir,
           null,
           this
         );
-  
+
         this.physics.add.collider(
           this.manos,
           pisoLayer,
@@ -346,9 +354,8 @@ export default class Juego extends Phaser.Scene {
 
     if (!this.puntajesSuscribed) {
       events.on("puntajes", this.puntajes, this);
-      this.puntajesSuscribed = true; 
+      this.puntajesSuscribed = true;
     }
-
   }
 
   update() {
@@ -359,7 +366,7 @@ export default class Juego extends Phaser.Scene {
 
   puntajes() {
     console.log("ejecutando punatjes");
-    
+
     const user = this.firebase.getUser();
     this.firebase.saveGameData(user.uid, {
       tiempo: this.tiempo,
@@ -368,8 +375,8 @@ export default class Juego extends Phaser.Scene {
     this.firebase.getHighScores().then((highScores) => {
       const highScore = highScores[0] || { score: 0 };
       if (this.tiempo > highScore.score) {
-        this.firebase.addHighScore(user.displayName || user.uid, this.tiempo) ;
-    } 
+        this.firebase.addHighScore(user.displayName || user.uid, this.tiempo);
+      }
     });
   }
 
@@ -402,24 +409,27 @@ export default class Juego extends Phaser.Scene {
   }
 
   manosRandom() {
-    this.musicaAmbiente.volume = 0.4;
     const manos = new Enemigo(
       this,
 
-      this.jugador.x + 350,
+      this.jugador.x + 900,
 
-      this.jugador.y - 1000,
+      this.jugador.y - 2500,
       "manos"
-    ).setSize(180,900).setPipeline("Light2D");
+    )
+      .setSize(200, 900)
+      .setPipeline("Light2D");
 
+    this.musicaAmbiente.volume = 0.4;
     manos.movimientoEnemigo();
     this.manos.add(manos);
     console.log("nueva mano");
   }
 
-  desaparecerManos(manos) {
-    this.manos.remove(manos, true, true);
+  desaparecerManos() {
+    this.manos.setVelocityY(-1000);
+    //this.manos.remove(manos, true, true);
     console.log("mano eliminada");
-    
+    this.musicaAmbiente.volume = 0.2;
   }
 }

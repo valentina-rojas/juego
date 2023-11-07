@@ -61,7 +61,7 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
         this.scene.start("juego", { nivel: this.nivel, tiempo: this.tiempo });
       } else {
         events.emit("puntajes");
-          this.temporizadorSonido.stop();
+        this.temporizadorSonido.stop();
         this.musicaAmbiente.stop();
 
         this.scene.start("animaciones", {
@@ -126,7 +126,7 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       this.temporizadorSonido.stop();
       this.puertaCerrada.play();
       this.puertaCerrada.setVolume(0.5);
-      this.musicaAmbiente.setVolume(1.5);
+      this.musicaAmbiente.setVolume(0.8);
       this.puerta.setTexture("puerta-cerrada3");
       console.log("puerta cerrada");
     }

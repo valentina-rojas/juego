@@ -3,6 +3,8 @@ import events from "../components/EventCenter";
 import { getPhrase } from "../services/traducciones";
 
 export default class Pausa extends Phaser.Scene {
+
+  musicaAmbiente;
   constructor() {
     super("pausa");
   }
@@ -75,11 +77,17 @@ export default class Pausa extends Phaser.Scene {
       botonReanudar.setStyle({ backgroundColor: "#000000" });
     });
 
-    botonReanudar.on("pointerup", () => {
+    botonReanudar.on ("pointerup", () => {
       this.scene.stop("pausa");
-
       this.scene.resume("juego");
       this.scene.resume("ui");
     });
+
+    this.input.keyboard.on("keydown-P", () => {
+      this.scene.stop("pausa");
+      this.scene.resume("juego");
+      this.scene.resume("ui");
+    });
+
   }
 }

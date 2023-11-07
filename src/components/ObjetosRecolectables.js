@@ -3,29 +3,59 @@ import events from "./EventCenter";
 import Enemigo from "./Enemigo";
 
 export default class Objetos extends Phaser.Physics.Arcade.Sprite {
-  jugador;
 
-  body;
+    jugador;
+  
+    body;
+  
+    recolectables;
+  
+    puerta;
+  
+    llave;
+  
+    palanca;
 
-  recolectables;
+    ojos;
+    
+    musicaAmbiente;
 
-  puerta;
+    constructor(scene, x, y, texture) {
+      super(scene, x, y, texture);
+  
+      scene.add.existing(this);
+      scene.physics.add.existing(this);
+  
+      this.setCollideWorldBounds(true);
+      this.body.setImmovable(true);
+      this.body.allowGravity = false;
+    }
 
-  llave;
+    recolectarLlave() {
+        this.llave.disableBody(true, true);
+        this.recolectables += 1;
+        events.emit("mostrarLlave");
+        this.puerta.setTexture("puerta-abierta");
+        console.log("llave recolectada");
+        setTimeout(() => {
+          this.ojos.setTexture("ojos").setVisible(true);
+          this.musicaAmbiente.volume = 0.5;
+        }, 2000);
+           (() => {
+          this.ojos.setTexture("ojos").setVisible(false);
+          this.musicaAmbiente.volume = 0.2;
+        });
+      }
+    
+      recolectarPalanca() {
+        this.palanca.disableBody(true, true);
+        this.recolectables += 1;
+        events.emit("colisionConPalanca");
+        this.puerta.setTexture("puerta-abierta");
+        console.log("palanca recolectada");
+        console.log(`recolectables${  this.recolectables}`);
+      }
 
-  palanca;
-
-  ojos;
-
-  constructor(scene, x, y, texture) {
-    super(scene, x, y, texture);
-
-    scene.add.existing(this);
-    scene.physics.add.existing(this);
-
-    this.setCollideWorldBounds(true);
-    this.body.setImmovable(true);
-    this.body.allowGravity = false;
   }
 
   recolectarLlave() {

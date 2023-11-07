@@ -32,10 +32,10 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 200 },
-      debug: false,
+      debug: true,
     },
   },
-  scene: [Preload, Login, Inicio, Menu, Creditos, Ajustes, Puntajes , Juego,  Pausa, UI, Animaciones],
+  scene: [Preload, Login, Inicio, Juego, Menu, Creditos, Ajustes, Puntajes ,   Pausa, UI, Animaciones],
   plugins: {
     global: [
       {

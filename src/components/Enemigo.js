@@ -19,6 +19,7 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
     this.setGravityY(1350);
 
     this.velocidad = 241;
+
   }
 
   aparicionOjos() {
