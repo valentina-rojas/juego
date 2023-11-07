@@ -42,7 +42,6 @@ export default class Preload extends Phaser.Scene {
 
     // objetos
     this.load.image("llave","assets/sprites/nivel 1/llave-n1.png" )
-    this.load.image("ojos","assets/sprites/nivel 1/ojos.jpg" )
     this.load.image("llaveSilueta","assets/sprites/nivel 1/llave-silueta-n1.png" )
     this.load.image("jarron","assets/sprites/nivel 2/jarron-n2.png" )
     this.load.image("palanca","assets/sprites/nivel 2/palanca-n2.png" )
@@ -52,6 +51,8 @@ export default class Preload extends Phaser.Scene {
     this.load.image("cuadro", "assets/sprites/nivel 3/cuadro-derecho-n3.png")
     this.load.image("cuadro-abierto", "assets/sprites/nivel 3/cuadro-movido-n3.png")
     this.load.image("palancaNo", "assets/sprites/nivel 3/interruptor-n3.png")
+    this.load.image("interruptorSilueta", "assets/sprites/nivel 3/interruptor-silueta-n3.png")
+
     this.load.image("olla", "assets/sprites/nivel 3/olla-n3.png")
     this.load.image("bolsaCemento", "assets/sprites/nivel 1/bolsa-cemento-n1.png")
 
@@ -109,10 +110,16 @@ export default class Preload extends Phaser.Scene {
     this.load.image("viñeta16", "assets/sprites/Animacion 2/viñeta7-c-fin.png");
 
 
- /*this.load.spritesheet("ojos", "assets/sprites/OjosSprite-316x184.png", {
+ this.load.spritesheet("ojos", "assets/sprites/OjosSprite-316x184.png", {
       frameWidth: 316,
       frameHeight: 184,
-    });*/
+    });
+
+    this.load.spritesheet("muro", "assets/sprites/SombraSprite-769x1080.png", {
+      frameWidth: 769,
+      frameHeight: 1080,
+    });
+
 
     //sonidos
     this.load.audio("pasos", "assets/audio/pasos.mp3");
@@ -124,15 +131,6 @@ export default class Preload extends Phaser.Scene {
     this.load.audio("arrastrar-jarron", "assets/audio/arrastrarJarron.ogg");
     //musica 
     this.load.audio("musicaAmbiente", "assets/audio/musicaAmbiente.mp3"); 
-
-
-  /* WebFont.load({
-      custom: {
-          families: ['Amatic SC'],
-          urls: ['assets/fuentes/tipografias.css'],
-      },
-  }); */
-
   
   }
 
@@ -174,15 +172,26 @@ export default class Preload extends Phaser.Scene {
       repeat: -1,
     });
    
-    /*this.anims.create({
+    this.anims.create({
       key: "aparecerOjos",
       frames: this.anims.generateFrameNumbers("ojos", {
         start: 0,
         end: 12,
       }),
       frameRate: 6,
-      repeat: 1,
-    });*/
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "perseguir",
+      frames: this.anims.generateFrameNumbers("muro", {
+        start: 0,
+        end: 10,
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
 
 
     getTranslations(this.#language, () => {

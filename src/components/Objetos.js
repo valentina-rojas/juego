@@ -86,6 +86,8 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
   }
 
   puertaTemporizada() {
+    events.emit("mostrarLlave");
+
     this.musicaAmbiente.setVolume(0.8);
     this.temporizadorSonido.play();
     this.temporizadorSonido.setVolume(0.3);
@@ -97,7 +99,7 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
     console.log(this.timer);
 
     this.enemigoFinal = new Enemigo(this, 400, 500, "manos");
-    this.enemigoFinal.movimientoEnemigo();
+    this.enemigoFinal.movimientoEnemigoFinal();
 
     this.enemigoManos = new Enemigo(
       this,
@@ -105,6 +107,8 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       this.jugador.y - 1000,
       "manos"
     ).setPipeline("Light2D");
+
+    
 
     this.enemigoManos.movimientoEnemigo();
     this.manos.add(this.enemigoManos); 
