@@ -72,12 +72,6 @@ export default class Juego extends Phaser.Scene {
       .setPipeline("Light2D");
     pisoLayer.setCollisionByProperty({ colision: true });
 
-    const mueblesKey = `muebles${this.nivel}`;
-    const capaMuebles = map.addTilesetImage("muebles", mueblesKey);
-    map.createLayer("furniture", capaMuebles, 0, 0).setPipeline("Light2D");
-
-    const objectsLayer = map.getObjectLayer("objects");
-
     const plataformasKey = `plataformas${this.nivel}`;
     const capaPlataformas = map.addTilesetImage("plataformas", plataformasKey);
     const plataformasLayer = map.createLayer(
@@ -91,6 +85,12 @@ export default class Juego extends Phaser.Scene {
         .setCollisionByProperty({ colision: true })
         .setPipeline("Light2D");
     }
+
+    const mueblesKey = `muebles${this.nivel}`;
+    const capaMuebles = map.addTilesetImage("muebles", mueblesKey);
+    map.createLayer("furniture", capaMuebles, 0, 0).setPipeline("Light2D");
+
+    const objectsLayer = map.getObjectLayer("objects");
 
     objectsLayer.objects.forEach((objData) => {
       const { x = 0, y = 0, name } = objData;
@@ -156,12 +156,11 @@ export default class Juego extends Phaser.Scene {
           );
           break;
         }
-        case "madera": {
-          this.madera = new Objetos(this, x, y, "bolsaCemento")
-            .setScale(0.9)
-            .setSize(230, 160)
-            .setOffset(10, 0)
-            .setPipeline("Light2D");
+        case "traba": {
+          this.traba = new Objetos(this, x, y, "bolsaCemento").setPipeline(
+            "Light2D"
+          );
+
           break;
         }
 
@@ -240,6 +239,8 @@ export default class Juego extends Phaser.Scene {
     if (this.nivel === 3) {
       this.olla.setGravityY(5000);
       this.olla.body.velocity.y = 800;
+
+      this.traba.setTexture("cacerolas");
 
       this.puerta.setTexture("puerta-cerrada3");
       this.puertaIzquierda.setTexture("puerta-izquierda3");
@@ -340,9 +341,9 @@ export default class Juego extends Phaser.Scene {
     this.physics.add.collider(this.jugador, pisoLayer);
     this.physics.add.collider(this.puerta, pisoLayer);
     this.physics.add.collider(this.caja, pisoLayer);
-    this.physics.add.collider(this.madera, pisoLayer);
-    this.physics.add.collider(this.caja, this.madera);
-    this.physics.add.collider(this.jugador, this.madera);
+    this.physics.add.collider(this.traba, pisoLayer);
+    this.physics.add.collider(this.caja, this.traba);
+    this.physics.add.collider(this.jugador, this.traba);
     this.physics.add.collider(this.jugador, this.caja);
     this.physics.add.collider(this.jugador, this.jarron);
 
@@ -430,6 +431,8 @@ export default class Juego extends Phaser.Scene {
     this.manos.setVelocityY(-1000);
     //this.manos.remove(manos, true, true);
     console.log("mano eliminada");
+
     this.musicaAmbiente.volume = 0.2;
+
   }
 }

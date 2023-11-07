@@ -14,21 +14,39 @@ export default class Pausa extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(960, 540, "popupPausa");
+    this.add.image(960, 540, "popupPausa").setScale(0.8);
+
+    this.add
+      .text(960, 250, getPhrase("pausa"), {
+        fontFamily: "Amatic SC, cursive",
+        fontSize: "120px",
+        color: "#fce5cd",
+      })
+      .setOrigin(0.5);
+
     const botonVolver = this.add
-      .text(1000, 500, getPhrase("volver"), {
+      .text(960, 450, getPhrase("volver"), {
         fontFamily: "Amatic SC",
-        fontSize: "70px",
+        fontSize: "90px",
+        color: "#fce5cd",
+        shadow: {
+          offsetX: 2,
+          offsetY: 2,
+          color: "#4b443d",
+          blur: 5,
+          stroke: false,
+          fill: true,
+        },
       })
       .setOrigin(0.5)
       .setInteractive();
 
     botonVolver.on("pointerover", () => {
-      botonVolver.setStyle({ backgroundColor: "#888888" });
+      botonVolver.setStyle({ color: "#b0a08f" });
     });
 
     botonVolver.on("pointerout", () => {
-      botonVolver.setStyle({ backgroundColor: "#000000" });
+      botonVolver.setStyle({ color: "#fce5cd" });
     });
 
     botonVolver.on("pointerup", () => {
@@ -38,19 +56,28 @@ export default class Pausa extends Phaser.Scene {
     });
 
     const botonReiniciar = this.add
-      .text(1000, 600, getPhrase("reiniciar"), {
+      .text(960, 600, getPhrase("reiniciar"), {
         fontFamily: "Amatic SC",
-        fontSize: "70px",
+        fontSize: "90px",
+        color: "#fce5cd",
+        shadow: {
+          offsetX: 2,
+          offsetY: 2,
+          color: "#4b443d",
+          blur: 5,
+          stroke: false,
+          fill: true,
+        },
       })
       .setOrigin(0.5)
       .setInteractive();
 
     botonReiniciar.on("pointerover", () => {
-      botonReiniciar.setStyle({ backgroundColor: "#888888" });
+      botonReiniciar.setStyle({ color: "#b0a08f" });
     });
 
     botonReiniciar.on("pointerout", () => {
-      botonReiniciar.setStyle({ backgroundColor: "#000000" });
+      botonReiniciar.setStyle({ color: "#fce5cd" });
     });
 
     botonReiniciar.on("pointerup", () => {
@@ -62,19 +89,28 @@ export default class Pausa extends Phaser.Scene {
     });
 
     const botonReanudar = this.add
-      .text(1000, 700, getPhrase("reanudar"), {
+      .text(960, 750, getPhrase("reanudar"), {
         fontFamily: "Amatic SC",
-        fontSize: "70px",
+        fontSize: "90px",
+        color: "#fce5cd",
+        shadow: {
+          offsetX: 2,
+          offsetY: 2,
+          color: "#4b443d",
+          blur: 5,
+          stroke: false,
+          fill: true,
+        },
       })
       .setOrigin(0.5)
       .setInteractive();
 
     botonReanudar.on("pointerover", () => {
-      botonReanudar.setStyle({ backgroundColor: "#888888" });
+      botonReanudar.setStyle({ color: "#b0a08f" });
     });
 
     botonReanudar.on("pointerout", () => {
-      botonReanudar.setStyle({ backgroundColor: "#000000" });
+      botonReanudar.setStyle({ color: "#fce5cd" });
     });
 
     botonReanudar.on ("pointerup", () => {
