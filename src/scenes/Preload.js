@@ -108,6 +108,8 @@ export default class Preload extends Phaser.Scene {
       "assets/sprites/nivel 1/bolsa-cemento-n1.png"
     );
 
+    this.load.image("roturas", "assets/sprites/nivel 3/roturas-piso-n3.png");
+
     // escenas fijas
     this.load.image("flechaVolver", "assets/escenas/flecha-volver.png");
     this.load.image("fondoMenu", "assets/escenas/menu/menu-principal.png");

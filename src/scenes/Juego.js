@@ -241,6 +241,7 @@ export default class Juego extends Phaser.Scene {
       this.olla.body.velocity.y = 800;
 
       this.traba.setTexture("cacerolas");
+      this.traba.setScale(0.5);
 
       this.puerta.setTexture("puerta-cerrada3");
       this.puertaIzquierda.setTexture("puerta-izquierda3");
@@ -295,6 +296,16 @@ export default class Juego extends Phaser.Scene {
         });
         console.log("temblor");
 
+        this.roturas = new Objetos(this, 6000, 2000, "roturas");
+
+        this.physics.add.collider(
+          this.jugador,
+          this.roturas,
+          this.jugador.morir,
+          null,
+          this
+        );
+
         this.physics.add.collider(
           this.jugador,
           enemigoFinal,
@@ -319,6 +330,8 @@ export default class Juego extends Phaser.Scene {
           this
         );
       });
+
+      this.physics.add.collider(this.olla, this.traba);
     }
 
     // agregado de fisicas
@@ -433,6 +446,5 @@ export default class Juego extends Phaser.Scene {
     console.log("mano eliminada");
 
     this.musicaAmbiente.volume = 0.2;
-
   }
 }

@@ -20,6 +20,7 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
 
     this.velocidad = 241;
 
+    this.manosVolver = 1000;
   }
 
   aparicionOjos() {
@@ -40,5 +41,10 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
   movimientoEnemigoFinal() {
     this.body.setVelocityX(this.velocidad);
     this.anims.play("perseguir", true);
+  }
+
+  movimientoEnemigoManos() {
+    this.body.setVelocityX(this.velocidad);
+    this.anims.play("atrapar", true);
   }
 }
