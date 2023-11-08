@@ -2,6 +2,8 @@ import Phaser from "phaser";
 import events from "../components/EventCenter";
 
 export default class UI extends Phaser.Scene {
+  firebase;
+
   constructor() {
     super("ui");
   }
@@ -12,59 +14,48 @@ export default class UI extends Phaser.Scene {
   }
 
   create() {
-    /* this.nivelTexto = this.add.text(1600, 40, `Nivel ${this.nivel}`, {
-      fontFamily: "Amatic SC",
-      fontSize: "60px",
-    }); */
-
-    const botonPausa = this.add
-      .text(100, 50, "pausa", { fontFamily: "Amatic SC", fontSize: "60px" })
-      .setOrigin(0.5)
-      .setInteractive();
-
-    botonPausa.on("pointerover", () => {
-      botonPausa.setStyle({ backgroundColor: "#888888" });
-    });
-
-    botonPausa.on("pointerout", () => {
-      botonPausa.setStyle({ backgroundColor: "#000000" });
-    });
-
-    botonPausa.on("pointerup", () => {
-
-      this.scene.stop("juego");
-      this.scene.stop("ui");
-      this.scene.launch("pausa");
-
+    this.input.keyboard.on("keydown-P", () => {
+      this.pausarJuego();
     });
 
     // escuchar eventos
     events.on("mostrarLlave", this.mostrarLlave, this);
-    // events.on("actualizarNivel", this.actualizarNivel, this);
+
+    this.add.image(1800, 80, "cartelUI").setScale(0.6);
 
     if (this.nivel === 1) {
       this.imagenNivel = this.add.image(1800, 80, "llaveSilueta");
-    } else if (this.nivel === 2) {
+    }
+
+    if (this.nivel === 2) {
       this.imagenNivel = this.add
         .image(1800, 80, "palancaSilueta")
         .setScale(0.3);
     }
+
+    if (this.nivel === 3) {
+      this.imagenNivel = this.add
+        .image(1800, 80, "interruptorSilueta")
+        .setScale(0.8);
+    }
   }
 
   mostrarLlave() {
-    // console.log("imagen en ui");
-
     if (this.nivel === 1) {
       this.imagenNivel.setTexture("llave");
     }
     if (this.nivel === 2) {
       this.imagenNivel.setTexture("palanca").setScale(0.3);
     }
+
+    if (this.nivel === 3) {
+      this.imagenNivel.setTexture("palancaNo").setScale(0.8);
+    }
   }
 
- /* actualizarNivel(data) {
-    this.nivel = data.nivel;
+  pausarJuego() {
+    this.scene.pause("juego");
 
-    this.nivelTexto.setText(`Nivel ${this.nivel}`);
-  } */
+    this.scene.launch("pausa");
+  }
 }

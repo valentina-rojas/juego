@@ -8,6 +8,9 @@ import Ajustes from "./scenes/Ajustes";
 import Pausa from "./scenes/Pausa";
 import Inicio from "./scenes/Inicio";
 import Animaciones from "./scenes/Animaciones";
+import FirebasePlugin from "./plugins/FirebasePlugin";
+import Login from "./scenes/Login";
+import Puntajes from "./scenes/Puntajes";
 
 const config = {
   type: Phaser.AUTO,
@@ -32,7 +35,18 @@ const config = {
       debug: false,
     },
   },
-  scene: [Preload, Inicio, Menu, Creditos, Ajustes, Pausa, Juego, UI, Animaciones],
+  scene: [Preload, Login, Inicio, Juego, Menu, Creditos, Ajustes, Puntajes ,   Pausa, UI, Animaciones],
+  plugins: {
+    global: [
+      {
+        key: "FirebasePlugin",
+        plugin: FirebasePlugin,
+        start: true,
+        mapping: "firebase",
+      },
+    ],
+  },
+ 
 };
 
 export default new Phaser.Game(config);

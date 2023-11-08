@@ -1,9 +1,9 @@
 import Phaser from "phaser";
 import { getPhrase } from "../services/traducciones";
 
-
 export default class Menu extends Phaser.Scene {
   language;
+  musicaAmbiente;
 
   constructor() {
     super("menu");
@@ -14,16 +14,17 @@ export default class Menu extends Phaser.Scene {
   }
 
   create() {
-    this.scene.stop("ui"); 
-    
-    console.log(`idioma:${  this.language}`);
+    this.scene.stop("ui");
 
-    this.add.image(960,540,"fondoMenu")
+    console.log(`idioma:${this.language}`);
+
+    this.add.image(960, 540, "fondoMenu");
 
     const botones = [
       { texto: getPhrase("JUGAR"), escenaKey: "animaciones" },
       { texto: getPhrase("CRÉDITOS"), escenaKey: "creditos" },
       { texto: getPhrase("AYUDA"), escenaKey: "ajustes" },
+      { texto: getPhrase("puntajes"), escenaKey: "puntajes" },
     ];
 
     const posicionIncialY = 400;
@@ -31,7 +32,7 @@ export default class Menu extends Phaser.Scene {
 
     botones.forEach((infoBoton, indice) => {
       const boton = this.agregarBoton(
-        1400,
+        1500,
         posicionIncialY + indice * espaciado,
         infoBoton.texto,
         infoBoton.escenaKey
@@ -43,7 +44,19 @@ export default class Menu extends Phaser.Scene {
 
   agregarBoton(x, y, texto, escenaKey) {
     const boton = this.add
-      .text(x, y, texto, { fontFamily: 'Amatic SC, cursive', fontSize: "80px" })
+      .text(x, y, texto, {
+        fontFamily: "Amatic SC, cursive",
+        fontSize: "80px",
+        color: "#fce5cd",
+        shadow: {
+          offsetX: 2,
+          offsetY: 2,
+          color: "#4b443d",
+          blur: 5,
+          stroke: false,
+          fill: true,
+        },
+      })
       .setOrigin(0.5)
       .setInteractive();
 
@@ -54,11 +67,11 @@ export default class Menu extends Phaser.Scene {
 
   interacciones(boton) {
     boton.on("pointerover", () => {
-      boton.setStyle({ backgroundColor: "#888888" });
+      boton.setStyle({ color: "#b0a08f" });
     });
 
     boton.on("pointerout", () => {
-      boton.setStyle({ backgroundColor: "#000000" });
+      boton.setStyle({ color: "#fce5cd" });
     });
 
     boton.on("pointerup", () => {

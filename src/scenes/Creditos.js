@@ -14,22 +14,36 @@ export default class Creditos extends Phaser.Scene {
   create() {
     this.add.image(960, 542, "creditos");
 
-    const botonVolver = this.add
-      .text(180, 50, getPhrase("volver"), {
-        fontSize: "60px",
-        backgroundColor: "#000000",
-        fontFamily: "Amatic SC, cursive",
+    this.add
+      .text(960, 100, getPhrase("equipo sombras"), {
+        fontFamily: "Amatic SC",
+        fontSize: "120px",
+        color: "#fce5cd",
       })
+      .setOrigin(0.5);
+
+    this.add.text(200, 300, getPhrase("programación y diseño"), {
+      fontFamily: "Amatic SC",
+      fontSize: "60px",
+      color: "#fce5cd",
+    });
+
+    this.add.text(750, 300, getPhrase("programación y diseño"), {
+      fontFamily: "Amatic SC",
+      fontSize: "60px",
+      color: "#fce5cd",
+    });
+
+    this.add.text(1400, 300, getPhrase("arte y diseño"), {
+      fontFamily: "Amatic SC",
+      fontSize: "60px",
+      color: "#fce5cd",
+    });
+
+    const botonVolver = this.add
+      .image(130, 80, "flechaVolver")
       .setOrigin(0.5)
       .setInteractive();
-
-    botonVolver.on("pointerover", () => {
-      botonVolver.setStyle({ backgroundColor: "#888888" });
-    });
-
-    botonVolver.on("pointerout", () => {
-      botonVolver.setStyle({ backgroundColor: "#000000" });
-    });
 
     botonVolver.on("pointerup", () => {
       this.scene.start("menu");

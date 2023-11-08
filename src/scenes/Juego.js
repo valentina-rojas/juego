@@ -13,19 +13,31 @@ export default class Juego extends Phaser.Scene {
 
   luces;
 
+  firebase;
+
   constructor() {
     super("juego");
   }
 
   init(data) {
-    this.recolectables =  0;
+    this.recolectables = 0;
     this.nivel = data.nivel || 1;
     this.timer = 40;
     this.baldosaPresionada = false;
     this.interruptor = null;
+    this.tiempo = data.tiempo || 0;
   }
 
   create() {
+    this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        this.tiempo++; // Incrementa la variable this.tiempo en 1 cada segundo
+      },
+      callbackScope: this,
+      loop: true,
+    });
+
     this.scene.launch("ui", {
       nivel: this.nivel,
       recolectables: this.recolectables,
@@ -60,12 +72,6 @@ export default class Juego extends Phaser.Scene {
       .setPipeline("Light2D");
     pisoLayer.setCollisionByProperty({ colision: true });
 
-    const mueblesKey = `muebles${this.nivel}`;
-    const capaMuebles = map.addTilesetImage("muebles", mueblesKey);
-    map.createLayer("furniture", capaMuebles, 0, 0).setPipeline("Light2D");
-
-    const objectsLayer = map.getObjectLayer("objects");
-
     const plataformasKey = `plataformas${this.nivel}`;
     const capaPlataformas = map.addTilesetImage("plataformas", plataformasKey);
     const plataformasLayer = map.createLayer(
@@ -79,6 +85,12 @@ export default class Juego extends Phaser.Scene {
         .setCollisionByProperty({ colision: true })
         .setPipeline("Light2D");
     }
+
+    const mueblesKey = `muebles${this.nivel}`;
+    const capaMuebles = map.addTilesetImage("muebles", mueblesKey);
+    map.createLayer("furniture", capaMuebles, 0, 0).setPipeline("Light2D");
+
+    const objectsLayer = map.getObjectLayer("objects");
 
     objectsLayer.objects.forEach((objData) => {
       const { x = 0, y = 0, name } = objData;
@@ -121,14 +133,15 @@ export default class Juego extends Phaser.Scene {
         case "olla": {
           this.olla = new ObjetosMovibles(this, x, y, "olla")
             .setDamping(true)
-            .setDrag(0.000001)
+            .setDrag(0.000001, 4)
             .setPipeline("Light2D");
           break;
         }
         case "jarron": {
-          this.jarron = new ObjetosMovibles(this, x, y, "jarron").setPipeline(
-            "Light2D"
-          );
+          this.jarron = new ObjetosMovibles(this, x, y, "jarron")
+            .setDamping(true)
+            .setDrag(0.000001, 4)
+            .setPipeline("Light2D");
           break;
         }
         case "baldosa": {
@@ -143,20 +156,22 @@ export default class Juego extends Phaser.Scene {
           );
           break;
         }
-        case "madera": {
-          this.madera = new Objetos(this, x, y, "#")
-            .setScale(0.3)
-            .setVisible(false)
-            .setPipeline("Light2D");
+        case "traba": {
+          this.traba = new Objetos(this, x, y, "bolsaCemento").setPipeline(
+            "Light2D"
+          );
+
           break;
         }
+
         case "ojos": {
           this.ojos = new Objetos(this, x, y, "ojos")
-          .setVisible(false)
-          .setPipeline("Light2D")
-          .setScale(0.3);
+            .setVisible(false)
+            .setPipeline("Light2D")
+            .setScale(0.3);
           break;
         }
+
         default: {
           break;
         }
@@ -203,7 +218,6 @@ export default class Juego extends Phaser.Scene {
         this
       );
 
-
       this.physics.add.collider(this.jugador, plataformasLayer);
       this.physics.add.collider(this.jarron, plataformasLayer);
 
@@ -223,8 +237,11 @@ export default class Juego extends Phaser.Scene {
 
     // condicionales para nivel 3
     if (this.nivel === 3) {
-      this.olla.setGravityY(5000); 
-      this.olla.body.velocity.y = 800; 
+      this.olla.setGravityY(5000);
+      this.olla.body.velocity.y = 800;
+
+      this.traba.setTexture("cacerolas");
+      this.traba.setScale(0.5);
 
       this.puerta.setTexture("puerta-cerrada3");
       this.puertaIzquierda.setTexture("puerta-izquierda3");
@@ -268,8 +285,6 @@ export default class Juego extends Phaser.Scene {
           loop: true,
         });
 
-        this.temporizador = this.sound.add("temporizador", { loop: true });
-
         this.tweens.add({
           targets: [this.cameras.main.startFollow(this.jugador)],
           x: -10,
@@ -281,6 +296,16 @@ export default class Juego extends Phaser.Scene {
         });
         console.log("temblor");
 
+        this.roturas = new Objetos(this, 6000, 2000, "roturas");
+
+        this.physics.add.collider(
+          this.jugador,
+          this.roturas,
+          this.jugador.morir,
+          null,
+          this
+        );
+
         this.physics.add.collider(
           this.jugador,
           enemigoFinal,
@@ -289,14 +314,14 @@ export default class Juego extends Phaser.Scene {
           this
         );
 
-       this.physics.add.overlap(
+        this.physics.add.overlap(
           this.manos,
           this.jugador,
           this.jugador.morir,
           null,
           this
         );
-  
+
         this.physics.add.collider(
           this.manos,
           pisoLayer,
@@ -305,6 +330,8 @@ export default class Juego extends Phaser.Scene {
           this
         );
       });
+
+      this.physics.add.collider(this.olla, this.traba);
     }
 
     // agregado de fisicas
@@ -327,21 +354,44 @@ export default class Juego extends Phaser.Scene {
     this.physics.add.collider(this.jugador, pisoLayer);
     this.physics.add.collider(this.puerta, pisoLayer);
     this.physics.add.collider(this.caja, pisoLayer);
-    this.physics.add.collider(this.madera, pisoLayer);
-    this.physics.add.collider(this.caja, this.madera);
+    this.physics.add.collider(this.traba, pisoLayer);
+    this.physics.add.collider(this.caja, this.traba);
+    this.physics.add.collider(this.jugador, this.traba);
     this.physics.add.collider(this.jugador, this.caja);
     this.physics.add.collider(this.jugador, this.jarron);
 
     this.cameras.main.startFollow(this.jugador);
     this.physics.world.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-   
+
+    this.map = (map.widthInPixels, map.heightInPixels);
+
+    if (!this.puntajesSuscribed) {
+      events.on("puntajes", this.puntajes, this);
+      this.puntajesSuscribed = true;
+    }
   }
 
   update() {
     this.jugador.movimiento();
     this.actualizarLuz();
     this.estadoBaldosa();
+  }
+
+  puntajes() {
+    console.log("ejecutando punatjes");
+
+    const user = this.firebase.getUser();
+    this.firebase.saveGameData(user.uid, {
+      tiempo: this.tiempo,
+    });
+
+    this.firebase.getHighScores().then((highScores) => {
+      const highScore = highScores[0] || { score: 0 };
+      if (this.tiempo > highScore.score) {
+        this.firebase.addHighScore(user.displayName || user.uid, this.tiempo);
+      }
+    });
   }
 
   estadoBaldosa() {
@@ -373,21 +423,28 @@ export default class Juego extends Phaser.Scene {
   }
 
   manosRandom() {
-    this.musicaAmbiente.volume = 0.4;
     const manos = new Enemigo(
       this,
-      this.jugador.x + 350,
-      this.jugador.y - 1000,
-      "manos"
-    ).setSize(180,900).setPipeline("Light2D");
 
+      this.jugador.x + 900,
+
+      this.jugador.y - 2500,
+      "manos"
+    )
+      .setSize(200, 900)
+      .setPipeline("Light2D");
+
+    this.musicaAmbiente.volume = 0.4;
     manos.movimientoEnemigo();
     this.manos.add(manos);
     console.log("nueva mano");
   }
 
-  desaparecerManos(manos) {
-    this.manos.remove(manos, true, true);
+  desaparecerManos() {
+    this.manos.setVelocityY(-1000);
+    //this.manos.remove(manos, true, true);
     console.log("mano eliminada");
+
+    this.musicaAmbiente.volume = 0.2;
   }
 }

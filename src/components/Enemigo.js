@@ -19,9 +19,31 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
     this.setGravityY(1350);
 
     this.velocidad = 241;
+
+    this.manosVolver = 1000;
+  }
+
+  aparicionOjos() {
+    this.anims.play("aparecerOjos", true);
+  }
+
+  desactivarGravedad() {
+    if (this.texture.key === "ojos") {
+      this.body.allowGravity = false;
+    }
   }
 
   movimientoEnemigo() {
+    this.body.setVelocityX(this.velocidad);
+    this.anims.play("atrapar", true);
+  }
+
+  movimientoEnemigoFinal() {
+    this.body.setVelocityX(this.velocidad);
+    this.anims.play("perseguir", true);
+  }
+
+  movimientoEnemigoManos() {
     this.body.setVelocityX(this.velocidad);
     this.anims.play("atrapar", true);
   }
