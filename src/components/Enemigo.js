@@ -18,7 +18,7 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
     this.setBounce(0.2);
     this.setGravityY(1350);
 
-    this.velocidad = 241;
+    this.velocidad = 258;
 
     this.manosVolver = 1000;
   }

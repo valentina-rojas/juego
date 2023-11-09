@@ -31,7 +31,7 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
 
   puertaCerrada;
 
-  i;
+  sueloRoto;
 
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
@@ -50,7 +50,6 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
 
   abrirPuerta() {
     console.log("colision puerta");
-
     if (this.recolectables >= 1) {
       console.log("puerta abierta");
       this.nivel += 1;
@@ -60,8 +59,7 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       } else {
         events.emit("puntajes");
         this.temporizadorSonido.stop();
-        this.musicaAmbiente.stop();
-
+        this.musicaAmbiente.setVolume(0.5);
         this.scene.start("animaciones", {
           nivel: this.nivel,
           tiempo: this.tiempo,
@@ -75,8 +73,9 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       this.baldosaPresionada = true;
 
       console.log("baldosa presionada");
-      this.interruptor = new Objetos(this, 1130, 500, "palancaNo");
+      this.interruptor = new Objetos(this, 1130, 500, "palancaNo").setPipeline("Light2D");
       this.cuadro.setTexture("cuadro-abierto");
+      this.baldosaSonido.setVolume(1.5);
       this.baldosaSonido.play();
 
       events.emit("colisionConInterruptor", this.interruptor);
@@ -86,9 +85,10 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
   puertaTemporizada() {
     events.emit("mostrarLlave");
 
-    this.musicaAmbiente.setVolume(0.8);
+    this.sueloRoto.play();
+
     this.temporizadorSonido.play();
-    this.temporizadorSonido.setVolume(0.3);
+    this.temporizadorSonido.setVolume(0.8);
     this.interruptor.disableBody(true);
     this.recolectables += 1;
     this.puerta.setTexture("puerta-abierta3");
@@ -96,7 +96,9 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
 
     console.log(this.timer);
 
-    this.enemigoFinal = new Enemigo(this, 400, 500, "manos");
+    this.enemigoFinal = new Enemigo(this, 400, 500, "muro")
+    .setSize(500, 1000)
+    .setPipeline("Light2D");
     this.enemigoFinal.movimientoEnemigoFinal();
 
     /*this.enemigoManos = new Enemigo(this, 2000, 500, "manos")
@@ -117,8 +119,8 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       this.recolectables = 0;
       this.temporizadorSonido.stop();
       this.puertaCerrada.play();
-      this.puertaCerrada.setVolume(0.5);
-      this.musicaAmbiente.setVolume(0.8);
+      this.puertaCerrada.setVolume(0.8);
+      this.musicaAmbiente.setVolume(1.4);
       this.puerta.setTexture("puerta-cerrada3");
       console.log("puerta cerrada");
     }

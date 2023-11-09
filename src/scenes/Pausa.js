@@ -5,8 +5,10 @@ import { getPhrase } from "../services/traducciones";
 export default class Pausa extends Phaser.Scene {
 
   musicaAmbiente;
+
   constructor() {
     super("pausa");
+
   }
 
   init(data) {
@@ -14,6 +16,7 @@ export default class Pausa extends Phaser.Scene {
   }
 
   create() {
+
     this.add.image(960, 540, "popupPausa").setScale(0.8);
 
     this.add

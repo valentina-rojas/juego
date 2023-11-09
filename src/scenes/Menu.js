@@ -18,6 +18,24 @@ export default class Menu extends Phaser.Scene {
 
     console.log(`idioma:${this.language}`);
 
+    this.musicaAmbiente = this.sound.add("musicaAmbiente", { loop: true });
+    this.musicaAmbiente.play();
+
+    this.musicaAmbiente.setVolume(0.5);
+    this.musicaAmbiente.seek = 4;
+
+    //pantalla completa
+    this.input.keyboard.on('keydown-F', () => {
+      const fullscreenElement = this.scale.fullscreenTarget;
+      
+      if (this.scale.isFullscreen) {
+          this.scale.stopFullscreen();
+      } else {
+          this.scale.startFullscreen();
+      }
+  });
+  this.scale.fullscreenTarget = this.game.canvas;
+
     this.add.image(960, 540, "fondoMenu");
 
     const botones = [
@@ -77,6 +95,7 @@ export default class Menu extends Phaser.Scene {
     boton.on("pointerup", () => {
       const targetScene = boton.getData("escenaKey");
       this.scene.start(targetScene, { language: this.language });
+      this.musicaAmbiente.stop();
     });
   }
 }

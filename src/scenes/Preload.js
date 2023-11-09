@@ -225,8 +225,17 @@ export default class Preload extends Phaser.Scene {
     this.load.audio("cuadro-abierto", "assets/audio/cuador-abierto.mp3");
     this.load.audio("puerta-cerrada", "assets/audio/puerta-cerrada.mp3");
     this.load.audio("arrastrar-jarron", "assets/audio/arrastrarJarron.ogg");
+    this.load.audio("puerta-animacion", "assets/audio/puerta-animacion.mp3");
+    this.load.audio("puerta-golpe", "assets/audio/puerta-golpe.mp3");
+    this.load.audio("puerta-abierta", "assets/audio/puerta-abierta.mp3");
+    this.load.audio("woosh-animacion", "assets/audio/woosh-animacion.mp3");
+    this.load.audio("woosh-largo", "assets/audio/wooshLargo.mp3");
+    this.load.audio("tragar-animacion", "assets/audio/tragarAnimacion.mp3");
+    this.load.audio("madera", "assets/audio/madera.mp3");
+    this.load.audio("suelo-roto", "assets/audio/suelo-roto.mp3");
     // musica
     this.load.audio("musicaAmbiente", "assets/audio/musicaAmbiente.mp3");
+    this.load.audio("musicaAnimacion", "assets/audio/musicaAnimacion.mp3");
   }
 
   create() {

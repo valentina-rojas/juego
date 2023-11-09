@@ -22,7 +22,7 @@ export default class Juego extends Phaser.Scene {
   init(data) {
     this.recolectables = 0;
     this.nivel = data.nivel || 1;
-    this.timer = 40;
+    this.timer = 33;
     this.baldosaPresionada = false;
     this.interruptor = null;
     this.tiempo = data.tiempo || 0;
@@ -43,20 +43,33 @@ export default class Juego extends Phaser.Scene {
       recolectables: this.recolectables,
     });
 
+   //pantalla completa
+    this.input.keyboard.on('keydown-F', () => {
+      const fullscreenElement = this.scale.fullscreenTarget;
+      
+      if (this.scale.isFullscreen) {
+          this.scale.stopFullscreen();
+      } else {
+          this.scale.startFullscreen();
+      }
+  });
+  this.scale.fullscreenTarget = this.game.canvas; 
+
     // sonido y musica
 
     this.musicaAmbiente = this.sound.add("musicaAmbiente", { loop: true });
-    this.musicaAmbiente.volume = 0.2;
+    this.musicaAmbiente.setVolume (1);
     this.musicaAmbiente.play();
-    this.musicaAmbiente.seek = 4;
     this.baldosaSonido = this.sound.add("baldosa", { loop: false });
     this.temporizadorSonido = this.sound.add("temporizador", { loop: true });
     this.pasos = this.sound.add("pasos", { loop: false });
     this.jarronSonido = this.sound.add("jarron", { loop: false });
-    this.ArrastrarJarronSonido = this.sound.add("arrastrar-jarron", {
-      loop: false,
-    });
+    this.ArrastrarJarronSonido = this.sound.add("arrastrar-jarron", { loop: false, });
     this.puertaCerrada = this.sound.add("puerta-cerrada", { loop: false });
+    this.puertaAbierta = this.sound.add("puerta-abierta", { loop: false });
+    this.madera = this.sound.add("madera", { loop: false });
+    this.madera.setVolume (0.2)
+    this.sueloRoto = this.sound.add("suelo-roto", { loop: false });
 
     const mapKey = `nivel${this.nivel}`;
     const map = this.make.tilemap({ key: mapKey });
@@ -134,6 +147,7 @@ export default class Juego extends Phaser.Scene {
           this.olla = new ObjetosMovibles(this, x, y, "olla")
             .setDamping(true)
             .setDrag(0.000001, 4)
+            .setSize(160,120)
             .setPipeline("Light2D");
           break;
         }
@@ -157,10 +171,17 @@ export default class Juego extends Phaser.Scene {
           break;
         }
         case "traba": {
-          this.traba = new Objetos(this, x, y, "bolsaCemento").setPipeline(
-            "Light2D"
-          );
-
+          this.traba = new Objetos(this, x, y, "bolsaCemento")
+          .setSize(220,150)
+          .setOffset(10,0)
+          .setPipeline( "Light2D" );
+          break;
+        }
+        case "traba2": {
+          this.traba2 = new Objetos(this, x, y, "bolaCemento")
+          .setSize(220,150)
+          .setOffset(10,0)
+          .setVisible(false);
           break;
         }
 
@@ -181,7 +202,7 @@ export default class Juego extends Phaser.Scene {
     this.manos = this.physics.add.group();
 
     this.luces = this.lights.addLight(1000, 500, 200, 0x555556, 5);
-    this.lights.enable().setAmbientColor(0x555556);
+    this.lights.enable().setAmbientColor(0x444446);
 
     // condicionales para nivel 2
     if (this.nivel === 2) {
@@ -296,7 +317,9 @@ export default class Juego extends Phaser.Scene {
         });
         console.log("temblor");
 
-        this.roturas = new Objetos(this, 6000, 2000, "roturas");
+        this.roturas = new Objetos(this, 6000, 2000, "roturas")
+        .setSize(6100,150)
+        .setPipeline( "Light2D");
 
         this.physics.add.collider(
           this.jugador,
@@ -332,6 +355,7 @@ export default class Juego extends Phaser.Scene {
       });
 
       this.physics.add.collider(this.olla, this.traba);
+      this.physics.add.collider(this.olla, this.traba2);
     }
 
     // agregado de fisicas
@@ -343,6 +367,8 @@ export default class Juego extends Phaser.Scene {
       this
     );
 
+
+
     this.physics.add.collider(
       this.puerta,
       this.jugador,
@@ -350,6 +376,8 @@ export default class Juego extends Phaser.Scene {
       null,
       this
     );
+
+
 
     this.physics.add.collider(this.jugador, pisoLayer);
     this.physics.add.collider(this.puerta, pisoLayer);
@@ -422,6 +450,7 @@ export default class Juego extends Phaser.Scene {
     this.luces.y = this.jugador.y;
   }
 
+
   manosRandom() {
     const manos = new Enemigo(
       this,
@@ -434,7 +463,7 @@ export default class Juego extends Phaser.Scene {
       .setSize(200, 900)
       .setPipeline("Light2D");
 
-    this.musicaAmbiente.volume = 0.4;
+    this.musicaAmbiente.setVolume(1.4);
     manos.movimientoEnemigo();
     this.manos.add(manos);
     console.log("nueva mano");
@@ -445,6 +474,6 @@ export default class Juego extends Phaser.Scene {
     //this.manos.remove(manos, true, true);
     console.log("mano eliminada");
 
-    this.musicaAmbiente.volume = 0.2;
+    this.musicaAmbiente.setVolume(1);
   }
 }
