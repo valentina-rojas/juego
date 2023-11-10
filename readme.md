@@ -6,8 +6,8 @@ mansión embrujada.
 El objetivo del juego es escapar. 
 Para conseguirlo el debrás recorrer las habitaciones resolviendo distintos puzzles y evitando ser capturado por el enemigo.
 
-Link del juego: https://liberate-de-las-sombras.netlify.app/
-
 <p align="center">
   <img src="https://raw.githubusercontent.com/valentina-rojas/liberate-de-las-sombras/main/public/assets/escenas/Logo.png" alt="GoChef" width="300">
 </p>
+
+Link del juego: https://liberate-de-las-sombras.netlify.app/
