@@ -16,6 +16,8 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
 
   cameras;
 
+  temporizadorSonido;
+
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
 
@@ -36,6 +38,7 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
   movimiento() {
     if (this.cursor.left.isDown) {
       this.body.setVelocityX(-this.velocidad);
+      this.scene.pasos.setVolume(2);
       this.scene.pasos.play();
       this.anims.play("caminarIzquierda", true);
     } else if (this.cursor.right.isDown) {
@@ -55,8 +58,8 @@ export default class Jugador extends Phaser.Physics.Arcade.Sprite {
   morir() {
     this.scene.stop("ui");
     this.scene.pause("juego");
-    this.musicaAmbiente.setVolume(0.1);
-
+    this.musicaAmbiente.setVolume(1);
+    this.temporizadorSonido.stop();
     this.cameras.main.fadeIn(6);
 
     setTimeout(() => {

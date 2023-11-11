@@ -30,7 +30,7 @@ export default class ObjetosMovibles extends Phaser.Physics.Arcade.Sprite {
 
   romperJarron() {
     this.jarronSonido.play(); 
-    this.jarronSonido.setVolume(0.2);
+    this.jarronSonido.setVolume(1);
     console.log("jarron roto");
     const { x } = this.jarron;
     const { y } = this.jarron;

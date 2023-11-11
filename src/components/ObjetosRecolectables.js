@@ -19,6 +19,10 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
 
   musicaAmbiente;
 
+  puertaAbierta;
+
+  madera;
+
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
 
@@ -31,6 +35,7 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
   }
 
   recolectarLlave() {
+    this.puertaAbierta.play();
     this.llave.disableBody(true, true);
     this.recolectables += 1;
     events.emit("mostrarLlave");
@@ -40,14 +45,13 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
       this.ojos = new Enemigo(this, 1350, 300, "ojos")
         .setPipeline("Light2D")
         .setImmovable(true);
-
       this.ojos.desactivarGravedad();
-
       this.ojos.aparicionOjos();
     }, 2000);
   }
 
   recolectarPalanca() {
+    this.madera.play();
     this.palanca.disableBody(true, true);
     this.recolectables += 1;
     events.emit("mostrarLlave");
