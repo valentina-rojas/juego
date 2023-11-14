@@ -22,7 +22,7 @@ export default class Juego extends Phaser.Scene {
   init(data) {
     this.recolectables = 0;
     this.nivel = data.nivel || 1;
-    this.timer = 33;
+    this.timer = 35;
     this.baldosaPresionada = false;
     this.interruptor = null;
     this.tiempo = data.tiempo || 0;
