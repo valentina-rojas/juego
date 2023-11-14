@@ -88,6 +88,7 @@ export default class Pausa extends Phaser.Scene {
       events.off("colisionConInterruptor");
       events.off("temporizador");
       events.off("colisionConPalanca");
+      this.sound.stopAll();
       this.scene.start("juego");
     });
 

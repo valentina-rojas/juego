@@ -317,8 +317,8 @@ export default class Juego extends Phaser.Scene {
         });
         console.log("temblor");
 
-        this.roturas = new Objetos(this, 6000, 2000, "roturas")
-        .setSize(6100,150)
+        this.roturas = new Objetos(this, 4700, 2000, "roturas")
+        .setSize(3800,150)
         .setPipeline( "Light2D");
 
         this.physics.add.collider(
@@ -328,6 +328,7 @@ export default class Juego extends Phaser.Scene {
           null,
           this
         );
+        console.log("muerte roturas");
 
         this.physics.add.collider(
           this.jugador,
