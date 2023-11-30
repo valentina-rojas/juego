@@ -15,8 +15,6 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
 
   puerta;
 
-  caja3;
-
   nivel;
 
   tiempo;
@@ -101,12 +99,12 @@ export default class Objetos extends Phaser.Physics.Arcade.Sprite {
     .setPipeline("Light2D");
     this.enemigoFinal.movimientoEnemigoFinal();
 
-    /*this.enemigoManos = new Enemigo(this, 2000, 500, "manos")
+    /* this.enemigoManos = new Enemigo(this, 2000, 500, "manos")
       .setRotation(360)
       .setPipeline("Light2D");
 
     this.manos.add(this.enemigoManos);
-    console.log("nueva mano");*/
+    console.log("nueva mano"); */
 
     events.emit("temporizador", this.enemigoFinal);
   }
