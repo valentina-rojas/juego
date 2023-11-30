@@ -3,6 +3,7 @@ import { getPhrase } from "../services/traducciones";
 
 export default class Menu extends Phaser.Scene {
   language;
+
   musicaAmbiente;
 
   constructor() {
@@ -24,9 +25,9 @@ export default class Menu extends Phaser.Scene {
     this.musicaAmbiente.setVolume(0.5);
     this.musicaAmbiente.seek = 4;
 
-    //pantalla completa
+    // pantalla completa
     this.input.keyboard.on('keydown-F', () => {
-      const fullscreenElement = this.scale.fullscreenTarget;
+      this.fullscreenElement = this.scale.fullscreenTarget;
       
       if (this.scale.isFullscreen) {
           this.scale.stopFullscreen();
