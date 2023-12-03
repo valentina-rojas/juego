@@ -19,14 +19,9 @@ export default class ObjetosMovibles extends Phaser.Physics.Arcade.Sprite {
 
     this.setCollideWorldBounds(true);
 
-    // this.body.setDamping(true); // Habilitar el amortiguador
-    //  this.body.setDrag(0.000001); // Configurar el valor del amortiguador
     this.scene = scene;
   }
 
-  create(){
-     // let jarronSonido = this.sound.add("jarron", {loop:false} );
-  }
 
   romperJarron() {
     this.jarronSonido.play(); 

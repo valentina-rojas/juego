@@ -6,8 +6,6 @@ export default class Enemigo extends Phaser.Physics.Arcade.Sprite {
 
   body;
 
-  manos;
-
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
 
