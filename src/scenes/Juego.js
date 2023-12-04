@@ -32,7 +32,7 @@ export default class Juego extends Phaser.Scene {
     this.time.addEvent({
       delay: 1000,
       callback: () => {
-        this.tiempo++; // Incrementa la variable this.tiempo en 1 cada segundo
+        this.tiempo += 1; // Incrementa la variable this.tiempo en 1 cada segundo
       },
       callbackScope: this,
       loop: true,
@@ -43,9 +43,9 @@ export default class Juego extends Phaser.Scene {
       recolectables: this.recolectables,
     });
 
-   //pantalla completa
+   // pantalla completa
     this.input.keyboard.on('keydown-F', () => {
-      const fullscreenElement = this.scale.fullscreenTarget;
+     this.fullscreenElement = this.scale.fullscreenTarget;
       
       if (this.scale.isFullscreen) {
           this.scale.stopFullscreen();
@@ -472,7 +472,7 @@ export default class Juego extends Phaser.Scene {
 
   desaparecerManos() {
     this.manos.setVelocityY(-1000);
-    //this.manos.remove(manos, true, true);
+    // this.manos.remove(manos, true, true);
     console.log("mano eliminada");
 
     this.musicaAmbiente.setVolume(1);
