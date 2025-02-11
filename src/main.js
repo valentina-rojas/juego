@@ -31,11 +31,11 @@ const config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 200 },
+      gravity: { x: 0, y: 200 },
       debug: false,
     },
   },
-  scene: [Preload, Login, Inicio, Juego, Menu, Creditos, Ajustes, Puntajes ,   Pausa, UI, Animaciones],
+  scene: [Preload, Login, Inicio, Juego, Menu, Creditos, Ajustes, Puntajes, Pausa, UI, Animaciones],
   plugins: {
     global: [
       {
